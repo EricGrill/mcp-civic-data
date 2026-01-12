@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mcp-govt-api-free"
+name = "mcp-civic-data"
 version = "0.1.0"
 description = "MCP server for free government and open data APIs"
 readme = "README.md"
@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-mcp-govt-api = "mcp_govt_api:main"
+mcp-civic-data = "mcp_govt_api:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/mcp_govt_api"]

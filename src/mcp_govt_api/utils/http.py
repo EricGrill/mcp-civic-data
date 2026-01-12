@@ -7,7 +7,7 @@ from mcp_govt_api.utils.config import config
 http_client = httpx.AsyncClient(
     timeout=httpx.Timeout(config.timeout),
     follow_redirects=True,
-    headers={"User-Agent": "mcp-govt-api-free/0.1.0"},
+    headers={"User-Agent": "mcp-civic-data/0.1.0"},
 )
 
 
