@@ -43,7 +43,15 @@ class Config:
             "  ✓ Data.gov (no key required)",
             "  ✓ EU Open Data (no key required)",
             "  ✓ Safecast (no key required)",
+            "  ✓ OpenAQ (no key required)",
+            "  ✓ USGS Water (no key required)",
+            "  ✓ USGS Earthquakes (no key required)",
+            "  ✓ NOAA Space Weather (no key required)",
         ])
+        if self.has_nasa_key:
+            lines.append("  ✓ NASA FIRMS (using NASA API key)")
+        else:
+            lines.append("  ✓ NASA FIRMS (using DEMO_KEY, limited)")
         return "\n".join(lines)
 
 

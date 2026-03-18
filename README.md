@@ -3,8 +3,8 @@
 **Access free government and open data APIs through Claude**
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![25 Tools](https://img.shields.io/badge/Tools-25-blue.svg)](#-tool-catalog)
-[![8 APIs](https://img.shields.io/badge/APIs-8-orange.svg)](#-included-apis)
+[![40 Tools](https://img.shields.io/badge/Tools-40-blue.svg)](#-tool-catalog)
+[![13 APIs](https://img.shields.io/badge/APIs-13-orange.svg)](#-included-apis)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11+-yellow.svg)](https://python.org)
 
 [Quick Start](#-quick-start) | [Tool Catalog](#-tool-catalog) | [Configuration](#-configuration) | [Examples](#-examples)
@@ -13,7 +13,7 @@
 
 ## 🌐 What is this?
 
-An MCP (Model Context Protocol) server that gives Claude access to **8 free government and open data APIs** - weather forecasts, census demographics, NASA imagery, economic indicators, and more. No API keys required for most features.
+An MCP (Model Context Protocol) server that gives Claude access to **13 free government and open data APIs** - weather forecasts, census demographics, NASA imagery, economic indicators, and more. No API keys required for most features.
 
 > Part of the [Claude Code Plugin Marketplace](https://github.com/EricGrill/agents-skills-plugins) ecosystem.
 
@@ -58,6 +58,11 @@ pip install mcp-civic-data
 | **Data.gov** | 300,000+ US government datasets | No |
 | **EU Open Data** | European Union datasets | No |
 | **Safecast** | Community radiation monitoring worldwide | No |
+| **OpenAQ** | Global air quality from monitoring stations | No |
+| **USGS Water** | US stream flow and flood levels | No |
+| **USGS Earthquakes** | Global real-time seismic data | No |
+| **NASA FIRMS** | Active wildfire detection from satellites | No (optional) |
+| **NOAA Space Weather** | Solar wind, flares, geomagnetic storms | No |
 
 ---
 
@@ -68,7 +73,7 @@ pip install mcp-civic-data
 | **Zero config** | Works immediately - most APIs need no keys |
 | **Graceful fallback** | Missing keys? Those tools just won't appear |
 | **Real data** | Live government sources, not cached or stale |
-| **25 tools** | From quick lookups to raw API access |
+| **40 tools** | From quick lookups to raw API access |
 | **Well-documented** | Every tool has clear parameters and examples |
 
 ---
@@ -84,6 +89,11 @@ pip install mcp-civic-data
 | **Data.gov** | 3 | Search/explore US government datasets |
 | **EU Data** | 3 | Search/explore European datasets |
 | **Safecast** | 3 | Radiation measurements, history, raw API |
+| **OpenAQ** | 3 | Air quality readings, history, raw API |
+| **USGS Water** | 3 | Stream flow, site conditions, raw API |
+| **Earthquakes** | 3 | Recent quakes, nearby quakes, raw API |
+| **NASA FIRMS** | 3 | Active fires by location/country, raw API |
+| **Space Weather** | 4 | Solar wind, flares, alerts, raw API |
 
 ---
 
@@ -149,6 +159,47 @@ pip install mcp-civic-data
 | `get_radiation_history` | Radiation history for a location over time |
 | `query_safecast` | Raw Safecast API access |
 
+### OpenAQ (Air Quality)
+
+| Tool | Description |
+|------|-------------|
+| `get_air_quality` | Air quality measurements near a location |
+| `get_air_quality_history` | Historical readings for a monitoring station |
+| `query_openaq` | Raw OpenAQ v3 API access |
+
+### USGS Water
+
+| Tool | Description |
+|------|-------------|
+| `get_water_conditions` | Stream flow and gage height by US state |
+| `get_water_site` | All readings for a specific USGS site |
+| `query_usgs_water` | Raw USGS Water Services API access |
+
+### USGS Earthquakes
+
+| Tool | Description |
+|------|-------------|
+| `get_recent_earthquakes` | Recent quakes worldwide by magnitude |
+| `get_earthquakes_near` | Recent quakes near a location |
+| `query_earthquakes` | Raw USGS Earthquake API access |
+
+### NASA FIRMS (Wildfires)
+
+| Tool | Description |
+|------|-------------|
+| `get_active_fires` | Active fires/hotspots near a location |
+| `get_country_fires` | Active fires for an entire country |
+| `query_firms` | Raw NASA FIRMS API access |
+
+### NOAA Space Weather
+
+| Tool | Description |
+|------|-------------|
+| `get_space_weather_summary` | Solar wind, Kp index, NOAA scales |
+| `get_solar_flares` | Recent solar flare activity |
+| `get_space_weather_alerts` | Active space weather alerts/warnings |
+| `query_space_weather` | Raw SWPC API access |
+
 ---
 
 ## ⚙️ Configuration
@@ -173,6 +224,11 @@ API Availability:
   ✓ Data.gov (no key required)
   ✓ EU Open Data (no key required)
   ✓ Safecast (no key required)
+  ✓ OpenAQ (no key required)
+  ✓ USGS Water (no key required)
+  ✓ USGS Earthquakes (no key required)
+  ✓ NOAA Space Weather (no key required)
+  ✓ NASA FIRMS (using DEMO_KEY, limited)
 ```
 
 ---
@@ -205,6 +261,34 @@ API Availability:
 ```
 "Compare GDP between USA, China, and India"
 → Uses compare_countries(["USA", "CHN", "IND"])
+```
+
+### Check air quality
+
+```
+"What's the air quality in Beijing right now?"
+→ Uses get_air_quality(39.9042, 116.4074)
+```
+
+### Check earthquake activity
+
+```
+"Any recent earthquakes near San Francisco?"
+→ Uses get_earthquakes_near(37.7749, -122.4194)
+```
+
+### Monitor wildfires
+
+```
+"Are there active fires in Australia?"
+→ Uses get_country_fires("AUS")
+```
+
+### Check space weather
+
+```
+"What's the current space weather like?"
+→ Uses get_space_weather_summary()
 ```
 
 ### Check radiation levels
