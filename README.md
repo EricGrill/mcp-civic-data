@@ -3,8 +3,8 @@
 **Access free government and open data APIs through Claude**
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![22 Tools](https://img.shields.io/badge/Tools-22-blue.svg)](#-tool-catalog)
-[![7 APIs](https://img.shields.io/badge/APIs-7-orange.svg)](#-included-apis)
+[![25 Tools](https://img.shields.io/badge/Tools-25-blue.svg)](#-tool-catalog)
+[![8 APIs](https://img.shields.io/badge/APIs-8-orange.svg)](#-included-apis)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11+-yellow.svg)](https://python.org)
 
 [Quick Start](#-quick-start) | [Tool Catalog](#-tool-catalog) | [Configuration](#-configuration) | [Examples](#-examples)
@@ -13,7 +13,7 @@
 
 ## 🌐 What is this?
 
-An MCP (Model Context Protocol) server that gives Claude access to **7 free government and open data APIs** - weather forecasts, census demographics, NASA imagery, economic indicators, and more. No API keys required for most features.
+An MCP (Model Context Protocol) server that gives Claude access to **8 free government and open data APIs** - weather forecasts, census demographics, NASA imagery, economic indicators, and more. No API keys required for most features.
 
 > Part of the [Claude Code Plugin Marketplace](https://github.com/EricGrill/agents-skills-plugins) ecosystem.
 
@@ -57,6 +57,7 @@ pip install mcp-civic-data
 | **World Bank** | GDP, poverty, country indicators | No |
 | **Data.gov** | 300,000+ US government datasets | No |
 | **EU Open Data** | European Union datasets | No |
+| **Safecast** | Community radiation monitoring worldwide | No |
 
 ---
 
@@ -67,7 +68,7 @@ pip install mcp-civic-data
 | **Zero config** | Works immediately - most APIs need no keys |
 | **Graceful fallback** | Missing keys? Those tools just won't appear |
 | **Real data** | Live government sources, not cached or stale |
-| **22 tools** | From quick lookups to raw API access |
+| **25 tools** | From quick lookups to raw API access |
 | **Well-documented** | Every tool has clear parameters and examples |
 
 ---
@@ -82,6 +83,7 @@ pip install mcp-civic-data
 | **Economics** | 3 | Country GDP, poverty, comparisons |
 | **Data.gov** | 3 | Search/explore US government datasets |
 | **EU Data** | 3 | Search/explore European datasets |
+| **Safecast** | 3 | Radiation measurements, history, raw API |
 
 ---
 
@@ -139,6 +141,14 @@ pip install mcp-civic-data
 | `get_eu_dataset_info` | Dataset details and distributions |
 | `query_eu_data` | Raw EU Data Portal API access |
 
+### Safecast (Radiation Monitoring)
+
+| Tool | Description |
+|------|-------------|
+| `get_radiation_measurements` | Radiation readings near a location |
+| `get_radiation_history` | Radiation history for a location over time |
+| `query_safecast` | Raw Safecast API access |
+
 ---
 
 ## ⚙️ Configuration
@@ -162,6 +172,7 @@ API Availability:
   ✓ World Bank (no key required)
   ✓ Data.gov (no key required)
   ✓ EU Open Data (no key required)
+  ✓ Safecast (no key required)
 ```
 
 ---
@@ -194,6 +205,13 @@ API Availability:
 ```
 "Compare GDP between USA, China, and India"
 → Uses compare_countries(["USA", "CHN", "IND"])
+```
+
+### Check radiation levels
+
+```
+"What are the radiation levels near Fukushima?"
+→ Uses get_radiation_measurements(37.4211, 141.0328)
 ```
 
 ### Find government data

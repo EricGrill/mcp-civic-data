@@ -12,6 +12,7 @@ mcp = FastMCP(
 - World Bank (country economic indicators)
 - Data.gov (US government datasets)
 - EU Open Data (European datasets)
+- Safecast (community radiation monitoring worldwide)
 """,
 )
 
@@ -29,3 +30,4 @@ from mcp_govt_api.tools import nasa  # noqa: E402, F401
 from mcp_govt_api.tools import economics  # noqa: E402, F401
 from mcp_govt_api.tools import datagov  # noqa: E402, F401
 from mcp_govt_api.tools import eu_data  # noqa: E402, F401
+from mcp_govt_api.tools import safecast  # noqa: E402, F401

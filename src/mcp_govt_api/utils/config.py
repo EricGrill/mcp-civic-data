@@ -42,6 +42,7 @@ class Config:
             "  ✓ World Bank (no key required)",
             "  ✓ Data.gov (no key required)",
             "  ✓ EU Open Data (no key required)",
+            "  ✓ Safecast (no key required)",
         ])
         return "\n".join(lines)
 
