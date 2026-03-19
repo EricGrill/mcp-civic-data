@@ -6,6 +6,7 @@ mcp = FastMCP(
     "Government API Server",
     instructions="""Access free government and open data APIs including:
 - NOAA Weather (US forecasts and alerts)
+- NOAA GOES satellite imagery (real-time Earth visuals)
 - OpenWeather (global weather, requires API key)
 - US Census (population, demographics, housing)
 - NASA (astronomy photos, Mars rover, image search)
@@ -18,6 +19,7 @@ mcp = FastMCP(
 - USGS Earthquakes (global seismic data)
 - NASA FIRMS (active wildfire detection)
 - NOAA Space Weather (solar wind, flares, geomagnetic storms)
+- RSOE-EDIS disaster events (global emergency and hazard feed)
 """,
 )
 
@@ -41,3 +43,5 @@ from mcp_govt_api.tools import usgs_water  # noqa: E402, F401
 from mcp_govt_api.tools import earthquakes  # noqa: E402, F401
 from mcp_govt_api.tools import firms  # noqa: E402, F401
 from mcp_govt_api.tools import space_weather  # noqa: E402, F401
+from mcp_govt_api.tools import noaa_goes_imagery  # noqa: E402, F401
+from mcp_govt_api.tools import rsoe_edis  # noqa: E402, F401

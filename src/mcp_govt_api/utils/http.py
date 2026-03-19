@@ -23,3 +23,17 @@ async def fetch_json(url: str, params: dict[str, Any] | None = None) -> dict[str
         raise Exception(f"HTTP {e.response.status_code}: {e.response.text[:200]}")
     except httpx.RequestError as e:
         raise Exception(f"Request failed: {e}")
+
+
+async def fetch_text(url: str, params: dict[str, Any] | None = None) -> str:
+    """Fetch text from a URL with error handling."""
+    try:
+        response = await http_client.get(url, params=params)
+        response.raise_for_status()
+        return response.text
+    except httpx.TimeoutException:
+        raise Exception(f"Request timed out after {config.timeout}s: {url}")
+    except httpx.HTTPStatusError as e:
+        raise Exception(f"HTTP {e.response.status_code}: {e.response.text[:200]}")
+    except httpx.RequestError as e:
+        raise Exception(f"Request failed: {e}")

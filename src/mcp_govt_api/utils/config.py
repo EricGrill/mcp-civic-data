@@ -47,6 +47,8 @@ class Config:
             "  ✓ USGS Water (no key required)",
             "  ✓ USGS Earthquakes (no key required)",
             "  ✓ NOAA Space Weather (no key required)",
+            "  ✓ NOAA GOES Imagery (no key required)",
+            "  ✓ RSOE-EDIS Disaster Events (no key required)",
         ])
         if self.has_nasa_key:
             lines.append("  ✓ NASA FIRMS (using NASA API key)")

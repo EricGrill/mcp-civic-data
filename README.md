@@ -5,14 +5,14 @@
 ### Real-time government and open data for AI agents
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
-[![40 Tools](https://img.shields.io/badge/tools-40-2563eb.svg?style=flat-square)](#tool-reference)
-[![13 APIs](https://img.shields.io/badge/APIs-13-7c3aed.svg?style=flat-square)](#data-sources)
+[![43 Tools](https://img.shields.io/badge/tools-43-2563eb.svg?style=flat-square)](#tool-reference)
+[![15 APIs](https://img.shields.io/badge/APIs-15-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **13 free, authoritative data APIs** — weather, earthquakes, air quality, wildfires, space weather, demographics, economics, and more.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **15 free, authoritative data APIs** — weather, earthquakes, air quality, wildfires, space weather, demographics, economics, and more.
 
-No API keys required for 11 of 13 sources. Just install and go.
+No API keys required for 13 of 15 sources. Just install and go.
 
 [Get Started](#get-started) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Configuration](#configuration)
 
@@ -175,6 +175,24 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_solar_flares` | Recent solar flare activity and classifications |
 | `get_space_weather_alerts` | Active NOAA space weather alerts and warnings |
 | `query_space_weather` | Raw SWPC API access |
+
+</details>
+
+<details>
+<summary><strong>NOAA GOES Satellite Imagery</strong> — 1 tool</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_goes_geocolor_full_disk_latest` | Latest GOES GeoColor full-disk image URL |
+
+</details>
+
+<details>
+<summary><strong>Disaster Events</strong> — 1 tool</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_recent_disaster_events` | Recent global emergency and hazard events |
 
 </details>
 
