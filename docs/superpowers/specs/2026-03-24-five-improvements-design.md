@@ -21,8 +21,8 @@ Five targeted improvements to the `mcp-civic-data` MCP server:
 
 Rename `src/mcp_govt_api/` → `src/mcp_civic_data/` and update all references:
 
-- All `from mcp_govt_api` imports across every `.py` file
-- `pyproject.toml`: `name`, `[project.scripts]` entry point, `[tool.hatch.build.targets.wheel]` packages path
+- All `from mcp_govt_api` imports across every `.py` file, including `__main__.py`
+- `pyproject.toml`: `[project.scripts]` entry point and `[tool.hatch.build.targets.wheel]` packages path (the `name` field is already `mcp-civic-data` — no change needed)
 - `[tool.mypy]` has no package references to change
 
 The CLI entry point becomes:
@@ -56,33 +56,37 @@ A module-level `cache = SimpleCache()` instance is used by the HTTP layer.
 
 Add optional `ttl_seconds: int | None = None` parameter to `fetch_json` and `fetch_text`. When set, check the cache before making the request and populate on miss.
 
+### Special case: `tools/firms.py`
+
+`firms.py` uses a private `_fetch_firms_csv` function that creates its own `httpx.AsyncClient` and returns CSV text — it does not use `fetch_json` or `fetch_text`. Caching for FIRMS must be added directly inside `_fetch_firms_csv` using the shared `cache` instance from `utils/cache.py`, with a 600s TTL.
+
 ### TTLs applied at call sites
 
-| Source | TTL |
-|---|---|
-| NOAA weather forecast | 3600s |
-| NOAA weather alerts | 300s |
-| OpenWeather current | 600s |
-| NOAA GOES imagery | 300s |
-| Census data | 86400s |
-| World Bank indicators | 86400s |
-| Data.gov search | 3600s |
-| EU Open Data | 3600s |
-| Safecast radiation | 3600s |
-| OpenAQ air quality | 3600s |
-| USGS water | 600s |
-| USGS earthquakes | 600s |
-| NASA FIRMS wildfires | 600s |
-| NOAA space weather | 300s |
-| RSOE-EDIS disasters | 300s |
+| Source | TTL | Via |
+|---|---|---|
+| NOAA weather forecast | 3600s | `fetch_json` |
+| NOAA weather alerts | 300s | `fetch_json` |
+| OpenWeather current | 600s | `fetch_json` |
+| NOAA GOES imagery | 300s | `fetch_json` |
+| Census data | 86400s | `fetch_json` |
+| World Bank indicators | 86400s | `fetch_json` |
+| Data.gov search | 3600s | `fetch_json` |
+| EU Open Data | 3600s | `fetch_json` |
+| Safecast radiation | 3600s | `fetch_json` |
+| OpenAQ air quality | 3600s | `fetch_json` |
+| USGS water | 600s | `fetch_json` |
+| USGS earthquakes | 600s | `fetch_json` |
+| NASA FIRMS wildfires | 600s | `_fetch_firms_csv` directly |
+| NOAA space weather | 300s | `fetch_json` |
+| RSOE-EDIS disasters | 300s | `fetch_text` |
 
 ---
 
 ## 3. MCP Resources
 
-### New file: `src/mcp_civic_data/resources/reference.py`
+### New files: `src/mcp_civic_data/resources/__init__.py` and `src/mcp_civic_data/resources/reference.py`
 
-Three resources registered with `@mcp.resource(uri)`:
+`resources/__init__.py` is an empty package marker. `reference.py` contains three resources registered with `@mcp.resource(uri)`:
 
 **`civic-data://census/variables`**
 - Fetches the ACS5 variable catalog: `https://api.census.gov/data/2022/acs/acs5/variables.json`
@@ -157,18 +161,25 @@ async def get_hazards_near(
 **Valid sources:** `earthquakes`, `wildfires`, `weather_alerts`, `air_quality`, `space_weather`
 
 **Behavior:**
-- Validates `sources` list; returns error string listing valid options if unknown source provided
-- Fans out to selected sources in parallel via `asyncio.gather(..., return_exceptions=True)`
-- Each source is a private async helper (e.g. `_fetch_earthquakes`, `_fetch_wildfires`) that calls `fetch_json` directly — not wrapping the existing MCP tools
+- Validates `sources` list **before** `asyncio.gather` runs; if any unknown source is provided, returns immediately with an error string listing valid options (no partial results)
+- Fans out to selected valid sources in parallel via `asyncio.gather(..., return_exceptions=True)`
+- Each source is a private async helper that queries the underlying API directly — not wrapping the existing MCP tools
 - Failed sources are noted inline ("earthquakes: unavailable") rather than failing the whole call
 - Returns unified markdown with a `## Source Name` section per source
 
+**Per-source fetch approach:**
+- `_fetch_earthquakes`: calls `fetch_json` against USGS bbox endpoint
+- `_fetch_wildfires`: calls `fetch_text` against the NASA FIRMS CSV endpoint, then parses the CSV response (same approach as `firms.py`'s `_fetch_firms_csv`) — does NOT use `fetch_json` since FIRMS returns CSV
+- `_fetch_weather_alerts`: calls `fetch_json` against `https://api.weather.gov/alerts/active?point={lat},{lon}` — NOAA supports point-based alert queries even though it doesn't support radius; response covers the zone containing the point; result notes this limitation
+- `_fetch_air_quality`: calls `fetch_json` against OpenAQ with `coordinates={lat},{lon}&radius={radius_m}` (OpenAQ accepts meters)
+- `_fetch_space_weather`: calls `fetch_json` for solar wind/flare data — global feed, radius ignored; result notes this
+
 **Coordinate filtering:**
-- Earthquakes: USGS bbox derived from lat/lon ± radius approximation
-- Wildfires: NASA FIRMS uses a bounding box param
-- Weather alerts: NOAA alerts API doesn't support radius — query by nearest point and note this limitation
-- Air quality: OpenAQ `coordinates` + `radius` params (supports km radius natively)
-- Space weather: global, not location-filtered — returned as-is with a note
+- Earthquakes: USGS bbox derived from lat/lon ± radius approximation (degrees)
+- Wildfires: NASA FIRMS bounding box param derived from lat/lon ± radius approximation
+- Weather alerts: `?point=lat,lon` on NOAA `/alerts/active` — zone-level, not radius-based
+- Air quality: OpenAQ native `radius` param (convert km → meters)
+- Space weather: global, not location-filtered
 
 ### Registration in `server.py`
 
