@@ -47,3 +47,6 @@ htmlcov/
 # Local development
 *.local
 .env
+
+# Git worktrees
+.worktrees/
