@@ -14,7 +14,7 @@ An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **13
 
 No API keys required for 11 of 13 sources. Just install and go.
 
-[Get Started](#get-started) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Configuration](#configuration)
+[Get Started](#get-started) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Configuration](#configuration) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -28,7 +28,7 @@ No API keys required for 11 of 13 sources. Just install and go.
 {
   "mcpServers": {
     "civic-data": {
-      "command": "python",
+      "command": "python3",
       "args": ["-m", "mcp_govt_api"],
       "env": {
         "OPENWEATHER_API_KEY": "optional",
@@ -43,7 +43,7 @@ No API keys required for 11 of 13 sources. Just install and go.
 
 ```bash
 pip install mcp-civic-data
-python -m mcp_govt_api
+python3 -m mcp_govt_api
 ```
 
 ---
@@ -266,18 +266,21 @@ API Availability:
 ```bash
 git clone https://github.com/EricGrill/mcp-civic-data.git
 cd mcp-civic-data
-pip install -e .
-python -m mcp_govt_api
+python3 -m pip install -e .
+python3 -m mcp_govt_api
 ```
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-source`)
-3. Commit your changes
-4. Open a Pull Request
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup, validation, and pull request guidance.
 
-See the [issue tracker](https://github.com/EricGrill/mcp-civic-data/issues) for data sources we'd like to add.
+## Code of Conduct
+
+Contributor expectations are documented in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## Security
+
+Please report vulnerabilities using the process in [SECURITY.md](SECURITY.md).
 
 ## License
 
