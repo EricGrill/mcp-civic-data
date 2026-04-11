@@ -1,147 +1,83 @@
-# Contributing to MCP Civic Data
+# Contributing to mcp-civic-data
 
-Thank you for your interest in contributing to MCP Civic Data! This MCP server provides access to free government and open data APIs.
+Thanks for contributing. This project adds MCP tools on top of public civic and government data APIs, so changes should stay small, readable, and easy to validate against upstream API behavior.
 
-## Overview
+## What to Contribute
 
-MCP Civic Data is a Model Context Protocol (MCP) server that enables AI assistants to access various civic data sources including NOAA, Census, World Bank, and more.
+- New data sources that fit the project's focus on public, authoritative data
+- Fixes for broken endpoints, response formatting, or configuration handling
+- Documentation improvements, examples, and setup clarifications
+- Small refactors that make tool modules easier to maintain
 
-## Quick Start
+For larger changes, open an issue first so the scope, API choice, and tool shape are clear before implementation starts.
 
-### Prerequisites
+## Local Setup
 
-- Python 3.11+
-- uv (recommended) or pip
-
-### Setup
+Clone the repository and install the package in editable mode.
 
 ```bash
-# Clone the repository
 git clone https://github.com/EricGrill/mcp-civic-data.git
 cd mcp-civic-data
+python3 -m pip install -e .
+```
 
-# Install dependencies with uv
+If you use `uv`, you can sync from the lockfile instead:
+
+```bash
 uv sync
+```
 
-# Or with pip
-pip install -e .
+Optional environment variables:
 
-# Copy environment file
+```bash
 cp .env.example .env
+export OPENWEATHER_API_KEY=...
+export NASA_API_KEY=...
+export API_TIMEOUT=30
 ```
 
-### Running the Server
+Run the server locally with:
 
 ```bash
-# With uv
-uv run python -m mcp_govt_api
-
-# Or after pip install
-python -m mcp_govt_api
+python3 -m mcp_govt_api
 ```
 
-## How to Contribute
+## Project Layout
 
-### Reporting Issues
+- `src/mcp_govt_api/server.py` defines the MCP server and registers tool modules
+- `src/mcp_govt_api/tools/` contains one module per data source or domain
+- `src/mcp_govt_api/utils/config.py` reads environment-based configuration
+- `src/mcp_govt_api/utils/http.py` centralizes async HTTP access
 
-- Check existing issues first
-- Include Python version and OS
-- Provide steps to reproduce
-- Include error messages and logs
+Prefer adding new API integrations as focused modules under `src/mcp_govt_api/tools/` and reusing shared config and HTTP helpers instead of duplicating request logic.
 
-### Adding New Data Sources
+## Contribution Expectations
 
-1. Create an adapter in `src/mcp_govt_api/adapters/`
-2. Follow the existing adapter pattern
-3. Add tests
-4. Update documentation
-5. Submit a PR
+- Keep pull requests focused on one change set
+- Update `README.md` when user-facing behavior, setup, or tool coverage changes
+- Do not commit API keys, tokens, or other secrets
+- Preserve the existing package/module naming unless there is a strong migration reason
+- Favor clear tool descriptions and predictable return formats over clever abstractions
 
-### Code Style
+## Validation
 
-- Follow PEP 8
-- Use type hints
-- Add docstrings to public functions
-- Keep functions focused and testable
-
-## Development Workflow
-
-1. Fork the repository
-2. Create a feature branch:
-   ```bash
-   git checkout -b feature/my-feature
-   ```
-3. Make your changes
-4. Run tests:
-   ```bash
-   uv run pytest
-   ```
-5. Submit a pull request
-
-## Testing
+Before opening a pull request, run the checks this repository currently relies on:
 
 ```bash
-# Run all tests
-uv run pytest
-
-# Run with coverage
-uv run pytest --cov=src
-
-# Run specific test file
-uv run pytest tests/test_specific.py
+python3 -m compileall src
+uv run python -m unittest discover -s tests -p "test_*.py"
+uv build
 ```
 
-## Adding a New Data Source
+When changing runtime behavior, also start the server locally and exercise the affected tool path against the upstream API you touched.
 
-### 1. Create Adapter
+## Pull Requests
 
-```python
-# src/mcp_govt_api/adapters/my_source.py
-from typing import Any
-import httpx
+Pull requests should include:
 
-class MySourceAdapter:
-    """Adapter for My Source API."""
-    
-    BASE_URL = "https://api.mysource.gov"
-    
-    async def fetch_data(self, endpoint: str) -> dict[str, Any]:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(f"{self.BASE_URL}/{endpoint}")
-            response.raise_for_status()
-            return response.json()
-```
+- A short description of the change
+- Why the change is needed
+- Any config or API-key implications
+- Notes about how the change was validated
 
-### 2. Add Tools
-
-Register your adapter's methods as MCP tools in the server module.
-
-### 3. Document
-
-- Add to README.md
-- Include example usage
-- Document required API keys
-
-## Documentation
-
-- Keep README.md updated
-- Add inline code comments
-- Update this file for process changes
-
-## Pull Request Guidelines
-
-- Clear description of changes
-- Link related issues
-- Ensure tests pass
-- Update documentation
-- Follow existing code patterns
-
-## Code of Conduct
-
-Be respectful, welcoming, and helpful to all contributors.
-
-## Questions?
-
-Open an issue or start a discussion.
-
-Thank you for improving MCP Civic Data!
+If the change adds a new data source, include the upstream API documentation link in the PR description.

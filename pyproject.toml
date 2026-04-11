@@ -17,6 +17,11 @@ dependencies = [
 [project.scripts]
 mcp-civic-data = "mcp_govt_api:main"
 
+[tool.hatch.build]
+exclude = [
+    "/.context",
+]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/mcp_govt_api"]
 

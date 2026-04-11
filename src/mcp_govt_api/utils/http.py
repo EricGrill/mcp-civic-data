@@ -11,7 +11,7 @@ http_client = httpx.AsyncClient(
 )
 
 
-async def fetch_json(url: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
+async def fetch_json(url: str, params: dict[str, Any] | None = None) -> Any:
     """Fetch JSON from a URL with error handling."""
     try:
         response = await http_client.get(url, params=params)

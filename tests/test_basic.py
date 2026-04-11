@@ -1,31 +1,37 @@
-"""Tests for MCP Civic Data server."""
-import pytest
-import respx
-from httpx import Response
+"""Basic import tests for MCP Civic Data."""
+
+import unittest
 
 
-class TestHTTPUtils:
+class TestHTTPUtils(unittest.TestCase):
     """Tests for HTTP utility functions."""
-    
+
     def test_import(self):
         """Test that http module can be imported."""
         from mcp_govt_api.utils import http
-        assert http is not None
+
+        self.assertIsNotNone(http)
 
 
-class TestConfig:
+class TestConfig(unittest.TestCase):
     """Tests for configuration module."""
-    
+
     def test_import(self):
         """Test that config module can be imported."""
         from mcp_govt_api.utils import config
-        assert config is not None
+
+        self.assertIsNotNone(config)
 
 
-class TestServer:
+class TestServer(unittest.TestCase):
     """Tests for MCP server."""
-    
+
     def test_import(self):
         """Test that server module can be imported."""
         from mcp_govt_api import server
-        assert server is not None
+
+        self.assertIsNotNone(server)
+
+
+if __name__ == "__main__":
+    unittest.main()
