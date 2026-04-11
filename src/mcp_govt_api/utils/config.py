@@ -8,11 +8,14 @@ class Config:
 
     openweather_api_key: str | None = None
     nasa_api_key: str | None = None
+    bea_api_key: str | None = None
+    nps_api_key: str | None = None
     timeout: int = 30
 
     def __post_init__(self):
         self.openweather_api_key = os.environ.get("OPENWEATHER_API_KEY")
         self.nasa_api_key = os.environ.get("NASA_API_KEY")
+        self.bea_api_key = os.environ.get("BEA_API_KEY")
         self.timeout = int(os.environ.get("API_TIMEOUT", "30"))
 
     @property
@@ -47,6 +50,7 @@ class Config:
             "  ✓ USGS Water (no key required)",
             "  ✓ USGS Earthquakes (no key required)",
             "  ✓ NOAA Space Weather (no key required)",
+            "  ✓ CISA KEV Catalog (no key required)",
         ])
         if self.has_nasa_key:
             lines.append("  ✓ NASA FIRMS (using NASA API key)")

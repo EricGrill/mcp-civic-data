@@ -18,6 +18,7 @@ mcp = FastMCP(
 - USGS Earthquakes (global seismic data)
 - NASA FIRMS (active wildfire detection)
 - NOAA Space Weather (solar wind, flares, geomagnetic storms)
+- CISA (cybersecurity advisories, known exploited vulnerabilities, alerts)
 """,
 )
 
@@ -41,3 +42,4 @@ from mcp_govt_api.tools import usgs_water  # noqa: E402, F401
 from mcp_govt_api.tools import earthquakes  # noqa: E402, F401
 from mcp_govt_api.tools import firms  # noqa: E402, F401
 from mcp_govt_api.tools import space_weather  # noqa: E402, F401
+from mcp_govt_api.tools import cisa  # noqa: E402, F401

@@ -261,6 +261,18 @@ API Availability:
 
 ---
 
+### CISA (Cybersecurity)
+
+| Tool | What It Does | Parameters |
+|------|--------------|------------|
+| `get_kev_vulnerabilities` | CISA Known Exploited Vulnerabilities (KEV) catalog | `cve_id` - filter by specific CVE, `limit` - max results (default: 20) |
+| `get_cisa_alerts` | Get CISA security alerts and advisories | `limit` - max results (default: 10), `keyword` - filter by keyword |
+| `get_security_advisories` | Get CISA security advisories by vendor/product | `vendor` - filter by vendor, `product` - filter by product, `limit` - max results |
+| `search_kev_by_ransomware` | Get vulnerabilities used in ransomware campaigns | `limit` - max results (default: 20) |
+| `get_critical_kev` | Get recently added critical vulnerabilities | `days` - lookback period (default: 30), `limit` - max results |
+
+---
+
 ## Development
 
 ```bash
