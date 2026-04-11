@@ -346,8 +346,8 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 
 - [#48](https://github.com/EricGrill/mcp-civic-data/issues/48) Add comprehensive error handling with fallback sources
 - [#47](https://github.com/EricGrill/mcp-civic-data/issues/47) Add intelligent caching for API responses
-- [#44](https://github.com/EricGrill/mcp-civic-data/issues/44) Add unit tests for 13 API integrations
-- [#45](https://github.com/EricGrill/mcp-civic-data/issues/45) Extend CI/CD toward publishing and release automation
+- [#44](https://github.com/EricGrill/mcp-civic-data/issues/44) Expand automated tests across existing integrations
+- [#91](https://github.com/EricGrill/mcp-civic-data/issues/91) Add release publishing and security checks
 
 **Core Data Sources**
 
