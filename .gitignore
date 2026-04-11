@@ -45,5 +45,6 @@ htmlcov/
 .mypy_cache/
 
 # Local development
+.context/
 *.local
 .env

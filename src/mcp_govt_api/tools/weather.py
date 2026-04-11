@@ -1,31 +1,43 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
+from mcp_govt_api.utils.location import resolve_location
 
 
 NOAA_BASE = "https://api.weather.gov"
 
 
 @mcp.tool()
-async def get_weather_forecast(latitude: float, longitude: float) -> str:
-    """Get weather forecast for a US location by coordinates.
+async def get_weather_forecast(
+    latitude: float | None = None,
+    longitude: float | None = None,
+    location: str = "",
+) -> str:
+    """Get weather forecast for a US location by location string or coordinates.
 
     Args:
         latitude: Latitude of the location (e.g., 38.8894 for Washington DC)
         longitude: Longitude of the location (e.g., -77.0352 for Washington DC)
+        location: Optional city, ZIP code, address, or 'lat, lon' string
 
     Returns:
         Current conditions and 7-day forecast from NOAA
     """
+    resolved = await resolve_location(
+        location=location,
+        latitude=latitude,
+        longitude=longitude,
+    )
+
     # First get the forecast grid endpoint for this location
-    points_url = f"{NOAA_BASE}/points/{latitude},{longitude}"
+    points_url = f"{NOAA_BASE}/points/{resolved.latitude},{resolved.longitude}"
     points_data = await fetch_json(points_url)
 
     forecast_url = points_data["properties"]["forecast"]
     forecast_data = await fetch_json(forecast_url)
 
     periods = forecast_data["properties"]["periods"]
-    result = [f"Weather forecast for {latitude}, {longitude}:\n"]
+    result = [f"Weather forecast for {resolved.display_name}:\n"]
 
     for period in periods[:6]:  # Next 3 days (day/night pairs)
         result.append(f"**{period['name']}**: {period['detailedForecast']}")
