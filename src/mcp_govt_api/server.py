@@ -30,6 +30,7 @@ def main():
 
 # Import tools to register them
 from mcp_govt_api.tools import weather  # noqa: E402, F401
+from mcp_govt_api.tools import location  # noqa: E402, F401
 from mcp_govt_api.tools import census  # noqa: E402, F401
 from mcp_govt_api.tools import nasa  # noqa: E402, F401
 from mcp_govt_api.tools import economics  # noqa: E402, F401

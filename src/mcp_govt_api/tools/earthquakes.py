@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
+from mcp_govt_api.utils.location import resolve_location
 
 
 BASE = "https://earthquake.usgs.gov/fdsnws/event/1/"
@@ -84,10 +85,11 @@ async def get_recent_earthquakes(min_magnitude: float = 4.0, limit: int = 10) ->
 
 @mcp.tool()
 async def get_earthquakes_near(
-    latitude: float,
-    longitude: float,
+    latitude: float | None = None,
+    longitude: float | None = None,
     max_radius_km: int = 200,
     min_magnitude: float = 2.0,
+    location: str = "",
 ) -> str:
     """Get recent earthquakes near a geographic location.
 
@@ -96,16 +98,23 @@ async def get_earthquakes_near(
         longitude: Longitude of the center point (e.g., -122.4194 for San Francisco)
         max_radius_km: Search radius in kilometers (default: 200)
         min_magnitude: Minimum Richter magnitude to include (default: 2.0)
+        location: Optional city, ZIP code, address, or 'lat, lon' string
 
     Returns:
         Up to 10 recent earthquakes near the location, ordered by time descending,
         showing magnitude, location, time, depth, and tsunami warning where applicable
     """
+    resolved = await resolve_location(
+        location=location,
+        latitude=latitude,
+        longitude=longitude,
+    )
+
     url = f"{BASE}query"
     params = {
         "format": "geojson",
-        "latitude": latitude,
-        "longitude": longitude,
+        "latitude": resolved.latitude,
+        "longitude": resolved.longitude,
         "maxradiuskm": max_radius_km,
         "minmagnitude": min_magnitude,
         "limit": 10,
@@ -118,7 +127,7 @@ async def get_earthquakes_near(
     if not features:
         return (
             f"No earthquakes found within {max_radius_km} km of "
-            f"({latitude}, {longitude}) with magnitude >= {min_magnitude}"
+            f"{resolved.display_name} with magnitude >= {min_magnitude}"
         )
 
     meta = data.get("metadata", {})
@@ -126,7 +135,7 @@ async def get_earthquakes_near(
 
     result = [
         f"Recent earthquakes within {max_radius_km} km of "
-        f"({latitude}, {longitude}) (M >= {min_magnitude}) - {count} result(s):\n"
+        f"{resolved.display_name} (M >= {min_magnitude}) - {count} result(s):\n"
     ]
     for feature in features:
         result.append(_format_feature(feature))

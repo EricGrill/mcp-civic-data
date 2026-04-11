@@ -1,5 +1,6 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
+from mcp_govt_api.utils.location import resolve_location
 
 
 OPENAQ_BASE = "https://api.openaq.org/v3"
@@ -17,7 +18,10 @@ POLLUTANT_NAMES = {
 
 @mcp.tool()
 async def get_air_quality(
-    latitude: float, longitude: float, radius_km: int = 25
+    latitude: float | None = None,
+    longitude: float | None = None,
+    radius_km: int = 25,
+    location: str = "",
 ) -> str:
     """Get current air quality measurements near a location.
 
@@ -25,15 +29,22 @@ async def get_air_quality(
         latitude: Latitude of the location (e.g., 40.7128 for New York City)
         longitude: Longitude of the location (e.g., -74.0060 for New York City)
         radius_km: Search radius in kilometers (default: 25)
+        location: Optional city, ZIP code, address, or 'lat, lon' string
 
     Returns:
         Latest air quality measurements from nearby monitoring stations,
         showing pollutant name, value, unit, and station name
     """
+    resolved = await resolve_location(
+        location=location,
+        latitude=latitude,
+        longitude=longitude,
+    )
+
     radius_m = radius_km * 1000
     url = f"{OPENAQ_BASE}/locations"
     params = {
-        "coordinates": f"{latitude},{longitude}",
+        "coordinates": f"{resolved.latitude},{resolved.longitude}",
         "radius": str(radius_m),
         "limit": "10",
     }
@@ -44,11 +55,11 @@ async def get_air_quality(
     if not locations:
         return (
             f"No air quality monitoring stations found within {radius_km}km "
-            f"of {latitude}, {longitude}"
+            f"of {resolved.display_name}"
         )
 
     result = [
-        f"Air quality near {latitude}, {longitude} "
+        f"Air quality near {resolved.display_name} "
         f"(within {radius_km}km):\n"
     ]
 
@@ -86,7 +97,7 @@ async def get_air_quality(
 
     if len(result) == 1:
         return (
-            f"Stations found near {latitude}, {longitude} but no current "
+            f"Stations found near {resolved.display_name} but no current "
             f"measurements are available"
         )
 

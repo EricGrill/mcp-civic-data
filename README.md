@@ -5,7 +5,7 @@
 ### Real-time government and open data for AI agents
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
-[![40 Tools](https://img.shields.io/badge/tools-40-2563eb.svg?style=flat-square)](#tool-reference)
+[![42 Tools](https://img.shields.io/badge/tools-42-2563eb.svg?style=flat-square)](#tool-reference)
 [![13 APIs](https://img.shields.io/badge/APIs-13-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
@@ -13,6 +13,8 @@
 An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **13 free, authoritative data APIs** — weather, earthquakes, air quality, wildfires, space weather, demographics, economics, and more.
 
 No API keys required for 11 of 13 sources. Just install and go.
+
+Many location-aware tools accept a city, ZIP code, address, or raw coordinates.
 
 [Get Started](#get-started) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Configuration](#configuration) · [Contributing](CONTRIBUTING.md)
 
@@ -119,6 +121,15 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_global_weather` | Current conditions for any city worldwide |
 | `query_noaa` | Raw NOAA API access |
 | `query_openweather` | Raw OpenWeather API access |
+
+</details>
+
+<details>
+<summary><strong>Geolocation</strong> — 1 tool</summary>
+
+| Tool | Description |
+|------|-------------|
+| `lookup_location` | Resolve a city, ZIP code, address, or coordinates to a normalized location |
 
 </details>
 

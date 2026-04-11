@@ -36,6 +36,9 @@ jobs:
       - name: Verify sources compile
         run: python -m compileall src
 
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -p "test_*.py"
+
       - name: Smoke test package imports
         run: python -c "import mcp_govt_api; import mcp_govt_api.server"
 
