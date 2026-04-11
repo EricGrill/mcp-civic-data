@@ -5,8 +5,8 @@
 ### Real-time government and open data for AI agents
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
-[![40 Tools](https://img.shields.io/badge/tools-40-2563eb.svg?style=flat-square)](#tool-reference)
-[![13 APIs](https://img.shields.io/badge/APIs-13-7c3aed.svg?style=flat-square)](#data-sources)
+[![45 Tools](https://img.shields.io/badge/tools-45-2563eb.svg?style=flat-square)](#tool-reference)
+[![14 APIs](https://img.shields.io/badge/APIs-14-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
@@ -67,6 +67,7 @@ python -m mcp_govt_api
 | [USGS Earthquakes](https://earthquake.usgs.gov) | Every earthquake on Earth, real-time | -- |
 | [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov) | Active wildfires detected from satellites | Optional |
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
+| [CISA](https://www.cisa.gov) | Known exploited vulnerabilities, security alerts, advisories | -- |
 
 ### Demographics & Economics
 
@@ -74,6 +75,12 @@ python -m mcp_govt_api
 |--------|---------------|-----|
 | [US Census](https://census.gov) | Population, demographics, housing for every US county | -- |
 | [World Bank](https://worldbank.org) | GDP, poverty, unemployment for 200+ countries | -- |
+
+### Finance & Securities
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [SEC EDGAR](https://sec.gov/edgar) | Company filings, 10-K, 10-Q, 8-K forms | -- |
 
 ### Open Data Catalogs
 
@@ -101,6 +108,8 @@ python -m mcp_govt_api
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
 "Find datasets about climate change on Data.gov"
+"Get Apple's latest 10-K filing from SEC"
+"Show me recent SEC filings for Tesla"
 ```
 
 ---
@@ -213,6 +222,19 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>SEC EDGAR</strong> — 5 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_company_filings` | Get SEC filings by ticker or CIK (10-K, 10-Q, 8-K) |
+| `search_company` | Find CIK for a company by name or ticker |
+| `get_latest_submissions` | Get latest submissions filtered by form type |
+| `get_company_facts` | Financial facts and XBRL data for a company |
+| `query_sec_edgar` | Raw SEC EDGAR API access |
+
+</details>
+
+<details>
 <summary><strong>NASA</strong> — 4 tools</summary>
 
 | Tool | Description |
@@ -256,6 +278,7 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
+  ✓ SEC EDGAR
   ✗ OpenWeather (key not set)
 ```
 
