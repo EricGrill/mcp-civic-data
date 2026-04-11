@@ -5,14 +5,14 @@
 ### Real-time government and open data for AI agents
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
-[![40 Tools](https://img.shields.io/badge/tools-40-2563eb.svg?style=flat-square)](#tool-reference)
-[![13 APIs](https://img.shields.io/badge/APIs-13-7c3aed.svg?style=flat-square)](#data-sources)
+[![44 Tools](https://img.shields.io/badge/tools-44-2563eb.svg?style=flat-square)](#tool-reference)
+[![14 APIs](https://img.shields.io/badge/APIs-14-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **13 free, authoritative data APIs** — weather, earthquakes, air quality, wildfires, space weather, demographics, economics, and more.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **14 free, authoritative data APIs** — weather, earthquakes, air quality, wildfires, space weather, demographics, economics, cybersecurity, and more.
 
-No API keys required for 11 of 13 sources. Just install and go.
+No API keys required for 12 of 14 sources. Just install and go.
 
 [Get Started](#get-started) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Configuration](#configuration)
 
@@ -67,6 +67,7 @@ python -m mcp_govt_api
 | [USGS Earthquakes](https://earthquake.usgs.gov) | Every earthquake on Earth, real-time | -- |
 | [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov) | Active wildfires detected from satellites | Optional |
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
+| [CISA](https://cisa.gov) | Cybersecurity advisories, known exploited vulnerabilities | -- |
 
 ### Demographics & Economics
 
@@ -101,6 +102,8 @@ python -m mcp_govt_api
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
 "Find datasets about climate change on Data.gov"
+"Are there any known exploited vulnerabilities for Microsoft products?"
+"What are the latest CISA security alerts?"
 ```
 
 ---
@@ -175,6 +178,18 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_solar_flares` | Recent solar flare activity and classifications |
 | `get_space_weather_alerts` | Active NOAA space weather alerts and warnings |
 | `query_space_weather` | Raw SWPC API access |
+
+</details>
+
+<details>
+<summary><strong>Cybersecurity (CISA)</strong> — 4 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_known_exploited_vulnerabilities` | Search CISA's catalog of actively exploited vulnerabilities |
+| `get_recent_cisa_alerts` | Recent CISA security alerts and advisories |
+| `get_cisa_bulletins` | Weekly CISA vulnerability summaries from major vendors |
+| `query_cisa_kev` | Raw CISA Known Exploited Vulnerabilities catalog access |
 
 </details>
 
@@ -256,6 +271,7 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
+  ✓ CISA
   ✗ OpenWeather (key not set)
 ```
 
