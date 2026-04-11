@@ -321,7 +321,7 @@ cli = [
 ]
 
 [[package]]
-name = "mcp-govt-api-free"
+name = "mcp-civic-data"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
