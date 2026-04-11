@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![46 Tools](https://img.shields.io/badge/tools-46-2563eb.svg?style=flat-square)](#tool-reference)
-[![14 APIs](https://img.shields.io/badge/APIs-14-7c3aed.svg?style=flat-square)](#data-sources)
+[![51 Tools](https://img.shields.io/badge/tools-51-2563eb.svg?style=flat-square)](#tool-reference)
+[![15 APIs](https://img.shields.io/badge/APIs-15-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **14 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, open data discovery, and cybersecurity.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **15 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, open data discovery, cybersecurity, and SEC disclosures.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 12 of 14 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 13 of 15 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -56,6 +56,7 @@ python3 -m mcp_govt_api
 - Added shared geolocation support with a new `lookup_location` tool
 - Upgraded weather, earthquake, and air-quality tools to accept human-friendly location strings
 - Added CISA cybersecurity tools and integrated them into the server and README
+- Added SEC EDGAR tools for filings, submissions, and company facts
 - Added GitHub Actions CI for install, compile, unit test, import, and build validation
 - Added `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`
 - Added branch protection and required automated checks on `main`
@@ -81,7 +82,7 @@ python3 -m mcp_govt_api
 | [USGS Earthquakes](https://earthquake.usgs.gov) | Every earthquake on Earth, real-time | -- |
 | [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov) | Active wildfires detected from satellites | Optional |
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
-| [CISA](https://cisa.gov) | Cybersecurity advisories and known exploited vulnerabilities | -- |
+| [CISA](https://www.cisa.gov) | Known exploited vulnerabilities, security alerts, advisories | -- |
 
 ### Demographics & Economics
 
@@ -89,6 +90,12 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [US Census](https://census.gov) | Population, demographics, housing for every US county | -- |
 | [World Bank](https://worldbank.org) | GDP, poverty, unemployment for 200+ countries | -- |
+
+### Finance & Securities
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [SEC EDGAR](https://sec.gov/edgar) | Company filings, 10-K, 10-Q, 8-K forms | -- |
 
 ### Open Data Catalogs
 
@@ -117,6 +124,8 @@ python3 -m mcp_govt_api
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
 "Find datasets about climate change on Data.gov"
+"Get Apple's latest 10-K filing from SEC"
+"Show me recent SEC filings for Tesla"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
 ```
@@ -218,6 +227,19 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>SEC EDGAR</strong> — 5 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_company_filings` | Get SEC filings by ticker or CIK (10-K, 10-Q, 8-K) |
+| `search_company` | Find a company CIK by name or ticker guidance |
+| `get_latest_submissions` | Get recent submissions filtered by form type |
+| `get_company_facts` | Get company facts and XBRL financial data |
+| `query_sec_edgar` | Raw SEC EDGAR API access |
+
+</details>
+
+<details>
 <summary><strong>Radiation</strong> — 3 tools</summary>
 
 | Tool | Description |
@@ -248,6 +270,19 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_country_indicators` | GDP, population, poverty for any country |
 | `compare_countries` | Compare indicators across multiple countries |
 | `query_worldbank` | Raw World Bank API access |
+
+</details>
+
+<details>
+<summary><strong>SEC EDGAR</strong> — 5 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_company_filings` | Get SEC filings by ticker or CIK (10-K, 10-Q, 8-K) |
+| `search_company` | Find CIK for a company by name or ticker |
+| `get_latest_submissions` | Get latest submissions filtered by form type |
+| `get_company_facts` | Financial facts and XBRL data for a company |
+| `query_sec_edgar` | Raw SEC EDGAR API access |
 
 </details>
 
@@ -295,6 +330,7 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
+  ✓ SEC EDGAR
   ✗ OpenWeather (key not set)
 ```
 
