@@ -30,6 +30,7 @@ uv sync
 Optional environment variables:
 
 ```bash
+cp .env.example .env
 export OPENWEATHER_API_KEY=...
 export NASA_API_KEY=...
 export API_TIMEOUT=30
@@ -60,12 +61,12 @@ Prefer adding new API integrations as focused modules under `src/mcp_govt_api/to
 
 ## Validation
 
-There is not yet a dedicated automated test suite in this repository, so contributors should do lightweight validation before opening a pull request.
-
-At minimum:
+Before opening a pull request, run the checks this repository currently relies on:
 
 ```bash
 python3 -m compileall src
+uv run python -m unittest discover -s tests -p "test_*.py"
+uv build
 ```
 
 When changing runtime behavior, also start the server locally and exercise the affected tool path against the upstream API you touched.

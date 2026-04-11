@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![42 Tools](https://img.shields.io/badge/tools-42-2563eb.svg?style=flat-square)](#tool-reference)
-[![13 APIs](https://img.shields.io/badge/APIs-13-7c3aed.svg?style=flat-square)](#data-sources)
+[![46 Tools](https://img.shields.io/badge/tools-46-2563eb.svg?style=flat-square)](#tool-reference)
+[![14 APIs](https://img.shields.io/badge/APIs-14-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **13 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, and open data discovery.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **14 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, open data discovery, and cybersecurity.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 11 of 13 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 12 of 14 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -55,6 +55,7 @@ python3 -m mcp_govt_api
 
 - Added shared geolocation support with a new `lookup_location` tool
 - Upgraded weather, earthquake, and air-quality tools to accept human-friendly location strings
+- Added CISA cybersecurity tools and integrated them into the server and README
 - Added GitHub Actions CI for install, compile, unit test, import, and build validation
 - Added `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`
 - Added branch protection and required automated checks on `main`
@@ -80,6 +81,7 @@ python3 -m mcp_govt_api
 | [USGS Earthquakes](https://earthquake.usgs.gov) | Every earthquake on Earth, real-time | -- |
 | [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov) | Active wildfires detected from satellites | Optional |
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
+| [CISA](https://cisa.gov) | Cybersecurity advisories and known exploited vulnerabilities | -- |
 
 ### Demographics & Economics
 
@@ -115,6 +117,8 @@ python3 -m mcp_govt_api
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
 "Find datasets about climate change on Data.gov"
+"Are there any known exploited vulnerabilities for Microsoft products?"
+"What are the latest CISA security alerts?"
 ```
 
 ---
@@ -198,6 +202,18 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_solar_flares` | Recent solar flare activity and classifications |
 | `get_space_weather_alerts` | Active NOAA space weather alerts and warnings |
 | `query_space_weather` | Raw SWPC API access |
+
+</details>
+
+<details>
+<summary><strong>Cybersecurity (CISA)</strong> — 4 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_known_exploited_vulnerabilities` | Search CISA's catalog of actively exploited vulnerabilities |
+| `get_recent_cisa_alerts` | Recent CISA security alerts and advisories |
+| `get_cisa_bulletins` | Weekly CISA vulnerability summaries from major vendors |
+| `query_cisa_kev` | Raw CISA Known Exploited Vulnerabilities catalog access |
 
 </details>
 
@@ -286,17 +302,16 @@ API Availability:
 
 ## Implementation Roadmap
 
-The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/issues/87) and the first delivery milestone is [First Wave: Foundation + Core Data](https://github.com/EricGrill/mcp-civic-data/milestone/1). The backlog below reflects the issue set currently staged for implementation.
+The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/issues/87) and the first delivery milestone is [First Wave: Foundation + Core Data](https://github.com/EricGrill/mcp-civic-data/milestone/1). The backlog below reflects the implementation plan staged in GitHub issues.
 
 ### First Wave
 
 **Foundation**
 
-- [#50](https://github.com/EricGrill/mcp-civic-data/issues/50) Add geolocation-based query support
 - [#48](https://github.com/EricGrill/mcp-civic-data/issues/48) Add comprehensive error handling with fallback sources
 - [#47](https://github.com/EricGrill/mcp-civic-data/issues/47) Add intelligent caching for API responses
 - [#44](https://github.com/EricGrill/mcp-civic-data/issues/44) Add unit tests for 13 API integrations
-- [#45](https://github.com/EricGrill/mcp-civic-data/issues/45) Add CI/CD pipeline for automated testing and publishing
+- [#45](https://github.com/EricGrill/mcp-civic-data/issues/45) Extend CI/CD toward publishing and release automation
 
 **Core Data Sources**
 
@@ -324,7 +339,6 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 - [#78](https://github.com/EricGrill/mcp-civic-data/issues/78) Add SBA small business and disaster loan tools
 - [#80](https://github.com/EricGrill/mcp-civic-data/issues/80) Add FDA recalls, shortages, and safety alert tools
 - [#84](https://github.com/EricGrill/mcp-civic-data/issues/84) Add National Park Service parks and alerts tools
-- [#86](https://github.com/EricGrill/mcp-civic-data/issues/86) Add CISA cybersecurity advisories and alerts tools
 
 **Economics, Finance, and Infrastructure**
 
