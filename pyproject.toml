@@ -19,3 +19,16 @@ mcp-civic-data = "mcp_govt_api:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/mcp_govt_api"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_default_fixture_loop_scope = "function"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=5.0.0",
+    "respx>=0.22.0",
+]
