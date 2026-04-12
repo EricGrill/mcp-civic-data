@@ -83,6 +83,12 @@ python -m mcp_govt_api
 | [EU Open Data](https://data.europa.eu) | European Union datasets, multilingual | -- |
 | [NASA](https://api.nasa.gov) | APOD, Mars rover photos, image/video library | Optional |
 
+### Parks & Recreation
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [NPS](https://www.nps.gov/subjects/developer) | National Parks, alerts, campgrounds, events | Required |
+
 > **Key**: `--` = no key needed. `Optional` = works without a key, key unlocks higher rate limits. `Required` = key needed to enable.
 
 ---
@@ -101,6 +107,9 @@ python -m mcp_govt_api
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
 "Find datasets about climate change on Data.gov"
+"What national parks are in California?"
+"Tell me about Yellowstone National Park"
+"Are there any alerts for Grand Canyon?"
 ```
 
 ---
@@ -225,6 +234,18 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>National Park Service</strong> — 4 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_parks` | Search parks by state, name, or keywords |
+| `get_park_details` | Get detailed park info including activities, fees, hours |
+| `get_park_alerts` | Get park alerts, closures, and warnings |
+| `query_nps` | Raw NPS API access |
+
+</details>
+
+<details>
 <summary><strong>Open Data</strong> — 6 tools</summary>
 
 | Tool | Description |
@@ -246,6 +267,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 |----------|---------|---------|
 | `OPENWEATHER_API_KEY` | Enables global weather tools | *(disabled)* |
 | `NASA_API_KEY` | Higher rate limits for NASA + FIRMS | `DEMO_KEY` (30 req/hr) |
+| `NPS_API_KEY` | Enables National Park Service tools | *(disabled)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
 On startup the server prints which APIs are available:
@@ -270,6 +292,24 @@ API Availability:
 | `get_security_advisories` | Get CISA security advisories by vendor/product | `vendor` - filter by vendor, `product` - filter by product, `limit` - max results |
 | `search_kev_by_ransomware` | Get vulnerabilities used in ransomware campaigns | `limit` - max results (default: 20) |
 | `get_critical_kev` | Get recently added critical vulnerabilities | `days` - lookback period (default: 30), `limit` - max results |
+
+### NREL (Clean Energy)
+
+| Tool | What It Does | Parameters |
+|------|--------------|------------|
+| `get_nearby_ev_chargers` | Find EV charging stations near a location | `latitude` - Latitude coordinate, `longitude` - Longitude coordinate, `radius_miles` - Search radius (default: 10), `limit` - Max results (default: 10) |
+| `get_alternative_fuel_stations` | Find alternative fuel stations (EV, hydrogen, CNG, etc.) | `latitude`/`longitude` OR `city`/`state` OR `zip_code` - Location, `fuel_type` - Filter by type (ELEC, HY, CNG, LNG, LPG, BD, E85, RD), `radius_miles` - Search radius, `limit` - Max results |
+| `get_clean_energy_site_summary` | Get summary of clean energy infrastructure near a location | `latitude` - Latitude coordinate, `longitude` - Longitude coordinate, `radius_miles` - Search radius (default: 25) |
+
+**Fuel Types:**
+- `ELEC` - Electric
+- `HY` - Hydrogen
+- `CNG` - Compressed Natural Gas
+- `LNG` - Liquefied Natural Gas
+- `LPG` - Propane
+- `BD` - Biodiesel
+- `E85` - Ethanol
+- `RD` - Renewable Diesel
 
 ---
 

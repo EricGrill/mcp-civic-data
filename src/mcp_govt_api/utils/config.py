@@ -16,6 +16,7 @@ class Config:
         self.openweather_api_key = os.environ.get("OPENWEATHER_API_KEY")
         self.nasa_api_key = os.environ.get("NASA_API_KEY")
         self.bea_api_key = os.environ.get("BEA_API_KEY")
+        self.nps_api_key = os.environ.get("NPS_API_KEY")
         self.timeout = int(os.environ.get("API_TIMEOUT", "30"))
 
     @property
