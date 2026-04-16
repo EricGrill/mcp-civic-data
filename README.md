@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![107 Tools](https://img.shields.io/badge/tools-107-2563eb.svg?style=flat-square)](#tool-reference)
-[![32 APIs](https://img.shields.io/badge/APIs-32-7c3aed.svg?style=flat-square)](#data-sources)
+[![110 Tools](https://img.shields.io/badge/tools-110-2563eb.svg?style=flat-square)](#tool-reference)
+[![33 APIs](https://img.shields.io/badge/APIs-33-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **32 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, behavioral health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, and USDA food and agriculture data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, and USDA food and agriculture data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 21 of 32 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 22 of 33 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -106,6 +106,7 @@ python3 -m mcp_govt_api
 | [SAMHSA](https://findtreatment.gov) | Mental health and substance abuse treatment facilities, behavioral health data | -- |
 | [NHTSA](https://www.nhtsa.gov) | Vehicle recalls, consumer complaints, VIN decoding | -- |
 | [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
+| [ClinicalTrials.gov](https://clinicaltrials.gov) | Clinical study search, trial details, database statistics | -- |
 
 ### Education
 
@@ -202,6 +203,9 @@ python3 -m mcp_govt_api
 "Search CDC datasets about influenza"
 "What are the latest disease surveillance reports for Salmonellosis?"
 "Show me vaccination coverage data for Influenza"
+"Search for clinical trials on breast cancer"
+"Get details for clinical trial NCT04280705"
+"How many studies are registered on ClinicalTrials.gov?"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
 "Show me consumer complaints about mortgages in California"
@@ -375,6 +379,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_cdc_disease_surveillance` | Notifiable disease case counts from the NNDSS |
 | `get_cdc_vaccination_coverage` | Vaccination coverage estimates by vaccine and state |
 | `query_cdc_open_data` | Raw CDC SODA API access for any dataset |
+
+</details>
+
+<details>
+<summary><strong>ClinicalTrials.gov</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_clinical_trials` | Search clinical studies by keyword, condition, intervention, or status |
+| `get_clinical_trial` | Get detailed protocol information for a specific trial by NCT ID |
+| `get_trial_statistics` | Get overall ClinicalTrials.gov database statistics |
 
 </details>
 
@@ -690,7 +705,7 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 
 - [#57](https://github.com/EricGrill/mcp-civic-data/issues/57) Add BLS labor statistics tools
 - [#61](https://github.com/EricGrill/mcp-civic-data/issues/61) Add FEMA disaster declarations and assistance tools
-- [#62](https://github.com/EricGrill/mcp-civic-data/issues/62) Add ClinicalTrials.gov health research tools
+- ~~[#62](https://github.com/EricGrill/mcp-civic-data/issues/62) Add ClinicalTrials.gov health research tools~~
 - [#63](https://github.com/EricGrill/mcp-civic-data/issues/63) Add USDA Forest Service land and wildfire tools
 - [#64](https://github.com/EricGrill/mcp-civic-data/issues/64) Add Bureau of Justice Statistics tools
 - [#65](https://github.com/EricGrill/mcp-civic-data/issues/65) Add USDA food and agriculture data tools

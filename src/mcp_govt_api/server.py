@@ -25,6 +25,7 @@ mcp = FastMCP(
 - FRED (Federal Reserve economic data, time series, indicators)
 - CMS (hospital quality ratings, Medicare provider search, healthcare data)
 - CDC (public health surveillance, disease tracking, vaccination coverage)
+- ClinicalTrials.gov (clinical study search, trial details, database statistics)
 - BLS (labor statistics, CPI, unemployment, employment data)
 - FEMA (disaster declarations, disaster summaries, housing assistance)
 - FDA (drug/food/device recalls, adverse events, drug labels via openFDA)
@@ -59,6 +60,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     census,  # noqa: F401
     cfpb,  # noqa: F401
     cisa,  # noqa: F401
+    clinical_trials,  # noqa: F401
     cms,  # noqa: F401
     datagov,  # noqa: F401
     earthquakes,  # noqa: F401
