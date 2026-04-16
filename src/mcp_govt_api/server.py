@@ -37,6 +37,7 @@ mcp = FastMCP(
 - SBA (small business size standards, disaster loans, open datasets)
 - CFPB (consumer complaints, financial product issues, company response data)
 - OSHA (workplace inspections, violations, fatality reports via DOL enforcement data)
+- NCES (school districts, school enrollment, college/university data via Education Data Portal)
 """,
 )
 
@@ -68,6 +69,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     fred,  # noqa: F401
     location,  # noqa: F401
     nasa,  # noqa: F401
+    nces,  # noqa: F401
     nhtsa,  # noqa: F401
     noaa_coops,  # noqa: F401
     noaa_weather,  # noqa: F401

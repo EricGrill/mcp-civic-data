@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![98 Tools](https://img.shields.io/badge/tools-98-2563eb.svg?style=flat-square)](#tool-reference)
-[![29 APIs](https://img.shields.io/badge/APIs-29-7c3aed.svg?style=flat-square)](#data-sources)
+[![101 Tools](https://img.shields.io/badge/tools-101-2563eb.svg?style=flat-square)](#tool-reference)
+[![30 APIs](https://img.shields.io/badge/APIs-30-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **29 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **30 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -103,6 +103,12 @@ python3 -m mcp_govt_api
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
 | [NHTSA](https://www.nhtsa.gov) | Vehicle recalls, consumer complaints, VIN decoding | -- |
 | [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
+
+### Education
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [NCES (Education Data Portal)](https://educationdata.urban.org) | School districts, school enrollment, college/university data | -- |
 
 ### Demographics & Economics
 
@@ -208,6 +214,9 @@ python3 -m mcp_govt_api
 "Are there any recalls for 2020 Toyota Camry?"
 "Show me consumer complaints for Ford F-150"
 "Decode VIN 1HGCM82633A004352"
+"Search for school districts in California"
+"What's the enrollment at schools in Texas?"
+"Find colleges in New York"
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
@@ -542,6 +551,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_bea_regional_data` | Regional GDP, income, and employment data by state |
 | `get_bea_gdp_by_industry` | GDP breakdown by industry sector |
 | `search_bea_datasets` | List available BEA datasets and tables |
+
+</details>
+
+<details>
+<summary><strong>Education (NCES)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_school_districts` | Search school districts by state or name |
+| `get_school_enrollment` | Get school enrollment data by state or district |
+| `search_colleges` | Search colleges and universities via IPEDS |
 
 </details>
 
