@@ -2,6 +2,9 @@ from mcp.server.fastmcp import FastMCP
 
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import http_lifespan
+from mcp_govt_api.utils.logging import get_logger
+
+logger = get_logger(__name__)
 
 mcp = FastMCP(
     "Government API Server",
@@ -25,8 +28,10 @@ mcp = FastMCP(
 - FRED (Federal Reserve economic data, time series, indicators)
 - CMS (hospital quality ratings, Medicare provider search, healthcare data)
 - CDC (public health surveillance, disease tracking, vaccination coverage)
+- ClinicalTrials.gov (clinical study search, trial details, database statistics)
 - BLS (labor statistics, CPI, unemployment, employment data)
 - FEMA (disaster declarations, disaster summaries, housing assistance)
+- EPA (facility compliance via ECHO, toxic releases via Envirofacts TRI)
 - FDA (drug/food/device recalls, adverse events, drug labels via openFDA)
 - NHTSA (vehicle recalls, consumer complaints, VIN decoding)
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
@@ -40,6 +45,7 @@ mcp = FastMCP(
 - NCES (school districts, school enrollment, college/university data via Education Data Portal)
 - SAMHSA (mental health and substance abuse treatment facility locator, behavioral health data)
 - USDA (food nutrition via FoodData Central, crop production via NASS; requires API key)
+- USFS (active wildfires, fire perimeters, National Forest boundaries via WFIGS/ArcGIS)
 - BJS / FBI CDE (crime estimates, arrest data, justice datasets; requires API key)
 """,
 )
@@ -47,7 +53,9 @@ mcp = FastMCP(
 
 def main():
     """Entry point for the MCP server."""
-    print(config.get_availability_summary())
+    logger.info("Starting MCP Government API Server")
+    for line in config.get_availability_summary().splitlines():
+        logger.info(line.strip())
     mcp.run()
 
 
@@ -61,11 +69,13 @@ from mcp_govt_api.tools import (  # noqa: E402
     census,  # noqa: F401
     cfpb,  # noqa: F401
     cisa,  # noqa: F401
+    clinical_trials,  # noqa: F401
     cms,  # noqa: F401
     datagov,  # noqa: F401
     earthquakes,  # noqa: F401
     economics,  # noqa: F401
     eia,  # noqa: F401
+    epa,  # noqa: F401
     eu_data,  # noqa: F401
     fda,  # noqa: F401
     fema,  # noqa: F401
@@ -86,6 +96,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     sec,  # noqa: F401
     space_weather,  # noqa: F401
     usda,  # noqa: F401
+    usfs,  # noqa: F401
     usgs_water,  # noqa: F401
     weather,  # noqa: F401
 )

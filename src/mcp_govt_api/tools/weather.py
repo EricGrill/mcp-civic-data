@@ -1,5 +1,6 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
+from mcp_govt_api.utils.errors import handle_api_error
 from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.location import resolve_location
 from mcp_govt_api.utils.validation import validate_state_code
@@ -8,6 +9,7 @@ NOAA_BASE = "https://api.weather.gov"
 
 
 @mcp.tool()
+@handle_api_error(context="NOAA Weather")
 async def get_weather_forecast(
     latitude: float | None = None,
     longitude: float | None = None,
@@ -46,6 +48,7 @@ async def get_weather_forecast(
 
 
 @mcp.tool()
+@handle_api_error(context="NOAA Weather")
 async def get_weather_alerts(state: str) -> str:
     """Get active weather alerts for a US state.
 
