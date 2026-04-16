@@ -1,4 +1,5 @@
 from mcp_govt_api.server import mcp
+from mcp_govt_api.utils.errors import handle_api_error
 from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.validation import validate_state_code
 
@@ -65,6 +66,7 @@ STATE_FIPS = {
 
 
 @mcp.tool()
+@handle_api_error(context="Census API")
 async def get_population(state: str, county: str = "") -> str:
     """Get population data for a US state or county.
 
