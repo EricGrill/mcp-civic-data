@@ -48,3 +48,4 @@ htmlcov/
 .context/
 *.local
 .env
+.claude/worktrees/
