@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![51 Tools](https://img.shields.io/badge/tools-51-2563eb.svg?style=flat-square)](#tool-reference)
-[![15 APIs](https://img.shields.io/badge/APIs-15-7c3aed.svg?style=flat-square)](#data-sources)
+[![54 Tools](https://img.shields.io/badge/tools-54-2563eb.svg?style=flat-square)](#tool-reference)
+[![16 APIs](https://img.shields.io/badge/APIs-16-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **15 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, open data discovery, cybersecurity, and SEC disclosures.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **16 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, energy, open data discovery, cybersecurity, and SEC disclosures.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 13 of 15 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 13 of 16 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -35,7 +35,8 @@ No API keys required for 13 of 15 sources. Install it, point your MCP client at 
       "args": ["-m", "mcp_govt_api"],
       "env": {
         "OPENWEATHER_API_KEY": "optional",
-        "NASA_API_KEY": "optional"
+        "NASA_API_KEY": "optional",
+        "EIA_API_KEY": "optional"
       }
     }
   }
@@ -91,6 +92,12 @@ python3 -m mcp_govt_api
 | [US Census](https://census.gov) | Population, demographics, housing for every US county | -- |
 | [World Bank](https://worldbank.org) | GDP, poverty, unemployment for 200+ countries | -- |
 
+### Energy
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [EIA](https://www.eia.gov/opendata/) | Electricity, petroleum, natural gas, coal, and energy market data | Required |
+
 ### Finance & Securities
 
 | Source | What It Covers | Key |
@@ -128,6 +135,9 @@ python3 -m mcp_govt_api
 "Show me recent SEC filings for Tesla"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
+"What are the current gasoline prices?"
+"Show me electricity data for California"
+"What energy data categories does the EIA provide?"
 ```
 
 ---
@@ -240,6 +250,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>Energy (EIA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_electricity_data` | Retail electricity sales, prices, and revenue by state |
+| `get_petroleum_prices` | Gasoline, diesel, and heating oil price data |
+| `get_energy_overview` | Browse available EIA data categories and routes |
+
+</details>
+
+<details>
 <summary><strong>Radiation</strong> — 3 tools</summary>
 
 | Tool | Description |
@@ -320,6 +341,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 |----------|---------|---------|
 | `OPENWEATHER_API_KEY` | Enables global weather tools | *(disabled)* |
 | `NASA_API_KEY` | Higher rate limits for NASA + FIRMS | `DEMO_KEY` (30 req/hr) |
+| `EIA_API_KEY` | Enables EIA energy market tools | *(disabled)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
 On startup the server prints which APIs are available:
@@ -332,6 +354,7 @@ API Availability:
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
   ✓ SEC EDGAR
   ✗ OpenWeather (key not set)
+  ✗ EIA (key not set)
 ```
 
 ---
