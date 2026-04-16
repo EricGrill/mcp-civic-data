@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![80 Tools](https://img.shields.io/badge/tools-80-2563eb.svg?style=flat-square)](#tool-reference)
-[![23 APIs](https://img.shields.io/badge/APIs-23-7c3aed.svg?style=flat-square)](#data-sources)
+[![83 Tools](https://img.shields.io/badge/tools-83-2563eb.svg?style=flat-square)](#tool-reference)
+[![24 APIs](https://img.shields.io/badge/APIs-24-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **23 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, and BEA economic accounts.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **24 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, and BTS transportation data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -116,6 +116,12 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [EIA](https://www.eia.gov/opendata/) | Electricity, petroleum, natural gas, coal, and energy market data | Required |
 
+### Transportation
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [BTS](https://data.bts.gov) | Airline on-time performance, border crossing data, transportation datasets | -- |
+
 ### Finance & Securities
 
 | Source | What It Covers | Key |
@@ -189,6 +195,9 @@ python3 -m mcp_govt_api
 "What's California's GDP from BEA?"
 "Show me GDP by industry for 2022"
 "What datasets does the BEA offer?"
+"Show me airline on-time stats for American Airlines"
+"What's the border crossing data for El Paso?"
+"Search BTS datasets about freight"
 ```
 
 ---
@@ -375,6 +384,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_electricity_data` | Retail electricity sales, prices, and revenue by state |
 | `get_petroleum_prices` | Gasoline, diesel, and heating oil price data |
 | `get_energy_overview` | Browse available EIA data categories and routes |
+
+</details>
+
+<details>
+<summary><strong>Transportation (BTS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_airline_ontime_stats` | Airline on-time performance, delays, and cancellations |
+| `get_border_crossing_data` | US-Canada and US-Mexico border crossing entry data |
+| `search_bts_datasets` | Search BTS open datasets on data.bts.gov |
 
 </details>
 
