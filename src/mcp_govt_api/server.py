@@ -23,13 +23,21 @@ mcp = FastMCP(
 - CISA (cybersecurity advisories, known exploited vulnerabilities)
 - SEC EDGAR (company filings, submissions, and company facts)
 - FRED (Federal Reserve economic data, time series, indicators)
+- CMS (hospital quality ratings, Medicare provider search, healthcare data)
 - CDC (public health surveillance, disease tracking, vaccination coverage)
 - BLS (labor statistics, CPI, unemployment, employment data)
 - FEMA (disaster declarations, disaster summaries, housing assistance)
 - FDA (drug/food/device recalls, adverse events, drug labels via openFDA)
+- NHTSA (vehicle recalls, consumer complaints, VIN decoding)
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
 - NPS (national parks, park alerts, and park details)
 - EIA (electricity data, petroleum prices, energy market overview; requires API key)
+- BEA (regional GDP, personal income, GDP by industry; requires API key)
+- BTS (airline on-time performance, border crossing data, transportation datasets)
+- SBA (small business size standards, disaster loans, open datasets)
+- CFPB (consumer complaints, financial product issues, company response data)
+- OSHA (workplace inspections, violations, fatality reports via DOL enforcement data)
+- NCES (school districts, school enrollment, college/university data via Education Data Portal)
 - SAMHSA (mental health and substance abuse treatment facility locator, behavioral health data)
 """,
 )
@@ -43,14 +51,18 @@ def main():
 
 # Import tools to register them
 from mcp_govt_api.tools import (  # noqa: E402
+    bea,  # noqa: F401
     bls,  # noqa: F401
+    bts,  # noqa: F401
     cdc,  # noqa: F401
     census,  # noqa: F401
+    cfpb,  # noqa: F401
     cisa,  # noqa: F401
+    cms,  # noqa: F401
     datagov,  # noqa: F401
     earthquakes,  # noqa: F401
-    eia,  # noqa: F401
     economics,  # noqa: F401
+    eia,  # noqa: F401
     eu_data,  # noqa: F401
     fda,  # noqa: F401
     fema,  # noqa: F401
@@ -58,12 +70,16 @@ from mcp_govt_api.tools import (  # noqa: E402
     fred,  # noqa: F401
     location,  # noqa: F401
     nasa,  # noqa: F401
+    nces,  # noqa: F401
+    nhtsa,  # noqa: F401
     noaa_coops,  # noqa: F401
     noaa_weather,  # noqa: F401
     nps,  # noqa: F401
     openaq,  # noqa: F401
+    osha,  # noqa: F401
     safecast,  # noqa: F401
     samhsa,  # noqa: F401
+    sba,  # noqa: F401
     sec,  # noqa: F401
     space_weather,  # noqa: F401
     usgs_water,  # noqa: F401
