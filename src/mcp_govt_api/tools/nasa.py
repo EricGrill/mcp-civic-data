@@ -53,7 +53,7 @@ async def get_mars_rover_photos(
         List of photo URLs from the specified rover
     """
     rover = rover.lower()
-    params = {"api_key": get_api_key()}
+    params: dict[str, str | int] = {"api_key": get_api_key()}
 
     if sol is not None:
         params["sol"] = sol

@@ -3,6 +3,7 @@ from datetime import UTC, datetime
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.location import resolve_location
+from mcp_govt_api.utils.validation import validate_limit, validate_magnitude
 
 BASE = "https://earthquake.usgs.gov/fdsnws/event/1/"
 
@@ -54,6 +55,9 @@ async def get_recent_earthquakes(min_magnitude: float = 4.0, limit: int = 10) ->
         Recent earthquakes ordered by time descending, showing magnitude,
         location, time, depth, and tsunami warning where applicable
     """
+    min_magnitude = validate_magnitude(min_magnitude)
+    limit = validate_limit(limit, max_val=20000, default=10)
+
     url = f"{BASE}query"
     params = {
         "format": "geojson",
