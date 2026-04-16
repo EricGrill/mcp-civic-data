@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![51 Tools](https://img.shields.io/badge/tools-51-2563eb.svg?style=flat-square)](#tool-reference)
-[![15 APIs](https://img.shields.io/badge/APIs-15-7c3aed.svg?style=flat-square)](#data-sources)
+[![54 Tools](https://img.shields.io/badge/tools-54-2563eb.svg?style=flat-square)](#tool-reference)
+[![16 APIs](https://img.shields.io/badge/APIs-16-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **15 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, open data discovery, cybersecurity, and SEC disclosures.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **16 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, labor statistics, open data discovery, cybersecurity, and SEC disclosures.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 13 of 15 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 13 of 16 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -35,7 +35,8 @@ No API keys required for 13 of 15 sources. Install it, point your MCP client at 
       "args": ["-m", "mcp_govt_api"],
       "env": {
         "OPENWEATHER_API_KEY": "optional",
-        "NASA_API_KEY": "optional"
+        "NASA_API_KEY": "optional",
+        "BLS_API_KEY": "optional"
       }
     }
   }
@@ -90,6 +91,7 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [US Census](https://census.gov) | Population, demographics, housing for every US county | -- |
 | [World Bank](https://worldbank.org) | GDP, poverty, unemployment for 200+ countries | -- |
+| [BLS](https://www.bls.gov) | CPI, unemployment, employment, labor statistics | Optional |
 
 ### Finance & Securities
 
@@ -128,6 +130,9 @@ python3 -m mcp_govt_api
 "Show me recent SEC filings for Tesla"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
+"What's the current CPI?"
+"What's the unemployment rate in California?"
+"Show me BLS employment data for 2023"
 ```
 
 ---
@@ -274,6 +279,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>Labor Statistics (BLS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_bls_timeseries` | Get time series data for any BLS series (CPI, employment, PPI) |
+| `search_bls_series` | Look up common BLS series IDs by keyword |
+| `get_unemployment_rate` | National or state-level unemployment rate data |
+
+</details>
+
+<details>
 <summary><strong>SEC EDGAR</strong> — 5 tools</summary>
 
 | Tool | Description |
@@ -320,6 +336,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 |----------|---------|---------|
 | `OPENWEATHER_API_KEY` | Enables global weather tools | *(disabled)* |
 | `NASA_API_KEY` | Higher rate limits for NASA + FIRMS | `DEMO_KEY` (30 req/hr) |
+| `BLS_API_KEY` | Higher rate limits for BLS (25 to 500 queries/day) | *(works without key)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
 On startup the server prints which APIs are available:
@@ -330,7 +347,7 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
-  ✓ SEC EDGAR
+  ✓ SEC EDGAR             ✓ BLS
   ✗ OpenWeather (key not set)
 ```
 
