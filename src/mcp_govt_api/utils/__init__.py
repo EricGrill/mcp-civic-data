@@ -1,3 +1,4 @@
+from mcp_govt_api.utils.cache import ResponseCache, response_cache
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.errors import (
     APIError,
@@ -16,6 +17,7 @@ __all__ = [
     "AuthenticationError",
     "NotFoundError",
     "RateLimitError",
+    "ResponseCache",
     "ServerError",
     "TimeoutError",
     "config",
@@ -23,4 +25,5 @@ __all__ = [
     "format_error",
     "handle_api_error",
     "http_client",
+    "response_cache",
 ]

@@ -1,4 +1,5 @@
 from mcp_govt_api.server import mcp
+from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
 
 
@@ -29,7 +30,7 @@ async def search_cdc_datasets(
     params = {"q": query, "limit": limit}
 
     try:
-        data = await fetch_json(url, params=params)
+        data = await fetch_json(url, params=params, cache_ttl=config.cache_ttl)
     except Exception as e:
         return f"Error searching CDC datasets: {e}"
 
@@ -109,7 +110,7 @@ async def get_cdc_disease_surveillance(
         params["$where"] = " AND ".join(where_clauses)
 
     try:
-        data = await fetch_json(url, params=params)
+        data = await fetch_json(url, params=params, cache_ttl=config.cache_ttl)
     except Exception as e:
         return f"Error fetching CDC disease surveillance data: {e}"
 
@@ -178,7 +179,7 @@ async def get_cdc_vaccination_coverage(
         params["$where"] = " AND ".join(where_clauses)
 
     try:
-        data = await fetch_json(url, params=params)
+        data = await fetch_json(url, params=params, cache_ttl=config.cache_ttl)
     except Exception as e:
         return f"Error fetching CDC vaccination coverage data: {e}"
 

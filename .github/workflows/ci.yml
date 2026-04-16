@@ -16,6 +16,7 @@ jobs:
         python-version:
           - "3.11"
           - "3.12"
+          - "3.13"
 
     steps:
       - name: Check out repository
@@ -25,25 +26,34 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: pip
 
-      - name: Install packaging tools
-        run: python -m pip install build
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
-      - name: Install project
-        run: python -m pip install -e ".[dev]"
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Run ruff check
+        run: uv run ruff check src/
 
       - name: Run mypy type checking
-        run: python -m mypy src/
+        run: uv run mypy src/
 
       - name: Verify sources compile
-        run: python -m compileall src
+        run: uv run python -m compileall src
 
-      - name: Run unit tests
-        run: python -m unittest discover -s tests -p "test_*.py"
+      - name: Run tests with coverage
+        run: uv run pytest --cov=mcp_govt_api --cov-report=xml
 
       - name: Smoke test package imports
-        run: python -c "import mcp_govt_api; import mcp_govt_api.server"
+        run: uv run python -c "import mcp_govt_api; import mcp_govt_api.server"
 
       - name: Validate package build
-        run: python -m build
+        run: uv build
+
+      - name: Upload coverage
+        if: matrix.python-version == '3.13'
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          fail_ci_if_error: false

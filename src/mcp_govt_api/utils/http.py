@@ -2,11 +2,13 @@ from typing import Any
 from contextlib import asynccontextmanager
 from collections.abc import AsyncIterator
 import asyncio
+import logging
 import random
 
 import httpx
 
 from mcp_govt_api.utils.config import config
+from mcp_govt_api.utils.cache import response_cache
 from mcp_govt_api.utils.errors import (
     APIError,
     AuthenticationError,
@@ -23,6 +25,8 @@ RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
 DEFAULT_MAX_RETRIES = 3
 DEFAULT_BASE_DELAY = 1.0  # seconds
 DEFAULT_MAX_JITTER = 0.5  # seconds
+
+logger = logging.getLogger(__name__)
 
 http_client = httpx.AsyncClient(
     timeout=httpx.Timeout(config.timeout),
@@ -104,8 +108,9 @@ async def fetch_json(
     url: str,
     params: dict[str, Any] | None = None,
     max_retries: int = DEFAULT_MAX_RETRIES,
+    cache_ttl: int | None = None,
 ) -> Any:
-    """Fetch JSON from a URL with error handling and retry logic.
+    """Fetch JSON from a URL with error handling, retry logic, and optional caching.
 
     Retries on transient errors (HTTP 429/5xx, timeouts, connection errors)
     with exponential backoff and jitter. Does not retry on client errors (4xx
@@ -115,6 +120,9 @@ async def fetch_json(
         url: The URL to fetch.
         params: Optional query parameters.
         max_retries: Maximum number of retry attempts (default 3).
+        cache_ttl: Cache time-to-live in seconds. Set to 0 to skip caching.
+            When None (default), caching is not used (backwards compatible).
+            Tools opt in by passing a positive value.
 
     Returns:
         Parsed JSON response.
@@ -127,13 +135,30 @@ async def fetch_json(
         TimeoutError: On request timeout.
         APIError: On other request failures.
     """
+    use_cache = (
+        config.cache_enabled
+        and cache_ttl is not None
+        and cache_ttl > 0
+    )
+
+    if use_cache:
+        cache_key = response_cache.make_key(url, params)
+        cached = await response_cache.get(cache_key)
+        if cached is not None:
+            return cached
+
     last_exception: Exception | None = None
 
     for attempt in range(max_retries + 1):
         try:
             response = await http_client.get(url, params=params)
             response.raise_for_status()
-            return response.json()
+            data = response.json()
+
+            if use_cache:
+                await response_cache.set(cache_key, data, ttl=cache_ttl)
+
+            return data
         except (httpx.TimeoutException, httpx.HTTPStatusError, httpx.RequestError) as e:
             last_exception = e
 
@@ -142,14 +167,15 @@ async def fetch_json(
                 break
 
             if attempt < max_retries:
-                print(
-                    f"[retry] Attempt {attempt + 1}/{max_retries} failed for {url}: "
-                    f"{e!r} -- retrying after backoff"
+                logger.warning(
+                    "Attempt %d/%d failed for %s: %r -- retrying after backoff",
+                    attempt + 1, max_retries, url, e,
                 )
                 await _retry_delay(attempt)
             else:
-                print(
-                    f"[retry] All {max_retries} retries exhausted for {url}: {e!r}"
+                logger.error(
+                    "All %d retries exhausted for %s: %r",
+                    max_retries, url, e,
                 )
 
     # Re-raise the last exception as a specific error type
@@ -200,14 +226,15 @@ async def fetch_with_retry(
                 break
 
             if attempt < max_retries:
-                print(
-                    f"[retry] Attempt {attempt + 1}/{max_retries} failed for {url}: "
-                    f"{e!r} -- retrying after backoff"
+                logger.warning(
+                    "Attempt %d/%d failed for %s: %r -- retrying after backoff",
+                    attempt + 1, max_retries, url, e,
                 )
                 await _retry_delay(attempt)
             else:
-                print(
-                    f"[retry] All {max_retries} retries exhausted for {url}: {e!r}"
+                logger.error(
+                    "All %d retries exhausted for %s: %r",
+                    max_retries, url, e,
                 )
 
     _raise_specific_error(last_exception, url)
