@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![51 Tools](https://img.shields.io/badge/tools-51-2563eb.svg?style=flat-square)](#tool-reference)
-[![15 APIs](https://img.shields.io/badge/APIs-15-7c3aed.svg?style=flat-square)](#data-sources)
+[![55 Tools](https://img.shields.io/badge/tools-55-2563eb.svg?style=flat-square)](#tool-reference)
+[![16 APIs](https://img.shields.io/badge/APIs-16-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **15 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, open data discovery, cybersecurity, and SEC disclosures.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **16 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, public health, open data discovery, cybersecurity, and SEC disclosures.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -53,6 +53,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added CDC public health surveillance tools for disease tracking and vaccination coverage
 - Added shared geolocation support with a new `lookup_location` tool
 - Upgraded weather, earthquake, and air-quality tools to accept human-friendly location strings
 - Added CISA cybersecurity tools and integrated them into the server and README
@@ -97,6 +98,12 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [SEC EDGAR](https://sec.gov/edgar) | Company filings, 10-K, 10-Q, 8-K forms | -- |
 
+### Public Health
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [CDC Open Data](https://data.cdc.gov) | Disease surveillance, vaccination coverage, public health datasets | -- |
+
 ### Open Data Catalogs
 
 | Source | What It Covers | Key |
@@ -126,6 +133,9 @@ python3 -m mcp_govt_api
 "Find datasets about climate change on Data.gov"
 "Get Apple's latest 10-K filing from SEC"
 "Show me recent SEC filings for Tesla"
+"Search CDC datasets about influenza"
+"What are the latest disease surveillance reports for Salmonellosis?"
+"Show me vaccination coverage data for Influenza"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
 ```
@@ -223,6 +233,18 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_recent_cisa_alerts` | Recent CISA security alerts and advisories |
 | `get_cisa_bulletins` | Weekly CISA vulnerability summaries from major vendors |
 | `query_cisa_kev` | Raw CISA Known Exploited Vulnerabilities catalog access |
+
+</details>
+
+<details>
+<summary><strong>CDC Public Health</strong> — 4 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_cdc_datasets` | Search CDC's open data catalog by keyword |
+| `get_cdc_disease_surveillance` | Notifiable disease case counts from the NNDSS |
+| `get_cdc_vaccination_coverage` | Vaccination coverage estimates by vaccine and state |
+| `query_cdc_open_data` | Raw CDC SODA API access for any dataset |
 
 </details>
 
@@ -330,7 +352,7 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
-  ✓ SEC EDGAR
+  ✓ SEC EDGAR             ✓ CDC Open Data
   ✗ OpenWeather (key not set)
 ```
 
