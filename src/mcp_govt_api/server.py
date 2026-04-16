@@ -1,9 +1,11 @@
 from mcp.server.fastmcp import FastMCP
 
 from mcp_govt_api.utils.config import config
+from mcp_govt_api.utils.http import http_lifespan
 
 mcp = FastMCP(
     "Government API Server",
+    lifespan=http_lifespan,
     instructions="""Access free government and open data APIs including:
 - NOAA Weather (US forecasts and alerts)
 - OpenWeather (global weather, requires API key)
