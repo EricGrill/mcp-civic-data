@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![101 Tools](https://img.shields.io/badge/tools-101-2563eb.svg?style=flat-square)](#tool-reference)
-[![30 APIs](https://img.shields.io/badge/APIs-30-7c3aed.svg?style=flat-square)](#data-sources)
+[![104 Tools](https://img.shields.io/badge/tools-104-2563eb.svg?style=flat-square)](#tool-reference)
+[![31 APIs](https://img.shields.io/badge/APIs-31-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **30 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **31 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, behavioral health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 18 of 28 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 21 of 31 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -58,6 +58,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added SAMHSA tools for mental health and substance abuse treatment facility locator and behavioral health data
 - Added CMS tools for hospital quality ratings, Medicare provider search, and healthcare data
 - Added FDA tools for recalls, adverse events, and drug labels via openFDA
 - Added CDC public health surveillance tools for disease tracking and vaccination coverage
@@ -101,6 +102,7 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [CMS](https://data.cms.gov) | Hospital quality ratings, Medicare provider search, healthcare data | -- |
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
+| [SAMHSA](https://findtreatment.gov) | Mental health and substance abuse treatment facilities, behavioral health data | -- |
 | [NHTSA](https://www.nhtsa.gov) | Vehicle recalls, consumer complaints, VIN decoding | -- |
 | [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
 
@@ -232,6 +234,8 @@ python3 -m mcp_govt_api
 "Show me OSHA inspections in California"
 "What violations were found in OSHA inspection 1234567?"
 "Search for workplace fatality reports in Texas"
+"Find mental health treatment facilities near Chicago"
+"Search SAMHSA data for opioid treatment admissions"
 ```
 
 ---
@@ -431,6 +435,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>SAMHSA (Behavioral Health)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `find_treatment_facilities` | Find mental health and substance abuse treatment facilities near a location |
+| `search_samhsa_datasets` | Search SAMHSA open data catalog for behavioral health datasets |
+| `get_samhsa_facility_details` | Get detailed info about a specific SAMHSA treatment facility |
+
+</details>
+
+<details>
 <summary><strong>SEC EDGAR</strong> — 5 tools</summary>
 
 | Tool | Description |
@@ -617,7 +632,7 @@ API Availability:
   ✓ SEC EDGAR             ✓ CDC Open Data
   ✓ BLS                   ✓ FEMA
   ✓ SBA                   ✓ CFPB
-  ✓ CMS Healthcare
+  ✓ CMS Healthcare        ✓ SAMHSA
   ✗ OpenWeather (key not set)
   ✗ EIA (key not set)
   ✗ BEA (key not set)
