@@ -2,6 +2,7 @@ from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.location import resolve_location
+from mcp_govt_api.utils.validation import validate_state_code
 
 NOAA_BASE = "https://api.weather.gov"
 
@@ -54,9 +55,10 @@ async def get_weather_alerts(state: str) -> str:
     Returns:
         List of active weather alerts for the state
     """
-    state = state.upper()
-    if len(state) != 2:
-        return "Error: State must be a 2-letter code (e.g., 'CA', 'TX')"
+    try:
+        state = validate_state_code(state)
+    except ValueError as e:
+        return f"Error: {e}"
 
     url = f"{NOAA_BASE}/alerts/active"
     data = await fetch_json(url, params={"area": state})
