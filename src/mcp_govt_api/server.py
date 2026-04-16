@@ -24,6 +24,7 @@ mcp = FastMCP(
 - SEC EDGAR (company filings, submissions, and company facts)
 - FRED (Federal Reserve economic data, time series, indicators)
 - CDC (public health surveillance, disease tracking, vaccination coverage)
+- BLS (labor statistics, CPI, unemployment, employment data)
 """,
 )
 
@@ -36,6 +37,7 @@ def main():
 
 # Import tools to register them
 from mcp_govt_api.tools import (  # noqa: E402
+    bls,  # noqa: F401
     cdc,  # noqa: F401
     census,  # noqa: F401
     cisa,  # noqa: F401

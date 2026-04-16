@@ -9,12 +9,14 @@ class Config:
     openweather_api_key: str | None = None
     nasa_api_key: str | None = None
     fred_api_key: str | None = None
+    bls_api_key: str | None = None
     timeout: int = 30
 
     def __post_init__(self):
         self.openweather_api_key = os.environ.get("OPENWEATHER_API_KEY")
         self.nasa_api_key = os.environ.get("NASA_API_KEY")
         self.fred_api_key = os.environ.get("FRED_API_KEY")
+        self.bls_api_key = os.environ.get("BLS_API_KEY")
         self.timeout = int(os.environ.get("API_TIMEOUT", "30"))
 
     @property
@@ -28,6 +30,10 @@ class Config:
     @property
     def has_fred(self) -> bool:
         return bool(self.fred_api_key)
+
+    @property
+    def has_bls(self) -> bool:
+        return bool(self.bls_api_key)
 
     def get_availability_summary(self) -> str:
         """Return a summary of API availability."""
@@ -62,6 +68,10 @@ class Config:
             lines.append("  ✓ FRED (API key configured)")
         else:
             lines.append("  ✗ FRED (FRED_API_KEY not set)")
+        if self.has_bls:
+            lines.append("  ✓ BLS (using API key for higher limits)")
+        else:
+            lines.append("  ✓ BLS (no key, limited to 25 queries/day)")
         if self.has_nasa_key:
             lines.append("  ✓ NASA FIRMS (using NASA API key)")
         else:
