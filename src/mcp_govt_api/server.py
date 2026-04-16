@@ -22,6 +22,7 @@ mcp = FastMCP(
 - NOAA Space Weather (solar wind, flares, geomagnetic storms)
 - CISA (cybersecurity advisories, known exploited vulnerabilities)
 - SEC EDGAR (company filings, submissions, and company facts)
+- FRED (Federal Reserve economic data, time series, indicators)
 - CDC (public health surveillance, disease tracking, vaccination coverage)
 """,
 )
@@ -43,6 +44,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     economics,  # noqa: F401
     eu_data,  # noqa: F401
     firms,  # noqa: F401
+    fred,  # noqa: F401
     location,  # noqa: F401
     nasa,  # noqa: F401
     openaq,  # noqa: F401
