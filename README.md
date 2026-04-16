@@ -11,7 +11,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, national forests, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, USDA food and agriculture data, and USFS wildfire and forest data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, national forests, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, USDA food and agriculture data, USFS wildfire and forest data, and FBI crime/justice statistics.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -41,7 +41,8 @@ No API keys required for 22 of 33 sources. Install it, point your MCP client at 
         "NPS_API_KEY": "optional",
         "EIA_API_KEY": "optional",
         "BEA_API_KEY": "optional",
-        "USDA_API_KEY": "optional"
+        "USDA_API_KEY": "optional",
+        "FBI_CDE_API_KEY": "optional"
       }
     }
   }
@@ -59,6 +60,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added BJS / FBI Crime Data Explorer tools for crime estimates, arrest data, and justice datasets
 - Added USDA Forest Service tools for active wildfires, fire perimeters, and National Forest search via WFIGS/ArcGIS
 - Added EPA environmental compliance tools for ECHO facility search, detailed facility reports, and Toxics Release Inventory
 - Added SAMHSA tools for mental health and substance abuse treatment facility locator and behavioral health data
@@ -151,6 +153,12 @@ python3 -m mcp_govt_api
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [USDA](https://fdc.nal.usda.gov/) | Food nutrition data (FoodData Central), crop production and acreage (NASS) | Required |
+
+### Criminal Justice
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [FBI CDE / BJS](https://crime-data-explorer.fr.cloud.gov) | Crime estimates, arrest data, justice datasets via FBI Crime Data Explorer | Required |
 
 ### Finance & Consumer Protection
 
@@ -260,6 +268,9 @@ python3 -m mcp_govt_api
 "What are the active wildfires in California?"
 "Show me wildfire perimeters in Oregon"
 "Search for National Forests in Montana"
+"What are the crime estimates for California?"
+"Show me national arrest data for robbery"
+"Search for prisoner statistics datasets"
 ```
 
 ---
@@ -516,6 +527,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>Criminal Justice (BJS / FBI CDE)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_crime_estimates` | Crime estimates by state or national from the FBI UCR program |
+| `get_arrest_data` | National arrest data by offense type |
+| `search_crime_datasets` | Search crime and justice datasets on Data.gov |
+
+</details>
+
+<details>
 <summary><strong>CFPB Consumer Complaints</strong> — 3 tools</summary>
 
 | Tool | Description |
@@ -688,6 +710,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `EIA_API_KEY` | Enables EIA energy market tools | *(disabled)* |
 | `BEA_API_KEY` | Enables BEA economic accounts tools | *(disabled)* |
 | `USDA_API_KEY` | Enables USDA food nutrition and crop data tools | *(disabled)* |
+| `FBI_CDE_API_KEY` | Enables FBI Crime Data Explorer / BJS crime tools | *(disabled)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
 On startup the server prints which APIs are available:

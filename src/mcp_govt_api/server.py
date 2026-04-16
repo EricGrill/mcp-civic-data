@@ -46,6 +46,7 @@ mcp = FastMCP(
 - SAMHSA (mental health and substance abuse treatment facility locator, behavioral health data)
 - USDA (food nutrition via FoodData Central, crop production via NASS; requires API key)
 - USFS (active wildfires, fire perimeters, National Forest boundaries via WFIGS/ArcGIS)
+- BJS / FBI CDE (crime estimates, arrest data, justice datasets; requires API key)
 """,
 )
 
@@ -61,6 +62,7 @@ def main():
 # Import tools to register them
 from mcp_govt_api.tools import (  # noqa: E402
     bea,  # noqa: F401
+    bjs,  # noqa: F401
     bls,  # noqa: F401
     bts,  # noqa: F401
     cdc,  # noqa: F401
