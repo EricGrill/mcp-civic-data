@@ -11,7 +11,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, behavioral health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, national forests, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, USDA food and agriculture data, and USFS wildfire and forest data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, national forests, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, USDA food and agriculture data, and USFS wildfire and forest data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -60,6 +60,7 @@ python3 -m mcp_govt_api
 ## What's New
 
 - Added USDA Forest Service tools for active wildfires, fire perimeters, and National Forest search via WFIGS/ArcGIS
+- Added EPA environmental compliance tools for ECHO facility search, detailed facility reports, and Toxics Release Inventory
 - Added SAMHSA tools for mental health and substance abuse treatment facility locator and behavioral health data
 - Added CMS tools for hospital quality ratings, Medicare provider search, and healthcare data
 - Added FDA tools for recalls, adverse events, and drug labels via openFDA
@@ -86,6 +87,7 @@ python3 -m mcp_govt_api
 | [OpenAQ](https://openaq.org) | Air quality from stations worldwide | -- |
 | [USGS Water](https://waterservices.usgs.gov) | Real-time stream flow and flood levels across every US river | -- |
 | [NOAA CO-OPS](https://tidesandcurrents.noaa.gov) | Tide predictions, observed water levels, coastal stations | -- |
+| [EPA ECHO/Envirofacts](https://echo.epa.gov) | Facility compliance, enforcement history, toxic releases (TRI) | -- |
 | [Safecast](https://safecast.org) | Community radiation monitoring, 150M+ measurements | -- |
 
 ### Hazards & Events
@@ -108,6 +110,7 @@ python3 -m mcp_govt_api
 | [SAMHSA](https://findtreatment.gov) | Mental health and substance abuse treatment facilities, behavioral health data | -- |
 | [NHTSA](https://www.nhtsa.gov) | Vehicle recalls, consumer complaints, VIN decoding | -- |
 | [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
+| [ClinicalTrials.gov](https://clinicaltrials.gov) | Clinical study search, trial details, database statistics | -- |
 
 ### Education
 
@@ -204,6 +207,9 @@ python3 -m mcp_govt_api
 "Search CDC datasets about influenza"
 "What are the latest disease surveillance reports for Salmonellosis?"
 "Show me vaccination coverage data for Influenza"
+"Search for clinical trials on breast cancer"
+"Get details for clinical trial NCT04280705"
+"How many studies are registered on ClinicalTrials.gov?"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
 "Show me consumer complaints about mortgages in California"
@@ -246,6 +252,9 @@ python3 -m mcp_govt_api
 "Show me OSHA inspections in California"
 "What violations were found in OSHA inspection 1234567?"
 "Search for workplace fatality reports in Texas"
+"Search for EPA-regulated facilities in California"
+"Get compliance details for EPA facility 110000350174"
+"Show toxic chemical releases in Texas for 2022"
 "Find mental health treatment facilities near Chicago"
 "Search SAMHSA data for opioid treatment admissions"
 "What are the active wildfires in California?"
@@ -326,6 +335,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>EPA (Environmental Compliance)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_epa_facilities` | Search EPA-regulated facilities via ECHO enforcement database |
+| `get_epa_facility_info` | Get detailed compliance info for a facility by registry ID |
+| `get_toxic_releases` | Query Toxics Release Inventory (TRI) data via Envirofacts |
+
+</details>
+
+<details>
 <summary><strong>Earthquakes</strong> — 3 tools</summary>
 
 | Tool | Description |
@@ -380,6 +400,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_cdc_disease_surveillance` | Notifiable disease case counts from the NNDSS |
 | `get_cdc_vaccination_coverage` | Vaccination coverage estimates by vaccine and state |
 | `query_cdc_open_data` | Raw CDC SODA API access for any dataset |
+
+</details>
+
+<details>
+<summary><strong>ClinicalTrials.gov</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_clinical_trials` | Search clinical studies by keyword, condition, intervention, or status |
+| `get_clinical_trial` | Get detailed protocol information for a specific trial by NCT ID |
+| `get_trial_statistics` | Get overall ClinicalTrials.gov database statistics |
 
 </details>
 
@@ -667,7 +698,7 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
-  ✓ SEC EDGAR             ✓ CDC Open Data
+  ✓ SEC EDGAR             ✓ CDC Open Data  ✓ EPA ECHO/TRI
   ✓ BLS                   ✓ FEMA
   ✓ SBA                   ✓ CFPB
   ✓ CMS Healthcare        ✓ SAMHSA
@@ -706,7 +737,7 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 
 - [#57](https://github.com/EricGrill/mcp-civic-data/issues/57) Add BLS labor statistics tools
 - [#61](https://github.com/EricGrill/mcp-civic-data/issues/61) Add FEMA disaster declarations and assistance tools
-- [#62](https://github.com/EricGrill/mcp-civic-data/issues/62) Add ClinicalTrials.gov health research tools
+- ~~[#62](https://github.com/EricGrill/mcp-civic-data/issues/62) Add ClinicalTrials.gov health research tools~~
 - [#63](https://github.com/EricGrill/mcp-civic-data/issues/63) Add USDA Forest Service land and wildfire tools
 - [#64](https://github.com/EricGrill/mcp-civic-data/issues/64) Add Bureau of Justice Statistics tools
 - [#65](https://github.com/EricGrill/mcp-civic-data/issues/65) Add USDA food and agriculture data tools

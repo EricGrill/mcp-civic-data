@@ -63,7 +63,8 @@ class TestSearchFdaRecalls(unittest.IsolatedAsyncioTestCase):
 
         result = await search_fda_recalls()
 
-        self.assertIn("Error fetching FDA recalls", result)
+        self.assertIn("Error:", result)
+        self.assertIn("FDA API", result)
 
     @patch("mcp_govt_api.tools.fda.fetch_json", new_callable=AsyncMock)
     async def test_search_recalls_device_category(self, mock_fetch):
@@ -162,7 +163,8 @@ class TestGetFdaAdverseEvents(unittest.IsolatedAsyncioTestCase):
 
         result = await get_fda_adverse_events(drug_name="aspirin")
 
-        self.assertIn("Error fetching FDA adverse events", result)
+        self.assertIn("Error:", result)
+        self.assertIn("FDA API", result)
 
 
 class TestGetFdaDrugLabels(unittest.IsolatedAsyncioTestCase):
@@ -224,7 +226,8 @@ class TestGetFdaDrugLabels(unittest.IsolatedAsyncioTestCase):
 
         result = await get_fda_drug_labels(drug_name="ibuprofen")
 
-        self.assertIn("Error fetching FDA drug labels", result)
+        self.assertIn("Error:", result)
+        self.assertIn("FDA API", result)
 
     @patch("mcp_govt_api.tools.fda.fetch_json", new_callable=AsyncMock)
     async def test_drug_labels_truncates_long_text(self, mock_fetch):

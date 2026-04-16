@@ -1,10 +1,12 @@
 from mcp_govt_api.server import mcp
+from mcp_govt_api.utils.errors import handle_api_error
 from mcp_govt_api.utils.http import fetch_json
 
 FDA_BASE_URL = "https://api.fda.gov"
 
 
 @mcp.tool()
+@handle_api_error(context="FDA API")
 async def search_fda_recalls(
     query: str = "",
     state: str = "",
@@ -45,10 +47,7 @@ async def search_fda_recalls(
     if search_parts:
         params["search"] = "+AND+".join(search_parts)
 
-    try:
-        data = await fetch_json(url, params=params)
-    except Exception as e:
-        return f"Error fetching FDA recalls: {e}"
+    data = await fetch_json(url, params=params)
 
     results = data.get("results", [])
     if not results:
@@ -83,6 +82,7 @@ async def search_fda_recalls(
 
 
 @mcp.tool()
+@handle_api_error(context="FDA API")
 async def get_fda_adverse_events(
     drug_name: str,
     limit: int = 10,
@@ -112,10 +112,7 @@ async def get_fda_adverse_events(
         "limit": str(limit),
     }
 
-    try:
-        data = await fetch_json(url, params=params)
-    except Exception as e:
-        return f"Error fetching FDA adverse events: {e}"
+    data = await fetch_json(url, params=params)
 
     results = data.get("results", [])
     if not results:
@@ -175,6 +172,7 @@ async def get_fda_adverse_events(
 
 
 @mcp.tool()
+@handle_api_error(context="FDA API")
 async def get_fda_drug_labels(
     drug_name: str,
     limit: int = 5,
@@ -203,10 +201,7 @@ async def get_fda_drug_labels(
         "limit": str(limit),
     }
 
-    try:
-        data = await fetch_json(url, params=params)
-    except Exception as e:
-        return f"Error fetching FDA drug labels: {e}"
+    data = await fetch_json(url, params=params)
 
     results = data.get("results", [])
     if not results:
