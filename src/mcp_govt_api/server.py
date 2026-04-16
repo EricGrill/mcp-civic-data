@@ -23,6 +23,7 @@ mcp = FastMCP(
 - CISA (cybersecurity advisories, known exploited vulnerabilities)
 - SEC EDGAR (company filings, submissions, and company facts)
 - FRED (Federal Reserve economic data, time series, indicators)
+- CDC (public health surveillance, disease tracking, vaccination coverage)
 """,
 )
 
@@ -35,6 +36,7 @@ def main():
 
 # Import tools to register them
 from mcp_govt_api.tools import (  # noqa: E402
+    cdc,  # noqa: F401
     census,  # noqa: F401
     cisa,  # noqa: F401
     datagov,  # noqa: F401
