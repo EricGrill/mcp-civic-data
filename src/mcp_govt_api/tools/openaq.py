@@ -2,7 +2,6 @@ from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.location import resolve_location
 
-
 OPENAQ_BASE = "https://api.openaq.org/v3"
 
 # Common pollutant parameter IDs in OpenAQ v3
@@ -53,23 +52,15 @@ async def get_air_quality(
     locations = data.get("results", [])
 
     if not locations:
-        return (
-            f"No air quality monitoring stations found within {radius_km}km "
-            f"of {resolved.display_name}"
-        )
+        return f"No air quality monitoring stations found within {radius_km}km of {resolved.display_name}"
 
-    result = [
-        f"Air quality near {resolved.display_name} "
-        f"(within {radius_km}km):\n"
-    ]
+    result = [f"Air quality near {resolved.display_name} (within {radius_km}km):\n"]
 
     for loc in locations[:10]:
         name = loc.get("name") or loc.get("locality") or "Unknown station"
         country = loc.get("country", {}).get("code", "")
         distance_m = loc.get("distance")
-        distance_str = (
-            f"{distance_m / 1000:.1f}km away" if distance_m is not None else ""
-        )
+        distance_str = f"{distance_m / 1000:.1f}km away" if distance_m is not None else ""
 
         sensors = loc.get("sensors", [])
         if not sensors:
@@ -96,10 +87,7 @@ async def get_air_quality(
             result.append(header + "\n" + "\n".join(readings))
 
     if len(result) == 1:
-        return (
-            f"Stations found near {resolved.display_name} but no current "
-            f"measurements are available"
-        )
+        return f"Stations found near {resolved.display_name} but no current measurements are available"
 
     return "\n\n---\n\n".join(result)
 
@@ -138,9 +126,7 @@ async def get_air_quality_history(
         date_range = ""
         if date_from or date_to:
             date_range = f" between {date_from or 'start'} and {date_to or 'now'}"
-        return (
-            f"No measurements found for location ID {location_id}{date_range}"
-        )
+        return f"No measurements found for location ID {location_id}{date_range}"
 
     result = [f"Air quality history for location ID {location_id}:\n"]
 
@@ -150,10 +136,7 @@ async def get_air_quality_history(
         value = m.get("value", "N/A")
         unit = parameter.get("units", "")
         period = m.get("period", {})
-        timestamp = (
-            period.get("datetimeFrom", {}).get("utc")
-            or m.get("date", {}).get("utc", "N/A")
-        )
+        timestamp = period.get("datetimeFrom", {}).get("utc") or m.get("date", {}).get("utc", "N/A")
 
         result.append(f"- {timestamp}: **{pollutant} {value} {unit}**")
 

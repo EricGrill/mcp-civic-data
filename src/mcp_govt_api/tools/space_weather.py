@@ -3,7 +3,6 @@ from typing import Any
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 BASE = "https://services.swpc.noaa.gov"
 
 
@@ -81,10 +80,7 @@ async def get_space_weather_summary() -> str:
         except (TypeError, ValueError, IndexError):
             kp_value = kp_row[1] if len(kp_row) > 1 else "N/A"
             kp_label = "Unknown"
-        lines.append(
-            f"Geomagnetic Activity (as of {kp_time}):\n"
-            f"  Kp Index: {kp_value} - {kp_label}"
-        )
+        lines.append(f"Geomagnetic Activity (as of {kp_time}):\n  Kp Index: {kp_value} - {kp_label}")
     else:
         lines.append("Kp index data unavailable.")
 
@@ -179,7 +175,7 @@ async def get_space_weather_alerts() -> str:
     if not alerts:
         return "No active space weather alerts."
 
-    lines: list[str] = [f"**Space Weather Alerts** (showing up to 5 most recent):\n"]
+    lines: list[str] = ["**Space Weather Alerts** (showing up to 5 most recent):\n"]
 
     for alert in alerts[:5]:
         product_id = alert.get("product_id", "N/A")
@@ -190,11 +186,7 @@ async def get_space_weather_alerts() -> str:
         if len(message) > 800:
             message = message[:800] + "...[truncated]"
 
-        lines.append(
-            f"**{product_id}**\n"
-            f"Issued: {issue_time}\n\n"
-            f"{message}"
-        )
+        lines.append(f"**{product_id}**\nIssued: {issue_time}\n\n{message}")
 
     return "\n\n---\n\n".join(lines)
 
