@@ -1,9 +1,11 @@
 from mcp.server.fastmcp import FastMCP
 
 from mcp_govt_api.utils.config import config
+from mcp_govt_api.utils.http import http_lifespan
 
 mcp = FastMCP(
     "Government API Server",
+    lifespan=http_lifespan,
     instructions="""Access free government and open data APIs including:
 - NOAA Weather (US forecasts and alerts)
 - OpenWeather (global weather, requires API key)
@@ -32,19 +34,21 @@ def main():
 
 
 # Import tools to register them
-from mcp_govt_api.tools import weather  # noqa: E402, F401
-from mcp_govt_api.tools import location  # noqa: E402, F401
-from mcp_govt_api.tools import census  # noqa: E402, F401
-from mcp_govt_api.tools import nasa  # noqa: E402, F401
-from mcp_govt_api.tools import economics  # noqa: E402, F401
-from mcp_govt_api.tools import datagov  # noqa: E402, F401
-from mcp_govt_api.tools import eu_data  # noqa: E402, F401
-from mcp_govt_api.tools import safecast  # noqa: E402, F401
-from mcp_govt_api.tools import openaq  # noqa: E402, F401
-from mcp_govt_api.tools import usgs_water  # noqa: E402, F401
-from mcp_govt_api.tools import earthquakes  # noqa: E402, F401
-from mcp_govt_api.tools import firms  # noqa: E402, F401
-from mcp_govt_api.tools import space_weather  # noqa: E402, F401
-from mcp_govt_api.tools import cisa  # noqa: E402, F401
-from mcp_govt_api.tools import sec  # noqa: E402, F401
-from mcp_govt_api.tools import fda  # noqa: E402, F401
+from mcp_govt_api.tools import (  # noqa: E402
+    census,  # noqa: F401
+    cisa,  # noqa: F401
+    datagov,  # noqa: F401
+    earthquakes,  # noqa: F401
+    economics,  # noqa: F401
+    eu_data,  # noqa: F401
+    fda,  # noqa: F401
+    firms,  # noqa: F401
+    location,  # noqa: F401
+    nasa,  # noqa: F401
+    openaq,  # noqa: F401
+    safecast,  # noqa: F401
+    sec,  # noqa: F401
+    space_weather,  # noqa: F401
+    usgs_water,  # noqa: F401
+    weather,  # noqa: F401
+)

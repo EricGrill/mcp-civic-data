@@ -3,7 +3,6 @@ from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.location import resolve_location
 
-
 NOAA_BASE = "https://api.weather.gov"
 
 
