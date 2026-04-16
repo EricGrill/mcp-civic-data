@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![107 Tools](https://img.shields.io/badge/tools-107-2563eb.svg?style=flat-square)](#tool-reference)
-[![32 APIs](https://img.shields.io/badge/APIs-32-7c3aed.svg?style=flat-square)](#data-sources)
+[![110 Tools](https://img.shields.io/badge/tools-110-2563eb.svg?style=flat-square)](#tool-reference)
+[![33 APIs](https://img.shields.io/badge/APIs-33-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **32 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, behavioral health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, and USDA food and agriculture data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, and USDA food and agriculture data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 21 of 32 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 22 of 33 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -59,6 +59,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added EPA environmental compliance tools for ECHO facility search, detailed facility reports, and Toxics Release Inventory
 - Added SAMHSA tools for mental health and substance abuse treatment facility locator and behavioral health data
 - Added CMS tools for hospital quality ratings, Medicare provider search, and healthcare data
 - Added FDA tools for recalls, adverse events, and drug labels via openFDA
@@ -85,6 +86,7 @@ python3 -m mcp_govt_api
 | [OpenAQ](https://openaq.org) | Air quality from stations worldwide | -- |
 | [USGS Water](https://waterservices.usgs.gov) | Real-time stream flow and flood levels across every US river | -- |
 | [NOAA CO-OPS](https://tidesandcurrents.noaa.gov) | Tide predictions, observed water levels, coastal stations | -- |
+| [EPA ECHO/Envirofacts](https://echo.epa.gov) | Facility compliance, enforcement history, toxic releases (TRI) | -- |
 | [Safecast](https://safecast.org) | Community radiation monitoring, 150M+ measurements | -- |
 
 ### Hazards & Events
@@ -244,6 +246,9 @@ python3 -m mcp_govt_api
 "Show me OSHA inspections in California"
 "What violations were found in OSHA inspection 1234567?"
 "Search for workplace fatality reports in Texas"
+"Search for EPA-regulated facilities in California"
+"Get compliance details for EPA facility 110000350174"
+"Show toxic chemical releases in Texas for 2022"
 "Find mental health treatment facilities near Chicago"
 "Search SAMHSA data for opioid treatment admissions"
 ```
@@ -317,6 +322,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_tide_predictions` | Tide predictions for a CO-OPS station |
 | `get_water_levels` | Observed water levels from a CO-OPS station |
 | `search_tide_stations` | Search for NOAA CO-OPS tide prediction stations |
+
+</details>
+
+<details>
+<summary><strong>EPA (Environmental Compliance)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_epa_facilities` | Search EPA-regulated facilities via ECHO enforcement database |
+| `get_epa_facility_info` | Get detailed compliance info for a facility by registry ID |
+| `get_toxic_releases` | Query Toxics Release Inventory (TRI) data via Envirofacts |
 
 </details>
 
@@ -651,7 +667,7 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
-  ✓ SEC EDGAR             ✓ CDC Open Data
+  ✓ SEC EDGAR             ✓ CDC Open Data  ✓ EPA ECHO/TRI
   ✓ BLS                   ✓ FEMA
   ✓ SBA                   ✓ CFPB
   ✓ CMS Healthcare        ✓ SAMHSA
