@@ -1,18 +1,15 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.location import resolve_location
-
 
 BASE = "https://earthquake.usgs.gov/fdsnws/event/1/"
 
 
 def _format_time(epoch_ms: int) -> str:
     """Format epoch milliseconds to a human-readable UTC string."""
-    return datetime.fromtimestamp(epoch_ms / 1000, tz=timezone.utc).strftime(
-        "%Y-%m-%d %H:%M:%S UTC"
-    )
+    return datetime.fromtimestamp(epoch_ms / 1000, tz=UTC).strftime("%Y-%m-%d %H:%M:%S UTC")
 
 
 def _format_feature(feature: dict) -> str:
@@ -74,9 +71,7 @@ async def get_recent_earthquakes(min_magnitude: float = 4.0, limit: int = 10) ->
     meta = data.get("metadata", {})
     count = meta.get("count", len(features))
 
-    result = [
-        f"Recent earthquakes worldwide (M >= {min_magnitude}) - {count} result(s):\n"
-    ]
+    result = [f"Recent earthquakes worldwide (M >= {min_magnitude}) - {count} result(s):\n"]
     for feature in features:
         result.append(_format_feature(feature))
 
