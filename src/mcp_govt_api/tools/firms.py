@@ -6,7 +6,6 @@ import httpx
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
 
-
 FIRMS_BASE = "https://firms.modaps.eosdis.nasa.gov/api"
 
 # Degrees per km (approximate at the equator; good enough for bounding boxes)
@@ -18,9 +17,7 @@ def _get_map_key() -> str:
     return config.nasa_api_key or "DEMO_KEY"
 
 
-def _bounding_box(
-    latitude: float, longitude: float, radius_km: int
-) -> tuple[float, float, float, float]:
+def _bounding_box(latitude: float, longitude: float, radius_km: int) -> tuple[float, float, float, float]:
     """Compute a (west, south, east, north) bounding box from a centre and radius.
 
     Args:
@@ -59,14 +56,12 @@ async def _fetch_firms_csv(url: str) -> list[dict[str, str]]:
         try:
             response = await client.get(url)
             response.raise_for_status()
-        except httpx.TimeoutException:
-            raise Exception(f"Request timed out after {config.timeout}s: {url}")
+        except httpx.TimeoutException as exc:
+            raise Exception(f"Request timed out after {config.timeout}s: {url}") from exc
         except httpx.HTTPStatusError as exc:
-            raise Exception(
-                f"HTTP {exc.response.status_code}: {exc.response.text[:200]}"
-            )
+            raise Exception(f"HTTP {exc.response.status_code}: {exc.response.text[:200]}") from exc
         except httpx.RequestError as exc:
-            raise Exception(f"Request failed: {exc}")
+            raise Exception(f"Request failed: {exc}") from exc
 
     reader = csv.DictReader(io.StringIO(response.text))
     return list(reader)
@@ -137,10 +132,7 @@ async def get_active_fires(
     rows = await _fetch_firms_csv(url)
 
     if not rows:
-        return (
-            f"No active fires detected within {range_km} km of "
-            f"({latitude}, {longitude}) in the past 24 hours."
-        )
+        return f"No active fires detected within {range_km} km of ({latitude}, {longitude}) in the past 24 hours."
 
     total = len(rows)
     displayed = rows[:15]
@@ -152,9 +144,7 @@ async def get_active_fires(
         + ":\n"
     )
 
-    sections = [header] + [
-        _format_hotspot(row, i + 1) for i, row in enumerate(displayed)
-    ]
+    sections = [header] + [_format_hotspot(row, i + 1) for i, row in enumerate(displayed)]
     return "\n\n---\n\n".join(sections)
 
 
@@ -180,17 +170,11 @@ async def get_country_fires(country_code: str, days: int = 1) -> str:
     country_code = country_code.upper().strip()
     map_key = _get_map_key()
 
-    url = (
-        f"{FIRMS_BASE}/country/csv/{map_key}/VIIRS_SNPP_NRT"
-        f"/{country_code}/{days}"
-    )
+    url = f"{FIRMS_BASE}/country/csv/{map_key}/VIIRS_SNPP_NRT/{country_code}/{days}"
     rows = await _fetch_firms_csv(url)
 
     if not rows:
-        return (
-            f"No active fires detected in {country_code} over the past "
-            f"{'day' if days == 1 else f'{days} days'}."
-        )
+        return f"No active fires detected in {country_code} over the past {'day' if days == 1 else f'{days} days'}."
 
     total = len(rows)
     displayed = rows[:20]
@@ -198,14 +182,10 @@ async def get_country_fires(country_code: str, days: int = 1) -> str:
 
     header = (
         f"Active fires in {country_code} over the past {day_label} "
-        f"- {total} hotspot(s) detected"
-        + (f" (showing 20 of {total})" if total > 20 else "")
-        + ":\n"
+        f"- {total} hotspot(s) detected" + (f" (showing 20 of {total})" if total > 20 else "") + ":\n"
     )
 
-    sections = [header] + [
-        _format_hotspot(row, i + 1) for i, row in enumerate(displayed)
-    ]
+    sections = [header] + [_format_hotspot(row, i + 1) for i, row in enumerate(displayed)]
     return "\n\n---\n\n".join(sections)
 
 
@@ -253,10 +233,7 @@ async def query_firms(
     source = source.upper().strip()
 
     if country:
-        url = (
-            f"{FIRMS_BASE}/country/csv/{map_key}/{source}"
-            f"/{country.upper().strip()}/{days}"
-        )
+        url = f"{FIRMS_BASE}/country/csv/{map_key}/{source}/{country.upper().strip()}/{days}"
     else:
         url = f"{FIRMS_BASE}/area/csv/{map_key}/{source}/{area.strip()}/{days}"
 

@@ -1,14 +1,11 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 SAFECAST_BASE = "https://api.safecast.org"
 
 
 @mcp.tool()
-async def get_radiation_measurements(
-    latitude: float, longitude: float, distance: int = 100
-) -> str:
+async def get_radiation_measurements(latitude: float, longitude: float, distance: int = 100) -> str:
     """Get radiation measurements near a location.
 
     Args:
@@ -31,9 +28,7 @@ async def get_radiation_measurements(
     if not data:
         return f"No radiation measurements found within {distance}km of {latitude}, {longitude}"
 
-    result = [
-        f"Radiation measurements within {distance}km of {latitude}, {longitude}:\n"
-    ]
+    result = [f"Radiation measurements within {distance}km of {latitude}, {longitude}:\n"]
 
     for m in data[:15]:
         unit = m.get("unit", "unknown")
@@ -43,10 +38,7 @@ async def get_radiation_measurements(
         lon = m.get("longitude", "N/A")
         device = m.get("device_id", "unknown")
 
-        result.append(
-            f"**{value} {unit}** at ({lat}, {lon})\n"
-            f"Captured: {captured} | Device: {device}"
-        )
+        result.append(f"**{value} {unit}** at ({lat}, {lon})\nCaptured: {captured} | Device: {device}")
 
     return "\n\n---\n\n".join(result)
 
@@ -84,7 +76,7 @@ async def get_radiation_history(
     data = await fetch_json(url, params=params)
 
     if not data:
-        return f"No radiation measurements found for the specified location and time range"
+        return "No radiation measurements found for the specified location and time range"
 
     result = [f"Radiation history for ({latitude}, {longitude}):\n"]
 
