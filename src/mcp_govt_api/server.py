@@ -28,6 +28,7 @@ mcp = FastMCP(
 - FEMA (disaster declarations, disaster summaries, housing assistance)
 - FDA (drug/food/device recalls, adverse events, drug labels via openFDA)
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
+- NPS (national parks, park alerts, and park details)
 """,
 )
 
@@ -56,6 +57,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     nasa,  # noqa: F401
     noaa_coops,  # noqa: F401
     noaa_weather,  # noqa: F401
+    nps,  # noqa: F401
     openaq,  # noqa: F401
     safecast,  # noqa: F401
     sec,  # noqa: F401
