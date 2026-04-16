@@ -38,18 +38,20 @@ class Config:
             lines.append("  ✓ OpenWeather (API key configured)")
         else:
             lines.append("  ✗ OpenWeather (OPENWEATHER_API_KEY not set)")
-        lines.extend([
-            "  ✓ World Bank (no key required)",
-            "  ✓ Data.gov (no key required)",
-            "  ✓ EU Open Data (no key required)",
-            "  ✓ Safecast (no key required)",
-            "  ✓ OpenAQ (no key required)",
-            "  ✓ USGS Water (no key required)",
-            "  ✓ USGS Earthquakes (no key required)",
-            "  ✓ NOAA Space Weather (no key required)",
-            "  ✓ SEC EDGAR (no key required)",
-            "  ✓ CISA (no key required)",
-        ])
+        lines.extend(
+            [
+                "  ✓ World Bank (no key required)",
+                "  ✓ Data.gov (no key required)",
+                "  ✓ EU Open Data (no key required)",
+                "  ✓ Safecast (no key required)",
+                "  ✓ OpenAQ (no key required)",
+                "  ✓ USGS Water (no key required)",
+                "  ✓ USGS Earthquakes (no key required)",
+                "  ✓ NOAA Space Weather (no key required)",
+                "  ✓ SEC EDGAR (no key required)",
+                "  ✓ CISA (no key required)",
+            ]
+        )
         if self.has_nasa_key:
             lines.append("  ✓ NASA FIRMS (using NASA API key)")
         else:
