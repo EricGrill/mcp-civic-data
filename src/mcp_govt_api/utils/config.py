@@ -11,6 +11,7 @@ class Config:
     fred_api_key: str | None = None
     bls_api_key: str | None = None
     nps_api_key: str | None = None
+    eia_api_key: str | None = None
     timeout: int = 30
 
     def __post_init__(self):
@@ -19,6 +20,7 @@ class Config:
         self.fred_api_key = os.environ.get("FRED_API_KEY")
         self.bls_api_key = os.environ.get("BLS_API_KEY")
         self.nps_api_key = os.environ.get("NPS_API_KEY")
+        self.eia_api_key = os.environ.get("EIA_API_KEY")
         self.timeout = int(os.environ.get("API_TIMEOUT", "30"))
 
     @property
@@ -40,6 +42,10 @@ class Config:
     @property
     def has_nps(self) -> bool:
         return bool(self.nps_api_key)
+
+    @property
+    def has_eia(self) -> bool:
+        return bool(self.eia_api_key)
 
     def get_availability_summary(self) -> str:
         """Return a summary of API availability."""
@@ -82,6 +88,10 @@ class Config:
             lines.append("  ✓ NPS (API key configured)")
         else:
             lines.append("  ✗ NPS (NPS_API_KEY not set)")
+        if self.has_eia:
+            lines.append("  ✓ EIA (API key configured)")
+        else:
+            lines.append("  ✗ EIA (EIA_API_KEY not set)")
         if self.has_nasa_key:
             lines.append("  ✓ NASA FIRMS (using NASA API key)")
         else:

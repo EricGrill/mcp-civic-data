@@ -29,6 +29,7 @@ mcp = FastMCP(
 - FDA (drug/food/device recalls, adverse events, drug labels via openFDA)
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
 - NPS (national parks, park alerts, and park details)
+- EIA (electricity data, petroleum prices, energy market overview; requires API key)
 """,
 )
 
@@ -47,6 +48,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     cisa,  # noqa: F401
     datagov,  # noqa: F401
     earthquakes,  # noqa: F401
+    eia,  # noqa: F401
     economics,  # noqa: F401
     eu_data,  # noqa: F401
     fda,  # noqa: F401
