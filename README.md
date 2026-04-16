@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![77 Tools](https://img.shields.io/badge/tools-77-2563eb.svg?style=flat-square)](#tool-reference)
-[![22 APIs](https://img.shields.io/badge/APIs-22-7c3aed.svg?style=flat-square)](#data-sources)
+[![80 Tools](https://img.shields.io/badge/tools-80-2563eb.svg?style=flat-square)](#tool-reference)
+[![23 APIs](https://img.shields.io/badge/APIs-23-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **22 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **23 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, behavioral health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 14 of 22 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 15 of 23 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -57,6 +57,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added SAMHSA tools for mental health and substance abuse treatment facility locator and behavioral health data
 - Added FDA tools for recalls, adverse events, and drug labels via openFDA
 - Added CDC public health surveillance tools for disease tracking and vaccination coverage
 - Added shared geolocation support with a new `lookup_location` tool
@@ -97,6 +98,7 @@ python3 -m mcp_govt_api
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
+| [SAMHSA](https://findtreatment.gov) | Mental health and substance abuse treatment facilities, behavioral health data | -- |
 
 ### Demographics & Economics
 
@@ -183,6 +185,8 @@ python3 -m mcp_govt_api
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
+"Find mental health treatment facilities near Chicago"
+"Search SAMHSA data for opioid treatment admissions"
 ```
 
 ---
@@ -338,6 +342,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>SAMHSA (Behavioral Health)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `find_treatment_facilities` | Find mental health and substance abuse treatment facilities near a location |
+| `search_samhsa_datasets` | Search SAMHSA open data catalog for behavioral health datasets |
+| `get_samhsa_facility_details` | Get detailed info about a specific SAMHSA treatment facility |
+
+</details>
+
+<details>
 <summary><strong>SEC EDGAR</strong> — 5 tools</summary>
 
 | Tool | Description |
@@ -477,7 +492,7 @@ API Availability:
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
   ✓ SEC EDGAR             ✓ CDC Open Data
-  ✓ BLS                   ✓ FEMA
+  ✓ BLS                   ✓ FEMA           ✓ SAMHSA
   ✗ OpenWeather (key not set)
   ✗ EIA (key not set)
 ```
