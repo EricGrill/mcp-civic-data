@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![77 Tools](https://img.shields.io/badge/tools-77-2563eb.svg?style=flat-square)](#tool-reference)
-[![22 APIs](https://img.shields.io/badge/APIs-22-7c3aed.svg?style=flat-square)](#data-sources)
+[![80 Tools](https://img.shields.io/badge/tools-80-2563eb.svg?style=flat-square)](#tool-reference)
+[![23 APIs](https://img.shields.io/badge/APIs-23-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **22 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **23 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -98,6 +98,12 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
 
+### Education
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [NCES (Education Data Portal)](https://educationdata.urban.org) | School districts, school enrollment, college/university data | -- |
+
 ### Demographics & Economics
 
 | Source | What It Covers | Key |
@@ -180,6 +186,9 @@ python3 -m mcp_govt_api
 "Search for national parks in California"
 "Are there any alerts at Yosemite?"
 "Tell me about Grand Canyon National Park"
+"Search for school districts in California"
+"What's the enrollment at schools in Texas?"
+"Find colleges in New York"
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
@@ -425,6 +434,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_bls_timeseries` | Get time series data for any BLS series (CPI, employment, PPI) |
 | `search_bls_series` | Look up common BLS series IDs by keyword |
 | `get_unemployment_rate` | National or state-level unemployment rate data |
+
+</details>
+
+<details>
+<summary><strong>Education (NCES)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_school_districts` | Search school districts by state or name |
+| `get_school_enrollment` | Get school enrollment data by state or district |
+| `search_colleges` | Search colleges and universities via IPEDS |
 
 </details>
 

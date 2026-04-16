@@ -30,6 +30,7 @@ mcp = FastMCP(
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
 - NPS (national parks, park alerts, and park details)
 - EIA (electricity data, petroleum prices, energy market overview; requires API key)
+- NCES (school districts, school enrollment, college/university data via Education Data Portal)
 """,
 )
 
@@ -57,6 +58,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     fred,  # noqa: F401
     location,  # noqa: F401
     nasa,  # noqa: F401
+    nces,  # noqa: F401
     noaa_coops,  # noqa: F401
     noaa_weather,  # noqa: F401
     nps,  # noqa: F401
