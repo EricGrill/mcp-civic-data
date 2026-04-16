@@ -11,7 +11,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, and USDA food and agriculture data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, national forests, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, USDA food and agriculture data, and USFS wildfire and forest data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -59,6 +59,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added USDA Forest Service tools for active wildfires, fire perimeters, and National Forest search via WFIGS/ArcGIS
 - Added EPA environmental compliance tools for ECHO facility search, detailed facility reports, and Toxics Release Inventory
 - Added SAMHSA tools for mental health and substance abuse treatment facility locator and behavioral health data
 - Added CMS tools for hospital quality ratings, Medicare provider search, and healthcare data
@@ -98,6 +99,7 @@ python3 -m mcp_govt_api
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
 | [CISA](https://www.cisa.gov) | Known exploited vulnerabilities, security alerts, advisories | -- |
 | [FEMA](https://www.fema.gov/api/open) | Disaster declarations, assistance data, housing assistance | -- |
+| [USFS (WFIGS)](https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/) | Active wildfires, fire perimeters, National Forest boundaries | -- |
 
 ### Health & Safety
 
@@ -255,6 +257,9 @@ python3 -m mcp_govt_api
 "Show toxic chemical releases in Texas for 2022"
 "Find mental health treatment facilities near Chicago"
 "Search SAMHSA data for opioid treatment admissions"
+"What are the active wildfires in California?"
+"Show me wildfire perimeters in Oregon"
+"Search for National Forests in Montana"
 ```
 
 ---
@@ -428,6 +433,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_fema_disasters` | Search disaster declarations by state, year, or type |
 | `get_fema_disaster_summary` | Detailed summary for a specific disaster number |
 | `get_fema_assistance` | Housing assistance data for disaster survivors |
+
+</details>
+
+<details>
+<summary><strong>USDA Forest Service (USFS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_active_wildfires` | Current wildfire incidents from WFIGS by state |
+| `get_wildfire_perimeters` | Active fire perimeters and boundaries with acreage |
+| `search_national_forests` | Search National Forests by name or state |
 
 </details>
 
