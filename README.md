@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![59 Tools](https://img.shields.io/badge/tools-59-2563eb.svg?style=flat-square)](#tool-reference)
+[![62 Tools](https://img.shields.io/badge/tools-62-2563eb.svg?style=flat-square)](#tool-reference)
 [![16 APIs](https://img.shields.io/badge/APIs-16-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **17 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, labor statistics, public health, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **18 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, labor statistics, public health, disaster management, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 13 of 16 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 14 of 18 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -86,6 +86,7 @@ python3 -m mcp_govt_api
 | [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov) | Active wildfires detected from satellites | Optional |
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
 | [CISA](https://www.cisa.gov) | Known exploited vulnerabilities, security alerts, advisories | -- |
+| [FEMA](https://www.fema.gov/api/open) | Disaster declarations, assistance data, housing assistance | -- |
 
 ### Demographics & Economics
 
@@ -147,6 +148,8 @@ python3 -m mcp_govt_api
 "What's the current CPI?"
 "What's the unemployment rate in California?"
 "Show me BLS employment data for 2023"
+"What FEMA disaster declarations were made in Florida this year?"
+"Show me housing assistance data for Hurricane Ian"
 ```
 
 ---
@@ -254,6 +257,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_cdc_disease_surveillance` | Notifiable disease case counts from the NNDSS |
 | `get_cdc_vaccination_coverage` | Vaccination coverage estimates by vaccine and state |
 | `query_cdc_open_data` | Raw CDC SODA API access for any dataset |
+
+</details>
+
+<details>
+<summary><strong>FEMA Disasters</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_fema_disasters` | Search disaster declarations by state, year, or type |
+| `get_fema_disaster_summary` | Detailed summary for a specific disaster number |
+| `get_fema_assistance` | Housing assistance data for disaster survivors |
 
 </details>
 
@@ -373,7 +387,7 @@ API Availability:
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
   ✓ SEC EDGAR             ✓ CDC Open Data
-  ✓ BLS
+  ✓ BLS                   ✓ FEMA
   ✗ OpenWeather (key not set)
 ```
 
