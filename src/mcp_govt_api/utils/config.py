@@ -15,6 +15,8 @@ class Config:
     bea_api_key: str | None = None
     usda_api_key: str | None = None
     timeout: int = 30
+    cache_enabled: bool = True
+    cache_ttl: int = 300
     log_level: str = "INFO"
 
     def __post_init__(self):
@@ -27,6 +29,10 @@ class Config:
         self.bea_api_key = os.environ.get("BEA_API_KEY")
         self.usda_api_key = os.environ.get("USDA_API_KEY")
         self.timeout = int(os.environ.get("API_TIMEOUT", "30"))
+        self.cache_enabled = os.environ.get(
+            "CACHE_ENABLED", "true"
+        ).lower() in ("true", "1", "yes")
+        self.cache_ttl = int(os.environ.get("CACHE_TTL", "300"))
         self.log_level = os.environ.get("LOG_LEVEL", "INFO").upper()
 
     @property
