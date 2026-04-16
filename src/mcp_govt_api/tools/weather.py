@@ -4,7 +4,6 @@ from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.location import resolve_location
 from mcp_govt_api.utils.validation import validate_state_code
 
-
 NOAA_BASE = "https://api.weather.gov"
 
 

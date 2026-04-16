@@ -2,7 +2,6 @@ from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.validation import validate_state_code
 
-
 CENSUS_BASE = "https://api.census.gov/data"
 # American Community Survey 5-Year Estimates (most recent)
 ACS_YEAR = "2022"
@@ -10,17 +9,58 @@ ACS_DATASET = f"{CENSUS_BASE}/{ACS_YEAR}/acs/acs5"
 
 # State FIPS lookup for all US states + DC + PR
 STATE_FIPS = {
-    "AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06",
-    "CO": "08", "CT": "09", "DE": "10", "FL": "12", "GA": "13",
-    "HI": "15", "ID": "16", "IL": "17", "IN": "18", "IA": "19",
-    "KS": "20", "KY": "21", "LA": "22", "ME": "23", "MD": "24",
-    "MA": "25", "MI": "26", "MN": "27", "MS": "28", "MO": "29",
-    "MT": "30", "NE": "31", "NV": "32", "NH": "33", "NJ": "34",
-    "NM": "35", "NY": "36", "NC": "37", "ND": "38", "OH": "39",
-    "OK": "40", "OR": "41", "PA": "42", "RI": "44", "SC": "45",
-    "SD": "46", "TN": "47", "TX": "48", "UT": "49", "VT": "50",
-    "VA": "51", "WA": "53", "WV": "54", "WI": "55", "WY": "56",
-    "DC": "11", "PR": "72",
+    "AL": "01",
+    "AK": "02",
+    "AZ": "04",
+    "AR": "05",
+    "CA": "06",
+    "CO": "08",
+    "CT": "09",
+    "DE": "10",
+    "FL": "12",
+    "GA": "13",
+    "HI": "15",
+    "ID": "16",
+    "IL": "17",
+    "IN": "18",
+    "IA": "19",
+    "KS": "20",
+    "KY": "21",
+    "LA": "22",
+    "ME": "23",
+    "MD": "24",
+    "MA": "25",
+    "MI": "26",
+    "MN": "27",
+    "MS": "28",
+    "MO": "29",
+    "MT": "30",
+    "NE": "31",
+    "NV": "32",
+    "NH": "33",
+    "NJ": "34",
+    "NM": "35",
+    "NY": "36",
+    "NC": "37",
+    "ND": "38",
+    "OH": "39",
+    "OK": "40",
+    "OR": "41",
+    "PA": "42",
+    "RI": "44",
+    "SC": "45",
+    "SD": "46",
+    "TN": "47",
+    "TX": "48",
+    "UT": "49",
+    "VT": "50",
+    "VA": "51",
+    "WA": "53",
+    "WV": "54",
+    "WI": "55",
+    "WY": "56",
+    "DC": "11",
+    "PR": "72",
 }
 
 
@@ -41,16 +81,12 @@ async def get_population(state: str, county: str = "") -> str:
     # Variables: B01003_001E = Total Population
     variables = "NAME,B01003_001E"
 
-    if county:
-        geo = f"county:*&in=state:{fips}"
-    else:
-        geo = f"state:{fips}"
+    geo = f"county:*&in=state:{fips}" if county else f"state:{fips}"
 
     url = f"{ACS_DATASET}?get={variables}&for={geo}"
     data = await fetch_json(url)
 
     # First row is headers, rest is data
-    headers = data[0]
     rows = data[1:]
 
     result = [f"Population Data ({ACS_YEAR} ACS 5-Year Estimates):\n"]
@@ -77,21 +113,20 @@ async def get_demographics(state: str, county: str = "") -> str:
     fips = STATE_FIPS.get(state_code, state_code)
 
     # Variables for demographics
-    variables = ",".join([
-        "NAME",
-        "B01003_001E",  # Total population
-        "B01002_001E",  # Median age
-        "B19013_001E",  # Median household income
-        "B02001_002E",  # White alone
-        "B02001_003E",  # Black alone
-        "B02001_005E",  # Asian alone
-        "B03001_003E",  # Hispanic/Latino
-    ])
+    variables = ",".join(
+        [
+            "NAME",
+            "B01003_001E",  # Total population
+            "B01002_001E",  # Median age
+            "B19013_001E",  # Median household income
+            "B02001_002E",  # White alone
+            "B02001_003E",  # Black alone
+            "B02001_005E",  # Asian alone
+            "B03001_003E",  # Hispanic/Latino
+        ]
+    )
 
-    if county:
-        geo = f"county:{county}&in=state:{fips}"
-    else:
-        geo = f"state:{fips}"
+    geo = f"county:{county}&in=state:{fips}" if county else f"state:{fips}"
 
     url = f"{ACS_DATASET}?get={variables}&for={geo}"
     data = await fetch_json(url)
@@ -107,7 +142,7 @@ async def get_demographics(state: str, county: str = "") -> str:
     hispanic = int(row[7]) if row[7] else 0
 
     def pct(n: int) -> str:
-        return f"{(n/total_pop*100):.1f}%" if total_pop else "N/A"
+        return f"{(n / total_pop * 100):.1f}%" if total_pop else "N/A"
 
     return (
         f"**Demographics for {name}** ({ACS_YEAR} ACS 5-Year Estimates)\n\n"
@@ -137,19 +172,18 @@ async def get_housing_stats(state: str, county: str = "") -> str:
     fips = STATE_FIPS.get(state_code, state_code)
 
     # Housing variables
-    variables = ",".join([
-        "NAME",
-        "B25001_001E",  # Total housing units
-        "B25002_002E",  # Occupied units
-        "B25002_003E",  # Vacant units
-        "B25077_001E",  # Median home value
-        "B25064_001E",  # Median gross rent
-    ])
+    variables = ",".join(
+        [
+            "NAME",
+            "B25001_001E",  # Total housing units
+            "B25002_002E",  # Occupied units
+            "B25002_003E",  # Vacant units
+            "B25077_001E",  # Median home value
+            "B25064_001E",  # Median gross rent
+        ]
+    )
 
-    if county:
-        geo = f"county:{county}&in=state:{fips}"
-    else:
-        geo = f"state:{fips}"
+    geo = f"county:{county}&in=state:{fips}" if county else f"state:{fips}"
 
     url = f"{ACS_DATASET}?get={variables}&for={geo}"
     data = await fetch_json(url)
@@ -175,12 +209,7 @@ async def get_housing_stats(state: str, county: str = "") -> str:
 
 
 @mcp.tool()
-async def query_census(
-    dataset: str,
-    variables: list[str],
-    geo: str,
-    year: str = "2022"
-) -> dict:
+async def query_census(dataset: str, variables: list[str], geo: str, year: str = "2022") -> dict:
     """Make a raw query to the Census API.
 
     Args:
