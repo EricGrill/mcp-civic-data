@@ -46,3 +46,4 @@ from mcp_govt_api.tools import firms  # noqa: E402, F401
 from mcp_govt_api.tools import space_weather  # noqa: E402, F401
 from mcp_govt_api.tools import cisa  # noqa: E402, F401
 from mcp_govt_api.tools import sec  # noqa: E402, F401
+from mcp_govt_api.tools import noaa_weather  # noqa: E402, F401

@@ -6,7 +6,7 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![51 Tools](https://img.shields.io/badge/tools-51-2563eb.svg?style=flat-square)](#tool-reference)
+[![54 Tools](https://img.shields.io/badge/tools-54-2563eb.svg?style=flat-square)](#tool-reference)
 [![15 APIs](https://img.shields.io/badge/APIs-15-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
@@ -146,6 +146,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_global_weather` | Current conditions for any city worldwide |
 | `query_noaa` | Raw NOAA API access |
 | `query_openweather` | Raw OpenWeather API access |
+
+</details>
+
+<details>
+<summary><strong>NOAA Radar & Alerts</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_forecast_discussion` | Area Forecast Discussion from a NWS Weather Forecast Office |
+| `get_active_weather_alerts` | Active weather alerts filtered by state, event type, and severity |
+| `get_radar_stations` | NEXRAD radar stations, optionally filtered by state |
 
 </details>
 
