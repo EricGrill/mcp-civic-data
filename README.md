@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![51 Tools](https://img.shields.io/badge/tools-51-2563eb.svg?style=flat-square)](#tool-reference)
-[![15 APIs](https://img.shields.io/badge/APIs-15-7c3aed.svg?style=flat-square)](#data-sources)
+[![54 Tools](https://img.shields.io/badge/tools-54-2563eb.svg?style=flat-square)](#tool-reference)
+[![16 APIs](https://img.shields.io/badge/APIs-16-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **15 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, open data discovery, cybersecurity, and SEC disclosures.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **16 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, open data discovery, cybersecurity, and SEC disclosures.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -73,6 +73,7 @@ python3 -m mcp_govt_api
 | [OpenWeather](https://openweathermap.org) | Global weather for any city | Required |
 | [OpenAQ](https://openaq.org) | Air quality from stations worldwide | -- |
 | [USGS Water](https://waterservices.usgs.gov) | Real-time stream flow and flood levels across every US river | -- |
+| [NOAA CO-OPS](https://tidesandcurrents.noaa.gov) | Tide predictions, observed water levels, coastal stations | -- |
 | [Safecast](https://safecast.org) | Community radiation monitoring, 150M+ measurements | -- |
 
 ### Hazards & Events
@@ -123,6 +124,8 @@ python3 -m mcp_govt_api
 "Show me recent photos from the Perseverance rover"
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
+"What are the tide predictions for Providence, RI?"
+"Find tide stations in Florida"
 "Find datasets about climate change on Data.gov"
 "Get Apple's latest 10-K filing from SEC"
 "Show me recent SEC filings for Tesla"
@@ -177,6 +180,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_water_conditions` | Stream flow and gage height by US state |
 | `get_water_site` | All readings for a specific USGS monitoring site |
 | `query_usgs_water` | Raw USGS Water Services API access |
+
+</details>
+
+<details>
+<summary><strong>Tides & Coastal (NOAA CO-OPS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_tide_predictions` | Tide predictions for a CO-OPS station |
+| `get_water_levels` | Observed water levels from a CO-OPS station |
+| `search_tide_stations` | Search for NOAA CO-OPS tide prediction stations |
 
 </details>
 
