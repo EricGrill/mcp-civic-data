@@ -274,19 +274,6 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
-<summary><strong>SEC EDGAR</strong> — 5 tools</summary>
-
-| Tool | Description |
-|------|-------------|
-| `get_company_filings` | Get SEC filings by ticker or CIK (10-K, 10-Q, 8-K) |
-| `search_company` | Find CIK for a company by name or ticker |
-| `get_latest_submissions` | Get latest submissions filtered by form type |
-| `get_company_facts` | Financial facts and XBRL data for a company |
-| `query_sec_edgar` | Raw SEC EDGAR API access |
-
-</details>
-
-<details>
 <summary><strong>NASA</strong> — 4 tools</summary>
 
 | Tool | Description |
