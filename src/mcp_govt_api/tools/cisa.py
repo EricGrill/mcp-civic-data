@@ -157,7 +157,7 @@ async def get_recent_cisa_alerts(limit: int = 5) -> str:
         published = entry.find("atom:published", ns)
         if published is None:
             published = entry.find("published")
-        published_text = published.text[:10] if published is not None else "Unknown date"
+        published_text = published.text[:10] if published is not None and published.text else "Unknown date"
 
         link = entry.find("atom:link", ns)
         if link is None:
@@ -238,7 +238,7 @@ async def get_cisa_bulletins(limit: int = 5) -> str:
         published = entry.find("atom:published", ns)
         if published is None:
             published = entry.find("published")
-        published_text = published.text[:10] if published is not None else "Unknown date"
+        published_text = published.text[:10] if published is not None and published.text else "Unknown date"
 
         link = entry.find("atom:link", ns)
         if link is None:
