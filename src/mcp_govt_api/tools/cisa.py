@@ -155,18 +155,18 @@ async def get_recent_cisa_alerts(limit: int = 5) -> str:
         published = entry.find("atom:published", ns)
         if published is None:
             published = entry.find("published")
-        published_text = published.text[:10] if published is not None else "Unknown date"
-        
+        published_text = published.text[:10] if published is not None and published.text else "Unknown date"
+
         link = entry.find("atom:link", ns)
         if link is None:
             link = entry.find("link")
         link_href = link.get("href") if link is not None else None
-        
+
         summary = entry.find("atom:summary", ns)
         if summary is None:
             summary = entry.find("summary")
         summary_text = summary.text if summary is not None else ""
-        
+
         lines.append(f"**{title_text}**")
         lines.append(f"  Published: {published_text}")
         if link_href:
@@ -235,13 +235,13 @@ async def get_cisa_bulletins(limit: int = 5) -> str:
         published = entry.find("atom:published", ns)
         if published is None:
             published = entry.find("published")
-        published_text = published.text[:10] if published is not None else "Unknown date"
-        
+        published_text = published.text[:10] if published is not None and published.text else "Unknown date"
+
         link = entry.find("atom:link", ns)
         if link is None:
             link = entry.find("link")
         link_href = link.get("href") if link is not None else None
-        
+
         lines.append(f"**{title_text}**")
         lines.append(f"  Published: {published_text}")
         if link_href:

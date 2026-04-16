@@ -75,15 +75,17 @@ async def get_space_weather_summary() -> str:
     # Kp index
     if kp_row:
         kp_time = kp_row[0] if len(kp_row) > 0 else "N/A"
+        kp_value_str: str
         try:
-            kp_value = float(kp_row[1])
-            kp_label = _kp_storm_level(kp_value)
+            kp_float = float(kp_row[1])
+            kp_label = _kp_storm_level(kp_float)
+            kp_value_str = str(kp_float)
         except (TypeError, ValueError, IndexError):
-            kp_value = kp_row[1] if len(kp_row) > 1 else "N/A"
+            kp_value_str = kp_row[1] if len(kp_row) > 1 else "N/A"
             kp_label = "Unknown"
         lines.append(
             f"Geomagnetic Activity (as of {kp_time}):\n"
-            f"  Kp Index: {kp_value} - {kp_label}"
+            f"  Kp Index: {kp_value_str} - {kp_label}"
         )
     else:
         lines.append("Kp index data unavailable.")

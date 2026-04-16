@@ -147,6 +147,8 @@ async def search_company(name: str = "", ticker: str = "") -> str:
     except Exception as e:
         return f"Error searching for company: {str(e)}"
 
+    return "Error: Please provide either a company name or ticker symbol."
+
 
 @mcp.tool()
 async def get_latest_submissions(cik: str, form_type: str = "") -> str:
