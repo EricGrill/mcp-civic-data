@@ -30,6 +30,9 @@ mcp = FastMCP(
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
 - NPS (national parks, park alerts, and park details)
 - EIA (electricity data, petroleum prices, energy market overview; requires API key)
+- BEA (regional GDP, personal income, GDP by industry; requires API key)
+- BTS (airline on-time performance, border crossing data, transportation datasets)
+- SBA (small business size standards, disaster loans, open datasets)
 - CFPB (consumer complaints, financial product issues, company response data)
 """,
 )
@@ -43,7 +46,9 @@ def main():
 
 # Import tools to register them
 from mcp_govt_api.tools import (  # noqa: E402
+    bea,  # noqa: F401
     bls,  # noqa: F401
+    bts,  # noqa: F401
     cdc,  # noqa: F401
     census,  # noqa: F401
     cfpb,  # noqa: F401
@@ -64,6 +69,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     nps,  # noqa: F401
     openaq,  # noqa: F401
     safecast,  # noqa: F401
+    sba,  # noqa: F401
     sec,  # noqa: F401
     space_weather,  # noqa: F401
     usgs_water,  # noqa: F401
