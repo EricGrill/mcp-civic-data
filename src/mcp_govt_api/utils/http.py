@@ -1,5 +1,7 @@
 import httpx
 from typing import Any
+from contextlib import asynccontextmanager
+from collections.abc import AsyncIterator
 
 from mcp_govt_api.utils.config import config
 
@@ -9,6 +11,15 @@ http_client = httpx.AsyncClient(
     follow_redirects=True,
     headers={"User-Agent": "mcp-civic-data/0.1.0"},
 )
+
+
+@asynccontextmanager
+async def http_lifespan(_server: Any) -> AsyncIterator[None]:
+    """Lifespan context manager that closes the HTTP client on shutdown."""
+    try:
+        yield None
+    finally:
+        await http_client.aclose()
 
 
 async def fetch_json(url: str, params: dict[str, Any] | None = None) -> Any:
