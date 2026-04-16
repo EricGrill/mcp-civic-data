@@ -1,5 +1,6 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
+from mcp_govt_api.utils.validation import validate_state_code
 
 CENSUS_BASE = "https://api.census.gov/data"
 # American Community Survey 5-Year Estimates (most recent)
@@ -74,7 +75,7 @@ async def get_population(state: str, county: str = "") -> str:
     Returns:
         Population statistics from the American Community Survey
     """
-    state_code = state.upper()
+    state_code = validate_state_code(state)
     fips = STATE_FIPS.get(state_code, state_code)
 
     # Variables: B01003_001E = Total Population
@@ -108,7 +109,7 @@ async def get_demographics(state: str, county: str = "") -> str:
     Returns:
         Age, race, and income demographics from the American Community Survey
     """
-    state_code = state.upper()
+    state_code = validate_state_code(state)
     fips = STATE_FIPS.get(state_code, state_code)
 
     # Variables for demographics
@@ -167,7 +168,7 @@ async def get_housing_stats(state: str, county: str = "") -> str:
     Returns:
         Housing data including median values, rent, and vacancy rates
     """
-    state_code = state.upper()
+    state_code = validate_state_code(state)
     fips = STATE_FIPS.get(state_code, state_code)
 
     # Housing variables
