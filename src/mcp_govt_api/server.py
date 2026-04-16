@@ -30,6 +30,7 @@ mcp = FastMCP(
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
 - NPS (national parks, park alerts, and park details)
 - EIA (electricity data, petroleum prices, energy market overview; requires API key)
+- CFPB (consumer complaints, financial product issues, company response data)
 """,
 )
 
@@ -45,6 +46,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     bls,  # noqa: F401
     cdc,  # noqa: F401
     census,  # noqa: F401
+    cfpb,  # noqa: F401
     cisa,  # noqa: F401
     datagov,  # noqa: F401
     earthquakes,  # noqa: F401
