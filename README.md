@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![95 Tools](https://img.shields.io/badge/tools-95-2563eb.svg?style=flat-square)](#tool-reference)
-[![28 APIs](https://img.shields.io/badge/APIs-28-7c3aed.svg?style=flat-square)](#data-sources)
+[![98 Tools](https://img.shields.io/badge/tools-98-2563eb.svg?style=flat-square)](#tool-reference)
+[![29 APIs](https://img.shields.io/badge/APIs-29-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **28 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **29 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -101,6 +101,7 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [CMS](https://data.cms.gov) | Hospital quality ratings, Medicare provider search, healthcare data | -- |
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
+| [NHTSA](https://www.nhtsa.gov) | Vehicle recalls, consumer complaints, VIN decoding | -- |
 | [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
 
 ### Demographics & Economics
@@ -204,6 +205,9 @@ python3 -m mcp_govt_api
 "Search for national parks in California"
 "Are there any alerts at Yosemite?"
 "Tell me about Grand Canyon National Park"
+"Are there any recalls for 2020 Toyota Camry?"
+"Show me consumer complaints for Ford F-150"
+"Decode VIN 1HGCM82633A004352"
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
@@ -403,6 +407,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `search_osha_inspections` | Search OSHA workplace inspections by state or establishment |
 | `get_osha_violations` | Get violations for a specific OSHA inspection |
 | `search_osha_fatalities` | Search workplace fatality and catastrophe reports |
+
+</details>
+
+<details>
+<summary><strong>NHTSA Vehicle Safety</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_vehicle_recalls` | Search NHTSA vehicle recall campaigns by make, model, and year |
+| `get_vehicle_complaints` | Get consumer complaints about vehicles from NHTSA |
+| `decode_vin` | Decode a Vehicle Identification Number for make/model/year/specs |
 
 </details>
 
