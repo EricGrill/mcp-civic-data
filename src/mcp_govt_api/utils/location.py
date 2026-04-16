@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 from mcp_govt_api.utils.http import fetch_json
 
-
 NOMINATIM_BASE = "https://nominatim.openstreetmap.org"
 
 

@@ -1,7 +1,6 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 DATAGOV_BASE = "https://catalog.data.gov/api/3"
 
 
@@ -40,11 +39,7 @@ async def search_datasets(query: str, rows: int = 10) -> str:
         num_resources = len(ds.get("resources", []))
 
         output.append(
-            f"**{title}**\n"
-            f"Organization: {org}\n"
-            f"Resources: {num_resources} files\n"
-            f"ID: `{dataset_id}`\n"
-            f"{notes}..."
+            f"**{title}**\nOrganization: {org}\nResources: {num_resources} files\nID: `{dataset_id}`\n{notes}..."
         )
 
     return "\n\n---\n\n".join(output)

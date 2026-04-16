@@ -1,13 +1,12 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 USGS_BASE = "https://waterservices.usgs.gov/nwis/iv/"
 
 # USGS parameter codes
-PARAM_STREAMFLOW = "00060"   # Streamflow, ft³/s
+PARAM_STREAMFLOW = "00060"  # Streamflow, ft³/s
 PARAM_GAGE_HEIGHT = "00065"  # Gage height, ft
-PARAM_WATER_TEMP = "00010"   # Water temperature, °C
+PARAM_WATER_TEMP = "00010"  # Water temperature, °C
 
 
 def _format_time_series(time_series: list[dict]) -> list[str]:
@@ -24,22 +23,10 @@ def _format_time_series(time_series: list[dict]) -> list[str]:
 
     for series in time_series:
         site_name = series.get("sourceInfo", {}).get("siteName", "Unknown site")
-        site_code = (
-            series.get("sourceInfo", {})
-            .get("siteCode", [{}])[0]
-            .get("value", "N/A")
-        )
+        site_code = series.get("sourceInfo", {}).get("siteCode", [{}])[0].get("value", "N/A")
         variable_name = series.get("variable", {}).get("variableName", "Unknown")
-        variable_code = (
-            series.get("variable", {})
-            .get("variableCode", [{}])[0]
-            .get("value", "")
-        )
-        unit = (
-            series.get("variable", {})
-            .get("unit", {})
-            .get("unitCode", "")
-        )
+        variable_code = series.get("variable", {}).get("variableCode", [{}])[0].get("value", "")
+        unit = series.get("variable", {}).get("unit", {}).get("unitCode", "")
 
         values = series.get("values", [{}])[0].get("value", [])
         reading = values[0].get("value", "N/A") if values else "N/A"
@@ -109,11 +96,7 @@ async def get_water_conditions(state: str) -> str:
     seen_sites: set[str] = set()
     limited: list[dict] = []
     for series in time_series:
-        site_code = (
-            series.get("sourceInfo", {})
-            .get("siteCode", [{}])[0]
-            .get("value", "")
-        )
+        site_code = series.get("sourceInfo", {}).get("siteCode", [{}])[0].get("value", "")
         if site_code not in seen_sites:
             seen_sites.add(site_code)
             if len(seen_sites) > 10:

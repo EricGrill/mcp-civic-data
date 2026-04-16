@@ -69,25 +69,28 @@ class WeatherToolLocationTests(unittest.IsolatedAsyncioTestCase):
             },
         ]
 
-        with patch(
-            "mcp_govt_api.tools.weather.resolve_location",
-            new=AsyncMock(
-                return_value=ResolvedLocation(
-                    latitude=38.8894,
-                    longitude=-77.0352,
-                    display_name="Washington, DC",
-                    source="nominatim",
-                )
-            ),
-        ) as resolve_mock, patch(
-            "mcp_govt_api.tools.weather.fetch_json",
-            new=AsyncMock(
-                side_effect=[
-                    {"properties": {"forecast": "https://example.com/forecast"}},
-                    {"properties": {"periods": periods}},
-                ]
-            ),
-        ) as fetch_mock:
+        with (
+            patch(
+                "mcp_govt_api.tools.weather.resolve_location",
+                new=AsyncMock(
+                    return_value=ResolvedLocation(
+                        latitude=38.8894,
+                        longitude=-77.0352,
+                        display_name="Washington, DC",
+                        source="nominatim",
+                    )
+                ),
+            ) as resolve_mock,
+            patch(
+                "mcp_govt_api.tools.weather.fetch_json",
+                new=AsyncMock(
+                    side_effect=[
+                        {"properties": {"forecast": "https://example.com/forecast"}},
+                        {"properties": {"periods": periods}},
+                    ]
+                ),
+            ) as fetch_mock,
+        ):
             result = await get_weather_forecast(location="Washington, DC")
 
         resolve_mock.assert_awaited_once_with(
