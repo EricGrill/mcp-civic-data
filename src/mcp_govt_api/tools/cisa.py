@@ -4,6 +4,7 @@ import httpx
 
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
+from mcp_govt_api.utils.validation import validate_limit
 
 CISA_KEV_URL = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
 CISA_ALERTS_URL = "https://www.cisa.gov/news.xml"
@@ -40,6 +41,8 @@ async def search_known_exploited_vulnerabilities(
         CVE ID, vendor/product, vulnerability name, remediation due date, and
         required action.
     """
+    limit = validate_limit(limit, max_val=100, default=10)
+
     try:
         data = await fetch_json(CISA_KEV_URL)
     except Exception as e:
@@ -79,7 +82,7 @@ async def search_known_exploited_vulnerabilities(
     # Sort by date added (most recent first)
     filtered.sort(key=lambda x: x.get("dateAdded", ""), reverse=True)
 
-    results = filtered[: min(limit, 100)]
+    results = filtered[:limit]
 
     lines = [f"CISA Known Exploited Vulnerabilities ({len(results)} of {len(filtered)} total):\n"]
 
@@ -119,7 +122,7 @@ async def get_recent_cisa_alerts(limit: int = 5) -> str:
     Returns:
         Recent CISA alerts with titles, publication dates, and links to full advisories.
     """
-    limit = min(limit, 20)
+    limit = validate_limit(limit, max_val=20, default=5)
 
     try:
         response = await http_client.get(CISA_ALERTS_URL)
@@ -157,7 +160,7 @@ async def get_recent_cisa_alerts(limit: int = 5) -> str:
         published = entry.find("atom:published", ns)
         if published is None:
             published = entry.find("published")
-        published_text = published.text[:10] if published is not None else "Unknown date"
+        published_text = published.text[:10] if published is not None and published.text else "Unknown date"
 
         link = entry.find("atom:link", ns)
         if link is None:
@@ -201,7 +204,7 @@ async def get_cisa_bulletins(limit: int = 5) -> str:
     Returns:
         Recent CISA bulletins with publication dates and links.
     """
-    limit = min(limit, 10)
+    limit = validate_limit(limit, max_val=10, default=5)
 
     try:
         response = await http_client.get(CISA_BULLETINS_URL)
@@ -238,7 +241,7 @@ async def get_cisa_bulletins(limit: int = 5) -> str:
         published = entry.find("atom:published", ns)
         if published is None:
             published = entry.find("published")
-        published_text = published.text[:10] if published is not None else "Unknown date"
+        published_text = published.text[:10] if published is not None and published.text else "Unknown date"
 
         link = entry.find("atom:link", ns)
         if link is None:
