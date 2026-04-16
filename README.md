@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![77 Tools](https://img.shields.io/badge/tools-77-2563eb.svg?style=flat-square)](#tool-reference)
-[![22 APIs](https://img.shields.io/badge/APIs-22-7c3aed.svg?style=flat-square)](#data-sources)
+[![80 Tools](https://img.shields.io/badge/tools-80-2563eb.svg?style=flat-square)](#tool-reference)
+[![23 APIs](https://img.shields.io/badge/APIs-23-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **22 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **23 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, and SBA small business data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 14 of 22 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 15 of 23 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -113,6 +113,12 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [EIA](https://www.eia.gov/opendata/) | Electricity, petroleum, natural gas, coal, and energy market data | Required |
 
+### Small Business
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [SBA](https://data.sba.gov) | Small business size standards, disaster loans, open datasets | -- |
+
 ### Finance & Securities
 
 | Source | What It Covers | Key |
@@ -183,6 +189,9 @@ python3 -m mcp_govt_api
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
+"Search SBA datasets for PPP loans"
+"What is the SBA size standard for restaurants?"
+"Show me SBA disaster loans in Florida"
 ```
 
 ---
@@ -338,6 +347,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>SBA (Small Business)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_sba_datasets` | Search SBA open datasets on data.sba.gov |
+| `get_sba_size_standards` | Look up small business size standards by industry or NAICS code |
+| `get_sba_disaster_loans` | Get SBA disaster loan data by state or year |
+
+</details>
+
+<details>
 <summary><strong>SEC EDGAR</strong> — 5 tools</summary>
 
 | Tool | Description |
@@ -478,6 +498,7 @@ API Availability:
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
   ✓ SEC EDGAR             ✓ CDC Open Data
   ✓ BLS                   ✓ FEMA
+  ✓ SBA
   ✗ OpenWeather (key not set)
   ✗ EIA (key not set)
 ```

@@ -30,6 +30,7 @@ mcp = FastMCP(
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
 - NPS (national parks, park alerts, and park details)
 - EIA (electricity data, petroleum prices, energy market overview; requires API key)
+- SBA (small business size standards, disaster loans, open datasets)
 """,
 )
 
@@ -62,6 +63,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     nps,  # noqa: F401
     openaq,  # noqa: F401
     safecast,  # noqa: F401
+    sba,  # noqa: F401
     sec,  # noqa: F401
     space_weather,  # noqa: F401
     usgs_water,  # noqa: F401
