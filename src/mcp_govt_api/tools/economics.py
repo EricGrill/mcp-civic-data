@@ -1,15 +1,11 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 WORLDBANK_BASE = "https://api.worldbank.org/v2"
 
 
 @mcp.tool()
-async def get_country_indicators(
-    country: str,
-    indicators: list[str] | None = None
-) -> str:
+async def get_country_indicators(country: str, indicators: list[str] | None = None) -> str:
     """Get economic indicators for a country from the World Bank.
 
     Args:
@@ -23,8 +19,8 @@ async def get_country_indicators(
     if not indicators:
         indicators = [
             "NY.GDP.MKTP.CD",  # GDP (current US$)
-            "SP.POP.TOTL",     # Population
-            "SI.POV.DDAY",     # Poverty headcount ratio
+            "SP.POP.TOTL",  # Population
+            "SI.POV.DDAY",  # Poverty headcount ratio
             "NY.GDP.PCAP.CD",  # GDP per capita
         ]
 
@@ -53,9 +49,9 @@ async def get_country_indicators(
 
                 if value is not None:
                     if indicator in ["NY.GDP.MKTP.CD"]:
-                        formatted = f"${value/1e12:.2f} trillion"
+                        formatted = f"${value / 1e12:.2f} trillion"
                     elif indicator == "SP.POP.TOTL":
-                        formatted = f"{value/1e6:.1f} million"
+                        formatted = f"{value / 1e6:.1f} million"
                     elif indicator in ["SI.POV.DDAY", "SL.UEM.TOTL.ZS", "FP.CPI.TOTL.ZG"]:
                         formatted = f"{value:.1f}%"
                     elif indicator == "NY.GDP.PCAP.CD":
@@ -73,10 +69,7 @@ async def get_country_indicators(
 
 
 @mcp.tool()
-async def compare_countries(
-    countries: list[str],
-    indicator: str = "NY.GDP.MKTP.CD"
-) -> str:
+async def compare_countries(countries: list[str], indicator: str = "NY.GDP.MKTP.CD") -> str:
     """Compare an economic indicator across multiple countries.
 
     Args:
@@ -119,9 +112,9 @@ async def compare_countries(
 
     for country_name, value, year in data_points:
         if indicator in ["NY.GDP.MKTP.CD"]:
-            formatted = f"${value/1e12:.2f}T"
+            formatted = f"${value / 1e12:.2f}T"
         elif indicator == "SP.POP.TOTL":
-            formatted = f"{value/1e6:.1f}M"
+            formatted = f"{value / 1e6:.1f}M"
         elif indicator == "NY.GDP.PCAP.CD":
             formatted = f"${value:,.0f}"
         else:
@@ -133,11 +126,7 @@ async def compare_countries(
 
 
 @mcp.tool()
-async def query_worldbank(
-    country: str,
-    indicator: str,
-    params: dict | None = None
-) -> dict:
+async def query_worldbank(country: str, indicator: str, params: dict | None = None) -> dict:
     """Make a raw query to the World Bank API.
 
     Args:

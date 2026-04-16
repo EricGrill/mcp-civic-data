@@ -1,7 +1,6 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 EU_DATA_BASE = "https://data.europa.eu/api/hub/search"
 
 
@@ -49,12 +48,7 @@ async def search_eu_datasets(query: str, limit: int = 10) -> str:
         publisher = ds.get("publisher", {}).get("name", "Unknown")
         dataset_id = ds.get("id", "")
 
-        output.append(
-            f"**{title}**\n"
-            f"Publisher: {publisher}\n"
-            f"ID: `{dataset_id}`\n"
-            f"{desc}..."
-        )
+        output.append(f"**{title}**\nPublisher: {publisher}\nID: `{dataset_id}`\n{desc}...")
 
     return "\n\n---\n\n".join(output)
 

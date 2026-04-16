@@ -2,7 +2,6 @@ from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
 
-
 NASA_BASE = "https://api.nasa.gov"
 
 
@@ -40,10 +39,7 @@ async def get_astronomy_photo(date: str = "") -> str:
 
 @mcp.tool()
 async def get_mars_rover_photos(
-    rover: str = "curiosity",
-    sol: int | None = None,
-    earth_date: str = "",
-    camera: str = ""
+    rover: str = "curiosity", sol: int | None = None, earth_date: str = "", camera: str = ""
 ) -> str:
     """Get photos from Mars rovers (Curiosity, Opportunity, Spirit, Perseverance).
 
