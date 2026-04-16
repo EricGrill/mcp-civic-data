@@ -30,6 +30,7 @@ mcp = FastMCP(
 - CDC (public health surveillance, disease tracking, vaccination coverage)
 - BLS (labor statistics, CPI, unemployment, employment data)
 - FEMA (disaster declarations, disaster summaries, housing assistance)
+- EPA (facility compliance via ECHO, toxic releases via Envirofacts TRI)
 - FDA (drug/food/device recalls, adverse events, drug labels via openFDA)
 - NHTSA (vehicle recalls, consumer complaints, VIN decoding)
 - NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
@@ -69,6 +70,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     earthquakes,  # noqa: F401
     economics,  # noqa: F401
     eia,  # noqa: F401
+    epa,  # noqa: F401
     eu_data,  # noqa: F401
     fda,  # noqa: F401
     fema,  # noqa: F401
