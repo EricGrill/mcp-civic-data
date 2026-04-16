@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![104 Tools](https://img.shields.io/badge/tools-104-2563eb.svg?style=flat-square)](#tool-reference)
-[![31 APIs](https://img.shields.io/badge/APIs-31-7c3aed.svg?style=flat-square)](#data-sources)
+[![107 Tools](https://img.shields.io/badge/tools-107-2563eb.svg?style=flat-square)](#tool-reference)
+[![32 APIs](https://img.shields.io/badge/APIs-32-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **31 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, behavioral health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **32 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, behavioral health, healthcare quality, disaster management, FDA safety data, vehicle safety, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, and USDA food and agriculture data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 21 of 31 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 21 of 32 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -40,7 +40,8 @@ No API keys required for 21 of 31 sources. Install it, point your MCP client at 
         "BLS_API_KEY": "optional",
         "NPS_API_KEY": "optional",
         "EIA_API_KEY": "optional",
-        "BEA_API_KEY": "optional"
+        "BEA_API_KEY": "optional",
+        "USDA_API_KEY": "optional"
       }
     }
   }
@@ -140,6 +141,12 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [SBA](https://data.sba.gov) | Small business size standards, disaster loans, open datasets | -- |
 
+### Food & Agriculture
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [USDA](https://fdc.nal.usda.gov/) | Food nutrition data (FoodData Central), crop production and acreage (NASS) | Required |
+
 ### Finance & Consumer Protection
 
 | Source | What It Covers | Key |
@@ -219,6 +226,9 @@ python3 -m mcp_govt_api
 "Search for school districts in California"
 "What's the enrollment at schools in Texas?"
 "Find colleges in New York"
+"Search for nutritional info on chicken breast"
+"What are the detailed nutrients in FDC ID 171688?"
+"Show me corn production data for Iowa in 2023"
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
@@ -481,6 +491,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>Food & Agriculture (USDA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_usda_foods` | Search FoodData Central for nutritional info on foods |
+| `get_food_details` | Get detailed nutrition data for a specific food by FDC ID |
+| `get_crop_data` | Get NASS crop production, acreage, and yield data by state and year |
+
+</details>
+
+<details>
 <summary><strong>Energy (EIA)</strong> — 3 tools</summary>
 
 | Tool | Description |
@@ -619,6 +640,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `NPS_API_KEY` | Enables National Park Service tools | *(disabled)* |
 | `EIA_API_KEY` | Enables EIA energy market tools | *(disabled)* |
 | `BEA_API_KEY` | Enables BEA economic accounts tools | *(disabled)* |
+| `USDA_API_KEY` | Enables USDA food nutrition and crop data tools | *(disabled)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
 On startup the server prints which APIs are available:
@@ -636,6 +658,7 @@ API Availability:
   ✗ OpenWeather (key not set)
   ✗ EIA (key not set)
   ✗ BEA (key not set)
+  ✗ USDA (key not set)
 ```
 
 ---

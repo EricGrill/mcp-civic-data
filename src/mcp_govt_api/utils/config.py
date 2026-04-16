@@ -13,6 +13,7 @@ class Config:
     nps_api_key: str | None = None
     eia_api_key: str | None = None
     bea_api_key: str | None = None
+    usda_api_key: str | None = None
     timeout: int = 30
 
     def __post_init__(self):
@@ -23,6 +24,7 @@ class Config:
         self.nps_api_key = os.environ.get("NPS_API_KEY")
         self.eia_api_key = os.environ.get("EIA_API_KEY")
         self.bea_api_key = os.environ.get("BEA_API_KEY")
+        self.usda_api_key = os.environ.get("USDA_API_KEY")
         self.timeout = int(os.environ.get("API_TIMEOUT", "30"))
 
     @property
@@ -52,6 +54,10 @@ class Config:
     @property
     def has_bea(self) -> bool:
         return bool(self.bea_api_key)
+
+    @property
+    def has_usda(self) -> bool:
+        return bool(self.usda_api_key)
 
     def get_availability_summary(self) -> str:
         """Return a summary of API availability."""
@@ -102,6 +108,10 @@ class Config:
             lines.append("  ✓ BEA (API key configured)")
         else:
             lines.append("  ✗ BEA (BEA_API_KEY not set)")
+        if self.has_usda:
+            lines.append("  ✓ USDA (API key configured)")
+        else:
+            lines.append("  ✗ USDA (USDA_API_KEY not set)")
         if self.has_nasa_key:
             lines.append("  ✓ NASA FIRMS (using NASA API key)")
         else:

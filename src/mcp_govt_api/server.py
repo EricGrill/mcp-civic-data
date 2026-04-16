@@ -39,6 +39,7 @@ mcp = FastMCP(
 - OSHA (workplace inspections, violations, fatality reports via DOL enforcement data)
 - NCES (school districts, school enrollment, college/university data via Education Data Portal)
 - SAMHSA (mental health and substance abuse treatment facility locator, behavioral health data)
+- USDA (food nutrition via FoodData Central, crop production via NASS; requires API key)
 """,
 )
 
@@ -82,6 +83,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     sba,  # noqa: F401
     sec,  # noqa: F401
     space_weather,  # noqa: F401
+    usda,  # noqa: F401
     usgs_water,  # noqa: F401
     weather,  # noqa: F401
 )
