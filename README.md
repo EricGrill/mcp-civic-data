@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![92 Tools](https://img.shields.io/badge/tools-92-2563eb.svg?style=flat-square)](#tool-reference)
-[![27 APIs](https://img.shields.io/badge/APIs-27-7c3aed.svg?style=flat-square)](#data-sources)
+[![95 Tools](https://img.shields.io/badge/tools-95-2563eb.svg?style=flat-square)](#tool-reference)
+[![28 APIs](https://img.shields.io/badge/APIs-28-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **27 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **28 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 17 of 27 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 18 of 28 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -101,6 +101,7 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [CMS](https://data.cms.gov) | Hospital quality ratings, Medicare provider search, healthcare data | -- |
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
+| [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
 
 ### Demographics & Economics
 
@@ -215,6 +216,9 @@ python3 -m mcp_govt_api
 "Search SBA datasets for PPP loans"
 "What is the SBA size standard for restaurants?"
 "Show me SBA disaster loans in Florida"
+"Show me OSHA inspections in California"
+"What violations were found in OSHA inspection 1234567?"
+"Search for workplace fatality reports in Texas"
 ```
 
 ---
@@ -388,6 +392,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `search_sba_datasets` | Search SBA open datasets on data.sba.gov |
 | `get_sba_size_standards` | Look up small business size standards by industry or NAICS code |
 | `get_sba_disaster_loans` | Get SBA disaster loan data by state or year |
+
+</details>
+
+<details>
+<summary><strong>Workplace Safety (OSHA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_osha_inspections` | Search OSHA workplace inspections by state or establishment |
+| `get_osha_violations` | Get violations for a specific OSHA inspection |
+| `search_osha_fatalities` | Search workplace fatality and catastrophe reports |
 
 </details>
 

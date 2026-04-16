@@ -35,6 +35,7 @@ mcp = FastMCP(
 - BTS (airline on-time performance, border crossing data, transportation datasets)
 - SBA (small business size standards, disaster loans, open datasets)
 - CFPB (consumer complaints, financial product issues, company response data)
+- OSHA (workplace inspections, violations, fatality reports via DOL enforcement data)
 """,
 )
 
@@ -70,6 +71,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     noaa_weather,  # noqa: F401
     nps,  # noqa: F401
     openaq,  # noqa: F401
+    osha,  # noqa: F401
     safecast,  # noqa: F401
     sba,  # noqa: F401
     sec,  # noqa: F401
