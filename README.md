@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![54 Tools](https://img.shields.io/badge/tools-54-2563eb.svg?style=flat-square)](#tool-reference)
-[![16 APIs](https://img.shields.io/badge/APIs-16-7c3aed.svg?style=flat-square)](#data-sources)
+[![77 Tools](https://img.shields.io/badge/tools-77-2563eb.svg?style=flat-square)](#tool-reference)
+[![22 APIs](https://img.shields.io/badge/APIs-22-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **16 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, energy, open data discovery, cybersecurity, and SEC disclosures.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **22 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 13 of 16 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 14 of 22 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -36,6 +36,9 @@ No API keys required for 13 of 16 sources. Install it, point your MCP client at 
       "env": {
         "OPENWEATHER_API_KEY": "optional",
         "NASA_API_KEY": "optional",
+        "FRED_API_KEY": "optional",
+        "BLS_API_KEY": "optional",
+        "NPS_API_KEY": "optional",
         "EIA_API_KEY": "optional"
       }
     }
@@ -54,6 +57,8 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added FDA tools for recalls, adverse events, and drug labels via openFDA
+- Added CDC public health surveillance tools for disease tracking and vaccination coverage
 - Added shared geolocation support with a new `lookup_location` tool
 - Upgraded weather, earthquake, and air-quality tools to accept human-friendly location strings
 - Added CISA cybersecurity tools and integrated them into the server and README
@@ -74,6 +79,7 @@ python3 -m mcp_govt_api
 | [OpenWeather](https://openweathermap.org) | Global weather for any city | Required |
 | [OpenAQ](https://openaq.org) | Air quality from stations worldwide | -- |
 | [USGS Water](https://waterservices.usgs.gov) | Real-time stream flow and flood levels across every US river | -- |
+| [NOAA CO-OPS](https://tidesandcurrents.noaa.gov) | Tide predictions, observed water levels, coastal stations | -- |
 | [Safecast](https://safecast.org) | Community radiation monitoring, 150M+ measurements | -- |
 
 ### Hazards & Events
@@ -84,6 +90,13 @@ python3 -m mcp_govt_api
 | [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov) | Active wildfires detected from satellites | Optional |
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
 | [CISA](https://www.cisa.gov) | Known exploited vulnerabilities, security alerts, advisories | -- |
+| [FEMA](https://www.fema.gov/api/open) | Disaster declarations, assistance data, housing assistance | -- |
+
+### Health & Safety
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
 
 ### Demographics & Economics
 
@@ -91,6 +104,8 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [US Census](https://census.gov) | Population, demographics, housing for every US county | -- |
 | [World Bank](https://worldbank.org) | GDP, poverty, unemployment for 200+ countries | -- |
+| [FRED](https://fred.stlouisfed.org) | Federal Reserve economic data: GDP, inflation, employment, interest rates | Required |
+| [BLS](https://www.bls.gov) | CPI, unemployment, employment, labor statistics | Optional |
 
 ### Energy
 
@@ -103,6 +118,18 @@ python3 -m mcp_govt_api
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [SEC EDGAR](https://sec.gov/edgar) | Company filings, 10-K, 10-Q, 8-K forms | -- |
+
+### Public Health
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [CDC Open Data](https://data.cdc.gov) | Disease surveillance, vaccination coverage, public health datasets | -- |
+
+### Parks & Recreation
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [NPS](https://www.nps.gov/subjects/developer) | National parks, alerts, closures, park details | Required |
 
 ### Open Data Catalogs
 
@@ -130,11 +157,29 @@ python3 -m mcp_govt_api
 "Show me recent photos from the Perseverance rover"
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
+"What are the tide predictions for Providence, RI?"
+"Find tide stations in Florida"
 "Find datasets about climate change on Data.gov"
+"What's the current US GDP from FRED?"
+"Search FRED for unemployment rate data"
 "Get Apple's latest 10-K filing from SEC"
 "Show me recent SEC filings for Tesla"
+"Search CDC datasets about influenza"
+"What are the latest disease surveillance reports for Salmonellosis?"
+"Show me vaccination coverage data for Influenza"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
+"What's the current CPI?"
+"What's the unemployment rate in California?"
+"Show me BLS employment data for 2023"
+"What FEMA disaster declarations were made in Florida this year?"
+"Show me housing assistance data for Hurricane Ian"
+"Show me recent FDA drug recalls in California"
+"What adverse events have been reported for aspirin?"
+"Get drug label information for ibuprofen"
+"Search for national parks in California"
+"Are there any alerts at Yosemite?"
+"Tell me about Grand Canyon National Park"
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
@@ -156,6 +201,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_global_weather` | Current conditions for any city worldwide |
 | `query_noaa` | Raw NOAA API access |
 | `query_openweather` | Raw OpenWeather API access |
+
+</details>
+
+<details>
+<summary><strong>NOAA Radar & Alerts</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_forecast_discussion` | Area Forecast Discussion from a NWS Weather Forecast Office |
+| `get_active_weather_alerts` | Active weather alerts filtered by state, event type, and severity |
+| `get_radar_stations` | NEXRAD radar stations, optionally filtered by state |
 
 </details>
 
@@ -187,6 +243,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_water_conditions` | Stream flow and gage height by US state |
 | `get_water_site` | All readings for a specific USGS monitoring site |
 | `query_usgs_water` | Raw USGS Water Services API access |
+
+</details>
+
+<details>
+<summary><strong>Tides & Coastal (NOAA CO-OPS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_tide_predictions` | Tide predictions for a CO-OPS station |
+| `get_water_levels` | Observed water levels from a CO-OPS station |
+| `search_tide_stations` | Search for NOAA CO-OPS tide prediction stations |
 
 </details>
 
@@ -237,6 +304,40 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>CDC Public Health</strong> — 4 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_cdc_datasets` | Search CDC's open data catalog by keyword |
+| `get_cdc_disease_surveillance` | Notifiable disease case counts from the NNDSS |
+| `get_cdc_vaccination_coverage` | Vaccination coverage estimates by vaccine and state |
+| `query_cdc_open_data` | Raw CDC SODA API access for any dataset |
+
+</details>
+
+<details>
+<summary><strong>FEMA Disasters</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_fema_disasters` | Search disaster declarations by state, year, or type |
+| `get_fema_disaster_summary` | Detailed summary for a specific disaster number |
+| `get_fema_assistance` | Housing assistance data for disaster survivors |
+
+</details>
+
+<details>
+<summary><strong>FDA (openFDA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_fda_recalls` | Search FDA drug, food, and device recall/enforcement reports |
+| `get_fda_adverse_events` | Search drug adverse event reports from FAERS |
+| `get_fda_drug_labels` | Search drug labeling and SPL data (indications, warnings, dosage) |
+
+</details>
+
+<details>
 <summary><strong>SEC EDGAR</strong> — 5 tools</summary>
 
 | Tool | Description |
@@ -246,6 +347,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_latest_submissions` | Get recent submissions filtered by form type |
 | `get_company_facts` | Get company facts and XBRL financial data |
 | `query_sec_edgar` | Raw SEC EDGAR API access |
+
+</details>
+
+<details>
+<summary><strong>National Parks (NPS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_national_parks` | Search parks by name, keyword, or state code |
+| `get_park_alerts` | Active alerts for a park (closures, cautions, dangers) |
+| `get_park_info` | Detailed park info including hours, fees, and contacts |
 
 </details>
 
@@ -284,13 +396,35 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
-<summary><strong>Economics</strong> — 3 tools</summary>
+<summary><strong>Economics (World Bank)</strong> — 3 tools</summary>
 
 | Tool | Description |
 |------|-------------|
 | `get_country_indicators` | GDP, population, poverty for any country |
 | `compare_countries` | Compare indicators across multiple countries |
 | `query_worldbank` | Raw World Bank API access |
+
+</details>
+
+<details>
+<summary><strong>Economics (FRED)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_fred_series` | Search for economic data series by keyword |
+| `get_fred_series` | Get observations for a series (e.g., GDP, UNRATE, CPIAUCSL) |
+| `get_fred_series_info` | Get metadata about a series |
+
+</details>
+
+<details>
+<summary><strong>Labor Statistics (BLS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_bls_timeseries` | Get time series data for any BLS series (CPI, employment, PPI) |
+| `search_bls_series` | Look up common BLS series IDs by keyword |
+| `get_unemployment_rate` | National or state-level unemployment rate data |
 
 </details>
 
@@ -328,6 +462,9 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 |----------|---------|---------|
 | `OPENWEATHER_API_KEY` | Enables global weather tools | *(disabled)* |
 | `NASA_API_KEY` | Higher rate limits for NASA + FIRMS | `DEMO_KEY` (30 req/hr) |
+| `FRED_API_KEY` | Enables FRED economic data tools | *(disabled)* |
+| `BLS_API_KEY` | Higher rate limits for BLS (25 to 500 queries/day) | *(works without key)* |
+| `NPS_API_KEY` | Enables National Park Service tools | *(disabled)* |
 | `EIA_API_KEY` | Enables EIA energy market tools | *(disabled)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
@@ -339,7 +476,8 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
-  ✓ SEC EDGAR
+  ✓ SEC EDGAR             ✓ CDC Open Data
+  ✓ BLS                   ✓ FEMA
   ✗ OpenWeather (key not set)
   ✗ EIA (key not set)
 ```
