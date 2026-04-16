@@ -27,6 +27,7 @@ mcp = FastMCP(
 - BLS (labor statistics, CPI, unemployment, employment data)
 - FEMA (disaster declarations, disaster summaries, housing assistance)
 - FDA (drug/food/device recalls, adverse events, drug labels via openFDA)
+- NOAA CO-OPS (tide predictions, observed water levels, coastal stations)
 """,
 )
 
@@ -53,6 +54,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     fred,  # noqa: F401
     location,  # noqa: F401
     nasa,  # noqa: F401
+    noaa_coops,  # noqa: F401
     noaa_weather,  # noqa: F401
     openaq,  # noqa: F401
     safecast,  # noqa: F401
