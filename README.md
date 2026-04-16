@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![62 Tools](https://img.shields.io/badge/tools-62-2563eb.svg?style=flat-square)](#tool-reference)
+[![65 Tools](https://img.shields.io/badge/tools-65-2563eb.svg?style=flat-square)](#tool-reference)
 [![16 APIs](https://img.shields.io/badge/APIs-16-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **18 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, labor statistics, public health, disaster management, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **19 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, labor statistics, public health, disaster management, FDA safety data, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -55,6 +55,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added FDA tools for recalls, adverse events, and drug labels via openFDA
 - Added CDC public health surveillance tools for disease tracking and vaccination coverage
 - Added shared geolocation support with a new `lookup_location` tool
 - Upgraded weather, earthquake, and air-quality tools to accept human-friendly location strings
@@ -87,6 +88,12 @@ python3 -m mcp_govt_api
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
 | [CISA](https://www.cisa.gov) | Known exploited vulnerabilities, security alerts, advisories | -- |
 | [FEMA](https://www.fema.gov/api/open) | Disaster declarations, assistance data, housing assistance | -- |
+
+### Health & Safety
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
 
 ### Demographics & Economics
 
@@ -150,6 +157,9 @@ python3 -m mcp_govt_api
 "Show me BLS employment data for 2023"
 "What FEMA disaster declarations were made in Florida this year?"
 "Show me housing assistance data for Hurricane Ian"
+"Show me recent FDA drug recalls in California"
+"What adverse events have been reported for aspirin?"
+"Get drug label information for ibuprofen"
 ```
 
 ---
@@ -268,6 +278,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_fema_disasters` | Search disaster declarations by state, year, or type |
 | `get_fema_disaster_summary` | Detailed summary for a specific disaster number |
 | `get_fema_assistance` | Housing assistance data for disaster survivors |
+
+</details>
+
+<details>
+<summary><strong>FDA (openFDA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_fda_recalls` | Search FDA drug, food, and device recall/enforcement reports |
+| `get_fda_adverse_events` | Search drug adverse event reports from FAERS |
+| `get_fda_drug_labels` | Search drug labeling and SPL data (indications, warnings, dosage) |
 
 </details>
 
