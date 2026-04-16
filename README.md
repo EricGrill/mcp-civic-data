@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![77 Tools](https://img.shields.io/badge/tools-77-2563eb.svg?style=flat-square)](#tool-reference)
-[![22 APIs](https://img.shields.io/badge/APIs-22-7c3aed.svg?style=flat-square)](#data-sources)
+[![80 Tools](https://img.shields.io/badge/tools-80-2563eb.svg?style=flat-square)](#tool-reference)
+[![23 APIs](https://img.shields.io/badge/APIs-23-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **22 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **23 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, vehicle safety, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -97,6 +97,7 @@ python3 -m mcp_govt_api
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
+| [NHTSA](https://www.nhtsa.gov) | Vehicle recalls, consumer complaints, VIN decoding | -- |
 
 ### Demographics & Economics
 
@@ -180,6 +181,9 @@ python3 -m mcp_govt_api
 "Search for national parks in California"
 "Are there any alerts at Yosemite?"
 "Tell me about Grand Canyon National Park"
+"Are there any recalls for 2020 Toyota Camry?"
+"Show me consumer complaints for Ford F-150"
+"Decode VIN 1HGCM82633A004352"
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
@@ -334,6 +338,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `search_fda_recalls` | Search FDA drug, food, and device recall/enforcement reports |
 | `get_fda_adverse_events` | Search drug adverse event reports from FAERS |
 | `get_fda_drug_labels` | Search drug labeling and SPL data (indications, warnings, dosage) |
+
+</details>
+
+<details>
+<summary><strong>NHTSA Vehicle Safety</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_vehicle_recalls` | Search NHTSA vehicle recall campaigns by make, model, and year |
+| `get_vehicle_complaints` | Get consumer complaints about vehicles from NHTSA |
+| `decode_vin` | Decode a Vehicle Identification Number for make/model/year/specs |
 
 </details>
 
