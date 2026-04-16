@@ -47,6 +47,16 @@ mcp = FastMCP(
 - USDA (food nutrition via FoodData Central, crop production via NASS; requires API key)
 - USFS (active wildfires, fire perimeters, National Forest boundaries via WFIGS/ArcGIS)
 - BJS / FBI CDE (crime estimates, arrest data, justice datasets; requires API key)
+- Blitzortung (real-time lightning strike detection worldwide)
+- N2YO (satellite tracking, positions, TLE data; requires API key)
+- Submarine Cable Map (undersea internet cable infrastructure)
+- NOAA Satellite Imagery (GOES-East/West satellite imagery links and timestamps)
+- USGS Volcanoes (active volcanoes, alerts, eruption monitoring)
+- ReliefWeb (global disaster events, situation reports)
+- OpenRailwayMap (railway stations, lines via Overpass/OSM)
+- Cloudflare Radar (internet traffic, top domains, DDoS attacks)
+- IHR Internet Health (network disconnections, delays, AS hegemony)
+- Service Outages (status page monitoring for GitHub, Slack, etc.)
 """,
 )
 
@@ -99,4 +109,17 @@ from mcp_govt_api.tools import (  # noqa: E402
     usfs,  # noqa: F401
     usgs_water,  # noqa: F401
     weather,  # noqa: F401
+)
+
+from mcp_govt_api.tools import (  # noqa: E402
+    blitzortung,  # noqa: F401
+    cloudflare_radar,  # noqa: F401
+    disaster_events,  # noqa: F401
+    internet_health,  # noqa: F401
+    n2yo,  # noqa: F401
+    noaa_imagery,  # noqa: F401
+    outages,  # noqa: F401
+    railway,  # noqa: F401
+    submarine_cables,  # noqa: F401
+    volcanoes,  # noqa: F401
 )

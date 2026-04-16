@@ -15,6 +15,7 @@ class Config:
     bea_api_key: str | None = None
     usda_api_key: str | None = None
     fbi_cde_api_key: str | None = None
+    n2yo_api_key: str | None = None
     timeout: int = 30
     cache_enabled: bool = True
     cache_ttl: int = 300
@@ -30,6 +31,7 @@ class Config:
         self.bea_api_key = os.environ.get("BEA_API_KEY")
         self.usda_api_key = os.environ.get("USDA_API_KEY")
         self.fbi_cde_api_key = os.environ.get("FBI_CDE_API_KEY")
+        self.n2yo_api_key = os.environ.get("N2YO_API_KEY")
         self.timeout = int(os.environ.get("API_TIMEOUT", "30"))
         self.cache_enabled = os.environ.get(
             "CACHE_ENABLED", "true"
@@ -72,6 +74,10 @@ class Config:
     @property
     def has_fbi_cde(self) -> bool:
         return bool(self.fbi_cde_api_key)
+
+    @property
+    def has_n2yo(self) -> bool:
+        return bool(self.n2yo_api_key)
 
     def get_availability_summary(self) -> str:
         """Return a summary of API availability."""
@@ -130,6 +136,10 @@ class Config:
             lines.append("  ✓ FBI CDE / BJS (API key configured)")
         else:
             lines.append("  ✗ FBI CDE / BJS (FBI_CDE_API_KEY not set)")
+        if self.has_n2yo:
+            lines.append("  ✓ N2YO (API key configured)")
+        else:
+            lines.append("  ✗ N2YO (N2YO_API_KEY not set)")
         if self.has_nasa_key:
             lines.append("  ✓ NASA FIRMS (using NASA API key)")
         else:
