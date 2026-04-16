@@ -6,12 +6,12 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![54 Tools](https://img.shields.io/badge/tools-54-2563eb.svg?style=flat-square)](#tool-reference)
+[![59 Tools](https://img.shields.io/badge/tools-59-2563eb.svg?style=flat-square)](#tool-reference)
 [![16 APIs](https://img.shields.io/badge/APIs-16-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **16 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, labor statistics, open data discovery, cybersecurity, and SEC disclosures.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **17 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, labor statistics, public health, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
@@ -36,6 +36,7 @@ No API keys required for 13 of 16 sources. Install it, point your MCP client at 
       "env": {
         "OPENWEATHER_API_KEY": "optional",
         "NASA_API_KEY": "optional",
+        "FRED_API_KEY": "optional",
         "BLS_API_KEY": "optional"
       }
     }
@@ -54,6 +55,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added CDC public health surveillance tools for disease tracking and vaccination coverage
 - Added shared geolocation support with a new `lookup_location` tool
 - Upgraded weather, earthquake, and air-quality tools to accept human-friendly location strings
 - Added CISA cybersecurity tools and integrated them into the server and README
@@ -91,6 +93,7 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [US Census](https://census.gov) | Population, demographics, housing for every US county | -- |
 | [World Bank](https://worldbank.org) | GDP, poverty, unemployment for 200+ countries | -- |
+| [FRED](https://fred.stlouisfed.org) | Federal Reserve economic data: GDP, inflation, employment, interest rates | Required |
 | [BLS](https://www.bls.gov) | CPI, unemployment, employment, labor statistics | Optional |
 
 ### Finance & Securities
@@ -98,6 +101,12 @@ python3 -m mcp_govt_api
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [SEC EDGAR](https://sec.gov/edgar) | Company filings, 10-K, 10-Q, 8-K forms | -- |
+
+### Public Health
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [CDC Open Data](https://data.cdc.gov) | Disease surveillance, vaccination coverage, public health datasets | -- |
 
 ### Open Data Catalogs
 
@@ -126,8 +135,13 @@ python3 -m mcp_govt_api
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
 "Find datasets about climate change on Data.gov"
+"What's the current US GDP from FRED?"
+"Search FRED for unemployment rate data"
 "Get Apple's latest 10-K filing from SEC"
 "Show me recent SEC filings for Tesla"
+"Search CDC datasets about influenza"
+"What are the latest disease surveillance reports for Salmonellosis?"
+"Show me vaccination coverage data for Influenza"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
 "What's the current CPI?"
@@ -232,6 +246,18 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>CDC Public Health</strong> — 4 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_cdc_datasets` | Search CDC's open data catalog by keyword |
+| `get_cdc_disease_surveillance` | Notifiable disease case counts from the NNDSS |
+| `get_cdc_vaccination_coverage` | Vaccination coverage estimates by vaccine and state |
+| `query_cdc_open_data` | Raw CDC SODA API access for any dataset |
+
+</details>
+
+<details>
 <summary><strong>SEC EDGAR</strong> — 5 tools</summary>
 
 | Tool | Description |
@@ -268,13 +294,24 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
-<summary><strong>Economics</strong> — 3 tools</summary>
+<summary><strong>Economics (World Bank)</strong> — 3 tools</summary>
 
 | Tool | Description |
 |------|-------------|
 | `get_country_indicators` | GDP, population, poverty for any country |
 | `compare_countries` | Compare indicators across multiple countries |
 | `query_worldbank` | Raw World Bank API access |
+
+</details>
+
+<details>
+<summary><strong>Economics (FRED)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_fred_series` | Search for economic data series by keyword |
+| `get_fred_series` | Get observations for a series (e.g., GDP, UNRATE, CPIAUCSL) |
+| `get_fred_series_info` | Get metadata about a series |
 
 </details>
 
@@ -323,6 +360,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 |----------|---------|---------|
 | `OPENWEATHER_API_KEY` | Enables global weather tools | *(disabled)* |
 | `NASA_API_KEY` | Higher rate limits for NASA + FIRMS | `DEMO_KEY` (30 req/hr) |
+| `FRED_API_KEY` | Enables FRED economic data tools | *(disabled)* |
 | `BLS_API_KEY` | Higher rate limits for BLS (25 to 500 queries/day) | *(works without key)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
@@ -334,7 +372,8 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
-  ✓ SEC EDGAR             ✓ BLS
+  ✓ SEC EDGAR             ✓ CDC Open Data
+  ✓ BLS
   ✗ OpenWeather (key not set)
 ```
 
