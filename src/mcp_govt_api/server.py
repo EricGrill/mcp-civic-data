@@ -2,6 +2,9 @@ from mcp.server.fastmcp import FastMCP
 
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import http_lifespan
+from mcp_govt_api.utils.logging import get_logger
+
+logger = get_logger(__name__)
 
 mcp = FastMCP(
     "Government API Server",
@@ -46,7 +49,9 @@ mcp = FastMCP(
 
 def main():
     """Entry point for the MCP server."""
-    print(config.get_availability_summary())
+    logger.info("Starting MCP Government API Server")
+    for line in config.get_availability_summary().splitlines():
+        logger.info(line.strip())
     mcp.run()
 
 
