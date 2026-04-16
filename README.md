@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![80 Tools](https://img.shields.io/badge/tools-80-2563eb.svg?style=flat-square)](#tool-reference)
-[![23 APIs](https://img.shields.io/badge/APIs-23-7c3aed.svg?style=flat-square)](#data-sources)
+[![95 Tools](https://img.shields.io/badge/tools-95-2563eb.svg?style=flat-square)](#tool-reference)
+[![28 APIs](https://img.shields.io/badge/APIs-28-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **23 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, workplace safety, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **28 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, workplace safety, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 15 of 23 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 18 of 28 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -39,7 +39,8 @@ No API keys required for 15 of 23 sources. Install it, point your MCP client at 
         "FRED_API_KEY": "optional",
         "BLS_API_KEY": "optional",
         "NPS_API_KEY": "optional",
-        "EIA_API_KEY": "optional"
+        "EIA_API_KEY": "optional",
+        "BEA_API_KEY": "optional"
       }
     }
   }
@@ -57,6 +58,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added CMS tools for hospital quality ratings, Medicare provider search, and healthcare data
 - Added FDA tools for recalls, adverse events, and drug labels via openFDA
 - Added CDC public health surveillance tools for disease tracking and vaccination coverage
 - Added shared geolocation support with a new `lookup_location` tool
@@ -65,6 +67,7 @@ python3 -m mcp_govt_api
 - Added SEC EDGAR tools for filings, submissions, and company facts
 - Added GitHub Actions CI for install, compile, unit test, import, and build validation
 - Added `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`
+- Added BEA regional and national economic accounts tools (GDP, income, industry)
 - Added branch protection and required automated checks on `main`
 
 ---
@@ -96,6 +99,7 @@ python3 -m mcp_govt_api
 
 | Source | What It Covers | Key |
 |--------|---------------|-----|
+| [CMS](https://data.cms.gov) | Hospital quality ratings, Medicare provider search, healthcare data | -- |
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
 | [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
 
@@ -107,6 +111,7 @@ python3 -m mcp_govt_api
 | [World Bank](https://worldbank.org) | GDP, poverty, unemployment for 200+ countries | -- |
 | [FRED](https://fred.stlouisfed.org) | Federal Reserve economic data: GDP, inflation, employment, interest rates | Required |
 | [BLS](https://www.bls.gov) | CPI, unemployment, employment, labor statistics | Optional |
+| [BEA](https://www.bea.gov) | Regional GDP, personal income, GDP by industry | Required |
 
 ### Energy
 
@@ -114,11 +119,24 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [EIA](https://www.eia.gov/opendata/) | Electricity, petroleum, natural gas, coal, and energy market data | Required |
 
-### Finance & Securities
+### Transportation
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [BTS](https://data.bts.gov) | Airline on-time performance, border crossing data, transportation datasets | -- |
+
+### Small Business
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [SBA](https://data.sba.gov) | Small business size standards, disaster loans, open datasets | -- |
+
+### Finance & Consumer Protection
 
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [SEC EDGAR](https://sec.gov/edgar) | Company filings, 10-K, 10-Q, 8-K forms | -- |
+| [CFPB](https://www.consumerfinance.gov) | Consumer complaints, financial product issues, company responses | -- |
 
 ### Public Health
 
@@ -170,11 +188,16 @@ python3 -m mcp_govt_api
 "Show me vaccination coverage data for Influenza"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
+"Show me consumer complaints about mortgages in California"
+"What are the most common complaint types filed with the CFPB?"
 "What's the current CPI?"
 "What's the unemployment rate in California?"
 "Show me BLS employment data for 2023"
 "What FEMA disaster declarations were made in Florida this year?"
 "Show me housing assistance data for Hurricane Ian"
+"Search for hospitals in New York with quality ratings"
+"What's the quality rating for facility 050001?"
+"Find Medicare providers specializing in Cardiology in Texas"
 "Show me recent FDA drug recalls in California"
 "What adverse events have been reported for aspirin?"
 "Get drug label information for ibuprofen"
@@ -184,6 +207,15 @@ python3 -m mcp_govt_api
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
+"What's California's GDP from BEA?"
+"Show me GDP by industry for 2022"
+"What datasets does the BEA offer?"
+"Show me airline on-time stats for American Airlines"
+"What's the border crossing data for El Paso?"
+"Search BTS datasets about freight"
+"Search SBA datasets for PPP loans"
+"What is the SBA size standard for restaurants?"
+"Show me SBA disaster loans in Florida"
 "Show me OSHA inspections in California"
 "What violations were found in OSHA inspection 1234567?"
 "Search for workplace fatality reports in Texas"
@@ -320,6 +352,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>CMS Healthcare</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_hospitals` | Search hospitals by name or state with overall quality ratings |
+| `get_hospital_quality` | Get detailed quality measures and ratings for a specific hospital |
+| `search_medicare_providers` | Search Medicare-enrolled healthcare providers by name, state, or specialty |
+
+</details>
+
+<details>
 <summary><strong>FEMA Disasters</strong> — 3 tools</summary>
 
 | Tool | Description |
@@ -338,6 +381,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `search_fda_recalls` | Search FDA drug, food, and device recall/enforcement reports |
 | `get_fda_adverse_events` | Search drug adverse event reports from FAERS |
 | `get_fda_drug_labels` | Search drug labeling and SPL data (indications, warnings, dosage) |
+
+</details>
+
+<details>
+<summary><strong>SBA (Small Business)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_sba_datasets` | Search SBA open datasets on data.sba.gov |
+| `get_sba_size_standards` | Look up small business size standards by industry or NAICS code |
+| `get_sba_disaster_loans` | Get SBA disaster loan data by state or year |
 
 </details>
 
@@ -366,6 +420,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>CFPB Consumer Complaints</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_cfpb_complaints` | Search consumer complaints by product, company, state, or keyword |
+| `get_cfpb_complaint` | Get full details of a specific consumer complaint by ID |
+| `get_cfpb_complaint_stats` | Aggregate complaint statistics by product, company, or state |
+
+</details>
+
+<details>
 <summary><strong>National Parks (NPS)</strong> — 3 tools</summary>
 
 | Tool | Description |
@@ -384,6 +449,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_electricity_data` | Retail electricity sales, prices, and revenue by state |
 | `get_petroleum_prices` | Gasoline, diesel, and heating oil price data |
 | `get_energy_overview` | Browse available EIA data categories and routes |
+
+</details>
+
+<details>
+<summary><strong>Transportation (BTS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_airline_ontime_stats` | Airline on-time performance, delays, and cancellations |
+| `get_border_crossing_data` | US-Canada and US-Mexico border crossing entry data |
+| `search_bts_datasets` | Search BTS open datasets on data.bts.gov |
 
 </details>
 
@@ -444,6 +520,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>Economics (BEA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_bea_regional_data` | Regional GDP, income, and employment data by state |
+| `get_bea_gdp_by_industry` | GDP breakdown by industry sector |
+| `search_bea_datasets` | List available BEA datasets and tables |
+
+</details>
+
+<details>
 <summary><strong>NASA</strong> — 4 tools</summary>
 
 | Tool | Description |
@@ -481,6 +568,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `BLS_API_KEY` | Higher rate limits for BLS (25 to 500 queries/day) | *(works without key)* |
 | `NPS_API_KEY` | Enables National Park Service tools | *(disabled)* |
 | `EIA_API_KEY` | Enables EIA energy market tools | *(disabled)* |
+| `BEA_API_KEY` | Enables BEA economic accounts tools | *(disabled)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
 On startup the server prints which APIs are available:
@@ -493,8 +581,11 @@ API Availability:
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
   ✓ SEC EDGAR             ✓ CDC Open Data
   ✓ BLS                   ✓ FEMA
+  ✓ SBA                   ✓ CFPB
+  ✓ CMS Healthcare
   ✗ OpenWeather (key not set)
   ✗ EIA (key not set)
+  ✗ BEA (key not set)
 ```
 
 ---
@@ -534,7 +625,6 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 - [#71](https://github.com/EricGrill/mcp-civic-data/issues/71) Add NCES education and school district tools
 - [#72](https://github.com/EricGrill/mcp-civic-data/issues/72) Add NHTSA traffic safety and crash statistics tools
 - [#73](https://github.com/EricGrill/mcp-civic-data/issues/73) Add OSHA workplace safety and enforcement tools
-- [#74](https://github.com/EricGrill/mcp-civic-data/issues/74) Add CMS healthcare provider and hospital quality tools
 - [#78](https://github.com/EricGrill/mcp-civic-data/issues/78) Add SBA small business and disaster loan tools
 - [#80](https://github.com/EricGrill/mcp-civic-data/issues/80) Add FDA recalls, shortages, and safety alert tools
 - [#84](https://github.com/EricGrill/mcp-civic-data/issues/84) Add National Park Service parks and alerts tools
@@ -543,7 +633,7 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 
 - [#49](https://github.com/EricGrill/mcp-civic-data/issues/49) Add composite queries for multi-source data aggregation
 - [#59](https://github.com/EricGrill/mcp-civic-data/issues/59) Add EIA energy market and grid tools
-- [#75](https://github.com/EricGrill/mcp-civic-data/issues/75) Add CFPB consumer complaint and financial protection tools
+- ~~[#75](https://github.com/EricGrill/mcp-civic-data/issues/75) Add CFPB consumer complaint and financial protection tools~~
 - [#79](https://github.com/EricGrill/mcp-civic-data/issues/79) Add BTS freight and transportation performance tools
 - [#82](https://github.com/EricGrill/mcp-civic-data/issues/82) Add SEC filings and company disclosure tools
 - [#83](https://github.com/EricGrill/mcp-civic-data/issues/83) Add BEA regional and national economic accounts tools
