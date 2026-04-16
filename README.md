@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![77 Tools](https://img.shields.io/badge/tools-77-2563eb.svg?style=flat-square)](#tool-reference)
-[![22 APIs](https://img.shields.io/badge/APIs-22-7c3aed.svg?style=flat-square)](#data-sources)
+[![80 Tools](https://img.shields.io/badge/tools-80-2563eb.svg?style=flat-square)](#tool-reference)
+[![23 APIs](https://img.shields.io/badge/APIs-23-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **22 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **23 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, workplace safety, national parks, open data discovery, cybersecurity, SEC disclosures, and Federal Reserve economic indicators.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 14 of 22 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 15 of 23 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -97,6 +97,7 @@ python3 -m mcp_govt_api
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
+| [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
 
 ### Demographics & Economics
 
@@ -183,6 +184,9 @@ python3 -m mcp_govt_api
 "What are the current gasoline prices?"
 "Show me electricity data for California"
 "What energy data categories does the EIA provide?"
+"Show me OSHA inspections in California"
+"What violations were found in OSHA inspection 1234567?"
+"Search for workplace fatality reports in Texas"
 ```
 
 ---
@@ -334,6 +338,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `search_fda_recalls` | Search FDA drug, food, and device recall/enforcement reports |
 | `get_fda_adverse_events` | Search drug adverse event reports from FAERS |
 | `get_fda_drug_labels` | Search drug labeling and SPL data (indications, warnings, dosage) |
+
+</details>
+
+<details>
+<summary><strong>Workplace Safety (OSHA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_osha_inspections` | Search OSHA workplace inspections by state or establishment |
+| `get_osha_violations` | Get violations for a specific OSHA inspection |
+| `search_osha_fatalities` | Search workplace fatality and catastrophe reports |
 
 </details>
 
