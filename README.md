@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![86 Tools](https://img.shields.io/badge/tools-86-2563eb.svg?style=flat-square)](#tool-reference)
-[![25 APIs](https://img.shields.io/badge/APIs-25-7c3aed.svg?style=flat-square)](#data-sources)
+[![89 Tools](https://img.shields.io/badge/tools-89-2563eb.svg?style=flat-square)](#tool-reference)
+[![26 APIs](https://img.shields.io/badge/APIs-26-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **25 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **26 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 15 of 25 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 16 of 26 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -128,11 +128,12 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [SBA](https://data.sba.gov) | Small business size standards, disaster loans, open datasets | -- |
 
-### Finance & Securities
+### Finance & Consumer Protection
 
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [SEC EDGAR](https://sec.gov/edgar) | Company filings, 10-K, 10-Q, 8-K forms | -- |
+| [CFPB](https://www.consumerfinance.gov) | Consumer complaints, financial product issues, company responses | -- |
 
 ### Public Health
 
@@ -184,6 +185,8 @@ python3 -m mcp_govt_api
 "Show me vaccination coverage data for Influenza"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
+"Show me consumer complaints about mortgages in California"
+"What are the most common complaint types filed with the CFPB?"
 "What's the current CPI?"
 "What's the unemployment rate in California?"
 "Show me BLS employment data for 2023"
@@ -382,6 +385,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_latest_submissions` | Get recent submissions filtered by form type |
 | `get_company_facts` | Get company facts and XBRL financial data |
 | `query_sec_edgar` | Raw SEC EDGAR API access |
+
+</details>
+
+<details>
+<summary><strong>CFPB Consumer Complaints</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_cfpb_complaints` | Search consumer complaints by product, company, state, or keyword |
+| `get_cfpb_complaint` | Get full details of a specific consumer complaint by ID |
+| `get_cfpb_complaint_stats` | Aggregate complaint statistics by product, company, or state |
 
 </details>
 
@@ -588,7 +602,7 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 
 - [#49](https://github.com/EricGrill/mcp-civic-data/issues/49) Add composite queries for multi-source data aggregation
 - [#59](https://github.com/EricGrill/mcp-civic-data/issues/59) Add EIA energy market and grid tools
-- [#75](https://github.com/EricGrill/mcp-civic-data/issues/75) Add CFPB consumer complaint and financial protection tools
+- ~~[#75](https://github.com/EricGrill/mcp-civic-data/issues/75) Add CFPB consumer complaint and financial protection tools~~
 - [#79](https://github.com/EricGrill/mcp-civic-data/issues/79) Add BTS freight and transportation performance tools
 - [#82](https://github.com/EricGrill/mcp-civic-data/issues/82) Add SEC filings and company disclosure tools
 - [#83](https://github.com/EricGrill/mcp-civic-data/issues/83) Add BEA regional and national economic accounts tools

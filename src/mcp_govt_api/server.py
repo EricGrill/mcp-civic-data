@@ -33,6 +33,7 @@ mcp = FastMCP(
 - BEA (regional GDP, personal income, GDP by industry; requires API key)
 - BTS (airline on-time performance, border crossing data, transportation datasets)
 - SBA (small business size standards, disaster loans, open datasets)
+- CFPB (consumer complaints, financial product issues, company response data)
 """,
 )
 
@@ -50,6 +51,7 @@ from mcp_govt_api.tools import (  # noqa: E402
     bts,  # noqa: F401
     cdc,  # noqa: F401
     census,  # noqa: F401
+    cfpb,  # noqa: F401
     cisa,  # noqa: F401
     datagov,  # noqa: F401
     earthquakes,  # noqa: F401
