@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![89 Tools](https://img.shields.io/badge/tools-89-2563eb.svg?style=flat-square)](#tool-reference)
-[![26 APIs](https://img.shields.io/badge/APIs-26-7c3aed.svg?style=flat-square)](#data-sources)
+[![92 Tools](https://img.shields.io/badge/tools-92-2563eb.svg?style=flat-square)](#tool-reference)
+[![27 APIs](https://img.shields.io/badge/APIs-27-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **26 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, disaster management, FDA safety data, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **27 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, energy, labor statistics, public health, healthcare quality, disaster management, FDA safety data, national parks, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, and SBA small business data.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 16 of 26 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 17 of 27 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -58,6 +58,7 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added CMS tools for hospital quality ratings, Medicare provider search, and healthcare data
 - Added FDA tools for recalls, adverse events, and drug labels via openFDA
 - Added CDC public health surveillance tools for disease tracking and vaccination coverage
 - Added shared geolocation support with a new `lookup_location` tool
@@ -98,6 +99,7 @@ python3 -m mcp_govt_api
 
 | Source | What It Covers | Key |
 |--------|---------------|-----|
+| [CMS](https://data.cms.gov) | Hospital quality ratings, Medicare provider search, healthcare data | -- |
 | [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
 
 ### Demographics & Economics
@@ -192,6 +194,9 @@ python3 -m mcp_govt_api
 "Show me BLS employment data for 2023"
 "What FEMA disaster declarations were made in Florida this year?"
 "Show me housing assistance data for Hurricane Ian"
+"Search for hospitals in New York with quality ratings"
+"What's the quality rating for facility 050001?"
+"Find Medicare providers specializing in Cardiology in Texas"
 "Show me recent FDA drug recalls in California"
 "What adverse events have been reported for aspirin?"
 "Get drug label information for ibuprofen"
@@ -339,6 +344,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_cdc_disease_surveillance` | Notifiable disease case counts from the NNDSS |
 | `get_cdc_vaccination_coverage` | Vaccination coverage estimates by vaccine and state |
 | `query_cdc_open_data` | Raw CDC SODA API access for any dataset |
+
+</details>
+
+<details>
+<summary><strong>CMS Healthcare</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_hospitals` | Search hospitals by name or state with overall quality ratings |
+| `get_hospital_quality` | Get detailed quality measures and ratings for a specific hospital |
+| `search_medicare_providers` | Search Medicare-enrolled healthcare providers by name, state, or specialty |
 
 </details>
 
@@ -550,7 +566,8 @@ API Availability:
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
   ✓ SEC EDGAR             ✓ CDC Open Data
   ✓ BLS                   ✓ FEMA
-  ✓ SBA
+  ✓ SBA                   ✓ CFPB
+  ✓ CMS Healthcare
   ✗ OpenWeather (key not set)
   ✗ EIA (key not set)
   ✗ BEA (key not set)
@@ -593,7 +610,6 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 - [#71](https://github.com/EricGrill/mcp-civic-data/issues/71) Add NCES education and school district tools
 - [#72](https://github.com/EricGrill/mcp-civic-data/issues/72) Add NHTSA traffic safety and crash statistics tools
 - [#73](https://github.com/EricGrill/mcp-civic-data/issues/73) Add OSHA workplace safety and enforcement tools
-- [#74](https://github.com/EricGrill/mcp-civic-data/issues/74) Add CMS healthcare provider and hospital quality tools
 - [#78](https://github.com/EricGrill/mcp-civic-data/issues/78) Add SBA small business and disaster loan tools
 - [#80](https://github.com/EricGrill/mcp-civic-data/issues/80) Add FDA recalls, shortages, and safety alert tools
 - [#84](https://github.com/EricGrill/mcp-civic-data/issues/84) Add National Park Service parks and alerts tools
