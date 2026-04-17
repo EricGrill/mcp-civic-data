@@ -4,8 +4,8 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.safecast import (
-    get_radiation_measurements,
     get_radiation_history,
+    get_radiation_measurements,
     query_safecast,
 )
 
@@ -64,8 +64,8 @@ class TestGetRadiationMeasurements(unittest.IsolatedAsyncioTestCase):
 
     @patch("mcp_govt_api.tools.safecast.fetch_json", new_callable=AsyncMock)
     async def test_network_error(self, mock_fetch):
-        mock_fetch.side_effect = Exception("Connection refused")
-        with self.assertRaises(Exception):
+        mock_fetch.side_effect = RuntimeError("Connection refused")
+        with self.assertRaises(RuntimeError):
             await get_radiation_measurements(latitude=35.0, longitude=139.0)
 
 
@@ -94,7 +94,7 @@ class TestGetRadiationHistory(unittest.IsolatedAsyncioTestCase):
         mock_fetch.return_value = [
             {"unit": "cpm", "value": 28.0, "captured_at": "2024-06-01T12:00:00Z"},
         ]
-        result = await get_radiation_history(
+        await get_radiation_history(
             latitude=35.0, longitude=139.0,
             captured_after="2024-06-01", captured_before="2024-06-30"
         )

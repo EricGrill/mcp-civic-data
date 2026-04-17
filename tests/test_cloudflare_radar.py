@@ -4,10 +4,10 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.cloudflare_radar import (
+    AUTH_FALLBACK_MSG,
+    get_attack_summary,
     get_internet_traffic_summary,
     get_top_domains,
-    get_attack_summary,
-    AUTH_FALLBACK_MSG,
 )
 
 

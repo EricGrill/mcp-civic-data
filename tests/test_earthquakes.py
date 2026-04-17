@@ -4,11 +4,11 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.earthquakes import (
-    get_recent_earthquakes,
-    get_earthquakes_near,
-    query_earthquakes,
     _format_feature,
     _format_time,
+    get_earthquakes_near,
+    get_recent_earthquakes,
+    query_earthquakes,
 )
 
 
@@ -85,8 +85,8 @@ class TestGetRecentEarthquakes(unittest.IsolatedAsyncioTestCase):
 
     @patch("mcp_govt_api.tools.earthquakes.fetch_json", new_callable=AsyncMock)
     async def test_network_error(self, mock_fetch):
-        mock_fetch.side_effect = Exception("API unavailable")
-        with self.assertRaises(Exception):
+        mock_fetch.side_effect = RuntimeError("API unavailable")
+        with self.assertRaises(RuntimeError):
             await get_recent_earthquakes()
 
 
@@ -140,7 +140,7 @@ class TestQueryEarthquakes(unittest.IsolatedAsyncioTestCase):
     @patch("mcp_govt_api.tools.earthquakes.fetch_json", new_callable=AsyncMock)
     async def test_raw_query(self, mock_fetch):
         mock_fetch.return_value = {"type": "FeatureCollection", "features": []}
-        result = await query_earthquakes(params={"minmagnitude": 7.0})
+        await query_earthquakes(params={"minmagnitude": 7.0})
         call_args = mock_fetch.call_args
         params = call_args[1].get("params") or call_args[0][1]
         self.assertEqual(params["format"], "geojson")

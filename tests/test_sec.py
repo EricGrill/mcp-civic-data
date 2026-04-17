@@ -6,7 +6,6 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 from mcp_govt_api.tools import sec
 
-
 # Sample data mirroring SEC's company_tickers.json structure
 SAMPLE_TICKERS_JSON = {
     "0": {"cik_str": "320193", "ticker": "AAPL", "title": "Apple Inc."},

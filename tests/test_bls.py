@@ -1,12 +1,12 @@
 """Tests for BLS labor statistics tools."""
 
 import unittest
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
 from mcp_govt_api.tools.bls import (
     get_bls_timeseries,
-    search_bls_series,
     get_unemployment_rate,
+    search_bls_series,
 )
 
 

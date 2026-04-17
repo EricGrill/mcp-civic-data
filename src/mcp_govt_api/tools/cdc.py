@@ -1,7 +1,8 @@
+from datetime import UTC
+
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
-
 
 CDC_OPEN_DATA_BASE = "https://data.cdc.gov"
 CDC_NNDSS_DATASET = "x9gk-5huc"
@@ -49,11 +50,11 @@ async def search_cdc_datasets(
         updated = ds.get("rowsUpdatedAt")
         updated_str = ""
         if updated:
-            from datetime import datetime, timezone
+            from datetime import datetime
 
             try:
                 updated_str = datetime.fromtimestamp(
-                    updated, tz=timezone.utc
+                    updated, tz=UTC
                 ).strftime("%Y-%m-%d")
             except (ValueError, OSError):
                 updated_str = "Unknown"

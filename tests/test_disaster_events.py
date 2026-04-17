@@ -4,8 +4,8 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.disaster_events import (
-    get_recent_disasters,
     get_disaster_details,
+    get_recent_disasters,
     search_disaster_reports,
 )
 

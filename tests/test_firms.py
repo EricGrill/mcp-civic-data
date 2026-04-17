@@ -4,11 +4,11 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.firms import (
+    _bounding_box,
+    _format_hotspot,
     get_active_fires,
     get_country_fires,
     query_firms,
-    _bounding_box,
-    _format_hotspot,
 )
 
 
@@ -103,8 +103,8 @@ class TestGetActiveFires(unittest.IsolatedAsyncioTestCase):
 
     @patch("mcp_govt_api.tools.firms._fetch_firms_csv", new_callable=AsyncMock)
     async def test_network_error(self, mock_csv):
-        mock_csv.side_effect = Exception("Request timed out")
-        with self.assertRaises(Exception):
+        mock_csv.side_effect = RuntimeError("Request timed out")
+        with self.assertRaises(RuntimeError):
             await get_active_fires(latitude=34.05, longitude=-118.24)
 
 
@@ -138,7 +138,7 @@ class TestGetCountryFires(unittest.IsolatedAsyncioTestCase):
     @patch("mcp_govt_api.tools.firms._fetch_firms_csv", new_callable=AsyncMock)
     async def test_days_clamped(self, mock_csv):
         mock_csv.return_value = []
-        result = await get_country_fires(country_code="USA", days=15)
+        await get_country_fires(country_code="USA", days=15)
         # days should be clamped to 10
         call_url = mock_csv.call_args[0][0]
         self.assertTrue(call_url.endswith("/10"))
@@ -150,17 +150,17 @@ class TestQueryFirms(unittest.IsolatedAsyncioTestCase):
     @patch("mcp_govt_api.tools.firms._fetch_firms_csv", new_callable=AsyncMock)
     async def test_with_area(self, mock_csv):
         mock_csv.return_value = []
-        result = await query_firms(area="-125,24,-66,49")
+        await query_firms(area="-125,24,-66,49")
         mock_csv.assert_awaited_once()
 
     @patch("mcp_govt_api.tools.firms._fetch_firms_csv", new_callable=AsyncMock)
     async def test_with_country(self, mock_csv):
         mock_csv.return_value = []
-        result = await query_firms(country="USA")
+        await query_firms(country="USA")
         mock_csv.assert_awaited_once()
 
     async def test_no_area_or_country(self):
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             await query_firms()
 
 

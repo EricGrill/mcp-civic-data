@@ -4,9 +4,9 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.internet_health import (
-    get_network_disconnections,
-    get_network_delays,
     get_as_hegemony,
+    get_network_delays,
+    get_network_disconnections,
 )
 
 

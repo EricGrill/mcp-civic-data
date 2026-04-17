@@ -4,8 +4,8 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.economics import (
-    get_country_indicators,
     compare_countries,
+    get_country_indicators,
     query_worldbank,
 )
 
@@ -49,7 +49,7 @@ class TestGetCountryIndicators(unittest.IsolatedAsyncioTestCase):
     async def test_default_indicators(self, mock_fetch):
         # Should use default indicators when none specified
         mock_fetch.return_value = [{"page": 1}, [{"value": 100, "date": "2022"}]]
-        result = await get_country_indicators(country="USA")
+        await get_country_indicators(country="USA")
         # Should have been called 4 times (4 default indicators)
         self.assertEqual(mock_fetch.await_count, 4)
 
@@ -97,7 +97,7 @@ class TestQueryWorldbank(unittest.IsolatedAsyncioTestCase):
     @patch("mcp_govt_api.tools.economics.fetch_json", new_callable=AsyncMock)
     async def test_raw_query(self, mock_fetch):
         mock_fetch.return_value = [{"page": 1}, [{"value": 100}]]
-        result = await query_worldbank(country="USA", indicator="NY.GDP.MKTP.CD")
+        await query_worldbank(country="USA", indicator="NY.GDP.MKTP.CD")
         mock_fetch.assert_awaited_once()
         # Verify format=json was injected
         call_args = mock_fetch.call_args

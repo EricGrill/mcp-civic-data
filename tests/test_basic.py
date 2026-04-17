@@ -19,7 +19,7 @@ class TestHTTPClientLifecycle(unittest.TestCase):
 
     def test_http_lifespan_closes_client(self):
         """Test that http_lifespan context manager closes the HTTP client."""
-        from mcp_govt_api.utils.http import http_lifespan, http_client
+        from mcp_govt_api.utils.http import http_client, http_lifespan
 
         async def run():
             # Client should start open

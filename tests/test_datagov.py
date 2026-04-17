@@ -4,9 +4,9 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.datagov import (
-    search_datasets,
     get_dataset_info,
     query_datagov,
+    search_datasets,
 )
 
 
@@ -50,8 +50,8 @@ class TestSearchDatasets(unittest.IsolatedAsyncioTestCase):
 
     @patch("mcp_govt_api.tools.datagov.fetch_json", new_callable=AsyncMock)
     async def test_network_error(self, mock_fetch):
-        mock_fetch.side_effect = Exception("Connection error")
-        with self.assertRaises(Exception):
+        mock_fetch.side_effect = RuntimeError("Connection error")
+        with self.assertRaises(RuntimeError):
             await search_datasets(query="climate")
 
 

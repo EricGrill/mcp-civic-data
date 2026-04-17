@@ -4,11 +4,11 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.space_weather import (
-    get_space_weather_summary,
+    _kp_storm_level,
     get_solar_flares,
     get_space_weather_alerts,
+    get_space_weather_summary,
     query_space_weather,
-    _kp_storm_level,
 )
 
 

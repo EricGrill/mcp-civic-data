@@ -4,9 +4,9 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.census import (
-    get_population,
     get_demographics,
     get_housing_stats,
+    get_population,
     query_census,
 )
 
@@ -48,14 +48,16 @@ class TestGetPopulation(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("County 20", result)
 
     async def test_invalid_state(self):
-        with self.assertRaises(ValueError):
-            await get_population(state="ZZ")
+        result = await get_population(state="ZZ")
+        self.assertIn("Error: [Census API]", result)
+        self.assertIn("valid US state", result)
 
     @patch("mcp_govt_api.tools.census.fetch_json", new_callable=AsyncMock)
     async def test_network_error(self, mock_fetch):
         mock_fetch.side_effect = Exception("Network error")
-        with self.assertRaises(Exception):
-            await get_population(state="CA")
+        result = await get_population(state="CA")
+        self.assertIn("Error: [Census API]", result)
+        self.assertIn("Network error", result)
 
 
 class TestGetDemographics(unittest.IsolatedAsyncioTestCase):

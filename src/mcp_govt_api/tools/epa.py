@@ -54,7 +54,6 @@ async def search_epa_facilities(
         return "No EPA-regulated facilities found matching the given criteria."
 
     facilities = facilities[:limit]
-    total = results.get("Message", "")
 
     lines = [f"EPA-Regulated Facilities ({len(facilities)} results):\n"]
 

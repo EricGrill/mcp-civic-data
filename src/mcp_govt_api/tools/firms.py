@@ -222,11 +222,11 @@ async def query_firms(
         'satellite', and others depending on the source.
 
     Raises:
-        Exception: If neither ``area`` nor ``country`` is supplied, or if
+        ValueError: If neither ``area`` nor ``country`` is supplied, or if
             the FIRMS API request fails.
     """
     if not area and not country:
-        raise Exception("Provide either 'area' (bounding box) or 'country' (ISO alpha-3 code).")
+        raise ValueError("Provide either 'area' (bounding box) or 'country' (ISO alpha-3 code).")
 
     days = max(1, min(10, days))
     map_key = _get_map_key()

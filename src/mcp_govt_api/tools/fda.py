@@ -166,7 +166,7 @@ async def get_fda_adverse_events(
         lines.append(f"  Drugs Involved: {drugs_str}")
         lines.append("")
 
-    lines.append(f"_Source: openFDA Drug Adverse Events (FAERS)_")
+    lines.append("_Source: openFDA Drug Adverse Events (FAERS)_")
 
     return "\n".join(lines)
 
@@ -245,6 +245,6 @@ async def get_fda_drug_labels(
         lines.append(f"  Dosage: {dosage}")
         lines.append("")
 
-    lines.append(f"_Source: openFDA Drug Labels (SPL)_")
+    lines.append("_Source: openFDA Drug Labels (SPL)_")
 
     return "\n".join(lines)

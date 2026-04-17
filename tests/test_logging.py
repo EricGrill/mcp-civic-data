@@ -114,6 +114,7 @@ class TestJSONFormatter(unittest.TestCase):
     def test_json_includes_exception(self):
         """JSON output should include exception info when present."""
         import sys
+
         from mcp_govt_api.utils.logging import JSONFormatter
 
         formatter = JSONFormatter()

@@ -183,13 +183,13 @@ async def get_cfpb_complaint(complaint_id: str) -> str:
         lines.append(f"Consumer Consent Provided: {consumer_consent}")
 
     if narrative:
-        lines.append(f"\n**Consumer Narrative:**")
+        lines.append("\n**Consumer Narrative:**")
         if len(narrative) > 1000:
             lines.append(narrative[:1000] + "...")
         else:
             lines.append(narrative)
 
-    lines.append(f"\n_Source: CFPB Consumer Complaint Database_")
+    lines.append("\n_Source: CFPB Consumer Complaint Database_")
 
     return "\n".join(lines)
 

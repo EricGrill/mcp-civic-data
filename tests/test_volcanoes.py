@@ -4,13 +4,12 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.volcanoes import (
+    _format_alert_feature,
+    _format_volcano_feature,
     get_active_volcanoes,
     get_volcano_alerts,
     search_volcanoes,
-    _format_alert_feature,
-    _format_volcano_feature,
 )
-
 
 # ---------------------------------------------------------------------------
 # Sample data fixtures
@@ -215,8 +214,8 @@ class TestGetActiveVolcanoes(unittest.IsolatedAsyncioTestCase):
 
     @patch("mcp_govt_api.tools.volcanoes.fetch_json", new_callable=AsyncMock)
     async def test_network_error(self, mock_fetch):
-        mock_fetch.side_effect = Exception("Connection timeout")
-        with self.assertRaises(Exception):
+        mock_fetch.side_effect = RuntimeError("Connection timeout")
+        with self.assertRaises(RuntimeError):
             await get_active_volcanoes()
 
 
@@ -278,8 +277,8 @@ class TestGetVolcanoAlerts(unittest.IsolatedAsyncioTestCase):
 
     @patch("mcp_govt_api.tools.volcanoes.fetch_json", new_callable=AsyncMock)
     async def test_network_error(self, mock_fetch):
-        mock_fetch.side_effect = Exception("API unavailable")
-        with self.assertRaises(Exception):
+        mock_fetch.side_effect = RuntimeError("API unavailable")
+        with self.assertRaises(RuntimeError):
             await get_volcano_alerts()
 
 
@@ -396,8 +395,8 @@ class TestSearchVolcanoes(unittest.IsolatedAsyncioTestCase):
 
     @patch("mcp_govt_api.tools.volcanoes.fetch_json", new_callable=AsyncMock)
     async def test_network_error(self, mock_fetch):
-        mock_fetch.side_effect = Exception("Connection refused")
-        with self.assertRaises(Exception):
+        mock_fetch.side_effect = RuntimeError("Connection refused")
+        with self.assertRaises(RuntimeError):
             await search_volcanoes(query="test")
 
 

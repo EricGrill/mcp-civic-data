@@ -4,10 +4,10 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.cdc import (
-    search_cdc_datasets,
     get_cdc_disease_surveillance,
     get_cdc_vaccination_coverage,
     query_cdc_open_data,
+    search_cdc_datasets,
 )
 
 
@@ -102,8 +102,6 @@ class TestGetCdcDiseaseSurveillance(unittest.IsolatedAsyncioTestCase):
                 disease="Hepatitis", state="Texas", limit=5
             )
 
-        _, kwargs = mock_fetch.call_args
-        params = kwargs.get("params", mock_fetch.call_args[0][1] if len(mock_fetch.call_args[0]) > 1 else {})
         # Verify the call was made with the right URL
         url = mock_fetch.call_args[0][0]
         self.assertIn("x9gk-5huc", url)

@@ -65,7 +65,7 @@ class TestGetAirlineOntimeStats(unittest.IsolatedAsyncioTestCase):
             "mcp_govt_api.tools.bts.fetch_json",
             new=AsyncMock(return_value=[]),
         ) as mock_fetch:
-            result = await get_airline_ontime_stats(airport="ATL")
+            await get_airline_ontime_stats(airport="ATL")
 
         call_args = mock_fetch.call_args
         params = call_args[1].get("params") or call_args[0][1]

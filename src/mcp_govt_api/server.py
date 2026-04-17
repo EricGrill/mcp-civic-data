@@ -70,9 +70,10 @@ def main():
 
 
 # Import tools to register them
-from mcp_govt_api.tools import (  # noqa: E402
+from mcp_govt_api.tools import (  # noqa: E402  # noqa: E402
     bea,  # noqa: F401
     bjs,  # noqa: F401
+    blitzortung,  # noqa: F401
     bls,  # noqa: F401
     bts,  # noqa: F401
     cdc,  # noqa: F401
@@ -80,8 +81,10 @@ from mcp_govt_api.tools import (  # noqa: E402
     cfpb,  # noqa: F401
     cisa,  # noqa: F401
     clinical_trials,  # noqa: F401
+    cloudflare_radar,  # noqa: F401
     cms,  # noqa: F401
     datagov,  # noqa: F401
+    disaster_events,  # noqa: F401
     earthquakes,  # noqa: F401
     economics,  # noqa: F401
     eia,  # noqa: F401
@@ -91,35 +94,29 @@ from mcp_govt_api.tools import (  # noqa: E402
     fema,  # noqa: F401
     firms,  # noqa: F401
     fred,  # noqa: F401
+    internet_health,  # noqa: F401
     location,  # noqa: F401
+    n2yo,  # noqa: F401
     nasa,  # noqa: F401
     nces,  # noqa: F401
     nhtsa,  # noqa: F401
     noaa_coops,  # noqa: F401
+    noaa_imagery,  # noqa: F401
     noaa_weather,  # noqa: F401
     nps,  # noqa: F401
     openaq,  # noqa: F401
     osha,  # noqa: F401
+    outages,  # noqa: F401
+    railway,  # noqa: F401
     safecast,  # noqa: F401
     samhsa,  # noqa: F401
     sba,  # noqa: F401
     sec,  # noqa: F401
     space_weather,  # noqa: F401
+    submarine_cables,  # noqa: F401
     usda,  # noqa: F401
     usfs,  # noqa: F401
     usgs_water,  # noqa: F401
-    weather,  # noqa: F401
-)
-
-from mcp_govt_api.tools import (  # noqa: E402
-    blitzortung,  # noqa: F401
-    cloudflare_radar,  # noqa: F401
-    disaster_events,  # noqa: F401
-    internet_health,  # noqa: F401
-    n2yo,  # noqa: F401
-    noaa_imagery,  # noqa: F401
-    outages,  # noqa: F401
-    railway,  # noqa: F401
-    submarine_cables,  # noqa: F401
     volcanoes,  # noqa: F401
+    weather,  # noqa: F401
 )

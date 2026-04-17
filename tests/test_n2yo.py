@@ -3,12 +3,11 @@
 import unittest
 from unittest.mock import AsyncMock, patch
 
-
 from mcp_govt_api.tools.n2yo import (
-    get_satellite_position,
-    get_satellites_above,
-    get_satellite_tle,
     get_api_key,
+    get_satellite_position,
+    get_satellite_tle,
+    get_satellites_above,
 )
 
 

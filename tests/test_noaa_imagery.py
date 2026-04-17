@@ -4,12 +4,12 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.noaa_imagery import (
-    get_satellite_imagery_info,
-    get_latest_satellite_timestamps,
-    get_satellite_sectors,
+    _validate_product,
     _validate_satellite,
     _validate_sector,
-    _validate_product,
+    get_latest_satellite_timestamps,
+    get_satellite_imagery_info,
+    get_satellite_sectors,
 )
 
 

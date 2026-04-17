@@ -4,9 +4,9 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.eu_data import (
-    search_eu_datasets,
     get_eu_dataset_info,
     query_eu_data,
+    search_eu_datasets,
 )
 
 
@@ -138,7 +138,7 @@ class TestQueryEuData(unittest.IsolatedAsyncioTestCase):
     @patch("mcp_govt_api.tools.eu_data.fetch_json", new_callable=AsyncMock)
     async def test_raw_query(self, mock_fetch):
         mock_fetch.return_value = {"result": {"results": []}}
-        result = await query_eu_data("/datasets", params={"q": "test"})
+        await query_eu_data("/datasets", params={"q": "test"})
         mock_fetch.assert_awaited_once()
 
 

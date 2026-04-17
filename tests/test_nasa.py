@@ -6,8 +6,8 @@ from unittest.mock import AsyncMock, patch
 from mcp_govt_api.tools.nasa import (
     get_astronomy_photo,
     get_mars_rover_photos,
-    search_nasa_images,
     query_nasa,
+    search_nasa_images,
 )
 
 
@@ -42,8 +42,8 @@ class TestGetAstronomyPhoto(unittest.IsolatedAsyncioTestCase):
 
     @patch("mcp_govt_api.tools.nasa.fetch_json", new_callable=AsyncMock)
     async def test_apod_network_error(self, mock_fetch):
-        mock_fetch.side_effect = Exception("API rate limit exceeded")
-        with self.assertRaises(Exception):
+        mock_fetch.side_effect = RuntimeError("API rate limit exceeded")
+        with self.assertRaises(RuntimeError):
             await get_astronomy_photo()
 
 
@@ -100,7 +100,6 @@ class TestGetMarsRoverPhotos(unittest.IsolatedAsyncioTestCase):
         mock_fetch.return_value = {"photos": []}
         await get_mars_rover_photos(rover="curiosity")
         call_args = mock_fetch.call_args
-        url = call_args[0][0]
         params = call_args[1].get("params", call_args[0][1] if len(call_args[0]) > 1 else {})
         self.assertEqual(params.get("sol"), 1000)
 

@@ -1,7 +1,6 @@
 from mcp_govt_api.server import mcp
-from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.config import config
-
+from mcp_govt_api.utils.http import fetch_json
 
 EIA_BASE = "https://api.eia.gov/v2"
 
@@ -185,10 +184,7 @@ async def get_energy_overview(
     except ValueError as exc:
         return str(exc)
 
-    if category:
-        url = f"{EIA_BASE}/{category}"
-    else:
-        url = EIA_BASE
+    url = f"{EIA_BASE}/{category}" if category else EIA_BASE
 
     params = {"api_key": api_key}
 

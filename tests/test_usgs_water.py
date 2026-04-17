@@ -4,10 +4,10 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.usgs_water import (
+    _format_time_series,
     get_water_conditions,
     get_water_site,
     query_usgs_water,
-    _format_time_series,
 )
 
 
@@ -166,7 +166,7 @@ class TestQueryUsgsWater(unittest.IsolatedAsyncioTestCase):
     @patch("mcp_govt_api.tools.usgs_water.fetch_json", new_callable=AsyncMock)
     async def test_raw_query(self, mock_fetch):
         mock_fetch.return_value = {"value": {"timeSeries": []}}
-        result = await query_usgs_water(params={"stateCd": "OR", "parameterCd": "00060"})
+        await query_usgs_water(params={"stateCd": "OR", "parameterCd": "00060"})
         call_params = mock_fetch.call_args[1].get("params") or mock_fetch.call_args[0][1]
         self.assertEqual(call_params["format"], "json")
 

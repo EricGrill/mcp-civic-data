@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 COOPS_DATA_BASE = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
 COOPS_STATIONS_BASE = "https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations.json"
 

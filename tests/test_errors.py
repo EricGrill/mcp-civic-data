@@ -1,7 +1,7 @@
 """Tests for the custom exception hierarchy, error formatting, and decorator."""
 
 import unittest
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import httpx
 
@@ -15,7 +15,6 @@ from mcp_govt_api.utils.errors import (
     format_error,
     handle_api_error,
 )
-
 
 # ---------------------------------------------------------------------------
 # Exception hierarchy

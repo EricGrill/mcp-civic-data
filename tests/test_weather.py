@@ -1,12 +1,12 @@
 """Tests for weather tools (NOAA and OpenWeather)."""
 
 import unittest
-from unittest.mock import AsyncMock, patch, PropertyMock
+from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.weather import (
-    get_weather_forecast,
-    get_weather_alerts,
     get_global_weather,
+    get_weather_alerts,
+    get_weather_forecast,
     query_noaa,
     query_openweather,
 )
@@ -71,8 +71,9 @@ class TestGetWeatherForecast(unittest.IsolatedAsyncioTestCase):
         )
         mock_fetch.side_effect = Exception("Connection refused")
 
-        with self.assertRaises(Exception):
-            await get_weather_forecast(latitude=38.0, longitude=-77.0)
+        result = await get_weather_forecast(latitude=38.0, longitude=-77.0)
+        self.assertIn("Error: [NOAA Weather]", result)
+        self.assertIn("Connection refused", result)
 
 
 class TestGetWeatherAlerts(unittest.IsolatedAsyncioTestCase):

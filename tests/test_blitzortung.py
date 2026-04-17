@@ -4,10 +4,9 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.blitzortung import (
-    get_recent_lightning_strikes,
     get_lightning_summary,
+    get_recent_lightning_strikes,
 )
-
 
 SAMPLE_GEOJSON = {
     "type": "FeatureCollection",

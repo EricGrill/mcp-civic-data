@@ -4,9 +4,9 @@ import unittest
 from unittest.mock import AsyncMock, patch
 
 from mcp_govt_api.tools.submarine_cables import (
-    search_submarine_cables,
-    get_submarine_cable_details,
     get_cable_landing_points,
+    get_submarine_cable_details,
+    search_submarine_cables,
 )
 
 

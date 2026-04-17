@@ -1,14 +1,14 @@
-from typing import Any
-from contextlib import asynccontextmanager
-from collections.abc import AsyncIterator
 import asyncio
 import logging
 import random
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+from typing import Any
 
 import httpx
 
-from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.cache import response_cache
+from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.errors import (
     APIError,
     AuthenticationError,
@@ -50,9 +50,7 @@ def _is_retryable_error(exc: Exception) -> bool:
         return True
     if isinstance(exc, httpx.HTTPStatusError):
         return exc.response.status_code in RETRYABLE_STATUS_CODES
-    if isinstance(exc, (httpx.ConnectError, httpx.ReadError, httpx.WriteError)):
-        return True
-    return False
+    return isinstance(exc, (httpx.ConnectError, httpx.ReadError, httpx.WriteError))
 
 
 async def _retry_delay(attempt: int, base_delay: float = DEFAULT_BASE_DELAY) -> None:
