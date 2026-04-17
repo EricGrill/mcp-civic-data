@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![51 Tools](https://img.shields.io/badge/tools-51-2563eb.svg?style=flat-square)](#tool-reference)
-[![15 APIs](https://img.shields.io/badge/APIs-15-7c3aed.svg?style=flat-square)](#data-sources)
+[![110 Tools](https://img.shields.io/badge/tools-110-2563eb.svg?style=flat-square)](#tool-reference)
+[![33 APIs](https://img.shields.io/badge/APIs-33-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **15 free, authoritative public data APIs** across weather, hazards, air quality, water, radiation, demographics, economics, open data discovery, cybersecurity, and SEC disclosures.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, national forests, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, USDA food and agriculture data, USFS wildfire and forest data, and FBI crime/justice statistics.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 13 of 15 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 22 of 33 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -35,7 +35,14 @@ No API keys required for 13 of 15 sources. Install it, point your MCP client at 
       "args": ["-m", "mcp_govt_api"],
       "env": {
         "OPENWEATHER_API_KEY": "optional",
-        "NASA_API_KEY": "optional"
+        "NASA_API_KEY": "optional",
+        "FRED_API_KEY": "optional",
+        "BLS_API_KEY": "optional",
+        "NPS_API_KEY": "optional",
+        "EIA_API_KEY": "optional",
+        "BEA_API_KEY": "optional",
+        "USDA_API_KEY": "optional",
+        "FBI_CDE_API_KEY": "optional"
       }
     }
   }
@@ -53,12 +60,20 @@ python3 -m mcp_govt_api
 
 ## What's New
 
+- Added BJS / FBI Crime Data Explorer tools for crime estimates, arrest data, and justice datasets
+- Added USDA Forest Service tools for active wildfires, fire perimeters, and National Forest search via WFIGS/ArcGIS
+- Added EPA environmental compliance tools for ECHO facility search, detailed facility reports, and Toxics Release Inventory
+- Added SAMHSA tools for mental health and substance abuse treatment facility locator and behavioral health data
+- Added CMS tools for hospital quality ratings, Medicare provider search, and healthcare data
+- Added FDA tools for recalls, adverse events, and drug labels via openFDA
+- Added CDC public health surveillance tools for disease tracking and vaccination coverage
 - Added shared geolocation support with a new `lookup_location` tool
 - Upgraded weather, earthquake, and air-quality tools to accept human-friendly location strings
 - Added CISA cybersecurity tools and integrated them into the server and README
 - Added SEC EDGAR tools for filings, submissions, and company facts
 - Added GitHub Actions CI for install, compile, unit test, import, and build validation
 - Added `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`
+- Added BEA regional and national economic accounts tools (GDP, income, industry)
 - Added branch protection and required automated checks on `main`
 
 ---
@@ -73,6 +88,8 @@ python3 -m mcp_govt_api
 | [OpenWeather](https://openweathermap.org) | Global weather for any city | Required |
 | [OpenAQ](https://openaq.org) | Air quality from stations worldwide | -- |
 | [USGS Water](https://waterservices.usgs.gov) | Real-time stream flow and flood levels across every US river | -- |
+| [NOAA CO-OPS](https://tidesandcurrents.noaa.gov) | Tide predictions, observed water levels, coastal stations | -- |
+| [EPA ECHO/Envirofacts](https://echo.epa.gov) | Facility compliance, enforcement history, toxic releases (TRI) | -- |
 | [Safecast](https://safecast.org) | Community radiation monitoring, 150M+ measurements | -- |
 
 ### Hazards & Events
@@ -83,6 +100,25 @@ python3 -m mcp_govt_api
 | [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov) | Active wildfires detected from satellites | Optional |
 | [NOAA Space Weather](https://swpc.noaa.gov) | Solar wind, geomagnetic storms, solar flares | -- |
 | [CISA](https://www.cisa.gov) | Known exploited vulnerabilities, security alerts, advisories | -- |
+| [FEMA](https://www.fema.gov/api/open) | Disaster declarations, assistance data, housing assistance | -- |
+| [USFS (WFIGS)](https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/) | Active wildfires, fire perimeters, National Forest boundaries | -- |
+
+### Health & Safety
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [CMS](https://data.cms.gov) | Hospital quality ratings, Medicare provider search, healthcare data | -- |
+| [FDA (openFDA)](https://open.fda.gov) | Drug/food/device recalls, adverse events, drug labels | -- |
+| [SAMHSA](https://findtreatment.gov) | Mental health and substance abuse treatment facilities, behavioral health data | -- |
+| [NHTSA](https://www.nhtsa.gov) | Vehicle recalls, consumer complaints, VIN decoding | -- |
+| [OSHA (DOL)](https://enforcedata.dol.gov) | Workplace inspections, violations, fatality reports | -- |
+| [ClinicalTrials.gov](https://clinicaltrials.gov) | Clinical study search, trial details, database statistics | -- |
+
+### Education
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [NCES (Education Data Portal)](https://educationdata.urban.org) | School districts, school enrollment, college/university data | -- |
 
 ### Demographics & Economics
 
@@ -90,12 +126,58 @@ python3 -m mcp_govt_api
 |--------|---------------|-----|
 | [US Census](https://census.gov) | Population, demographics, housing for every US county | -- |
 | [World Bank](https://worldbank.org) | GDP, poverty, unemployment for 200+ countries | -- |
+| [FRED](https://fred.stlouisfed.org) | Federal Reserve economic data: GDP, inflation, employment, interest rates | Required |
+| [BLS](https://www.bls.gov) | CPI, unemployment, employment, labor statistics | Optional |
+| [BEA](https://www.bea.gov) | Regional GDP, personal income, GDP by industry | Required |
 
-### Finance & Securities
+### Energy
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [EIA](https://www.eia.gov/opendata/) | Electricity, petroleum, natural gas, coal, and energy market data | Required |
+
+### Transportation
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [BTS](https://data.bts.gov) | Airline on-time performance, border crossing data, transportation datasets | -- |
+
+### Small Business
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [SBA](https://data.sba.gov) | Small business size standards, disaster loans, open datasets | -- |
+
+### Food & Agriculture
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [USDA](https://fdc.nal.usda.gov/) | Food nutrition data (FoodData Central), crop production and acreage (NASS) | Required |
+
+### Criminal Justice
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [FBI CDE / BJS](https://crime-data-explorer.fr.cloud.gov) | Crime estimates, arrest data, justice datasets via FBI Crime Data Explorer | Required |
+
+### Finance & Consumer Protection
 
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [SEC EDGAR](https://sec.gov/edgar) | Company filings, 10-K, 10-Q, 8-K forms | -- |
+| [CFPB](https://www.consumerfinance.gov) | Consumer complaints, financial product issues, company responses | -- |
+
+### Public Health
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [CDC Open Data](https://data.cdc.gov) | Disease surveillance, vaccination coverage, public health datasets | -- |
+
+### Parks & Recreation
+
+| Source | What It Covers | Key |
+|--------|---------------|-----|
+| [NPS](https://www.nps.gov/subjects/developer) | National parks, alerts, closures, park details | Required |
 
 ### Open Data Catalogs
 
@@ -123,11 +205,72 @@ python3 -m mcp_govt_api
 "Show me recent photos from the Perseverance rover"
 "What are the radiation levels near Fukushima?"
 "What are stream flow levels in Colorado?"
+"What are the tide predictions for Providence, RI?"
+"Find tide stations in Florida"
 "Find datasets about climate change on Data.gov"
+"What's the current US GDP from FRED?"
+"Search FRED for unemployment rate data"
 "Get Apple's latest 10-K filing from SEC"
 "Show me recent SEC filings for Tesla"
+"Search CDC datasets about influenza"
+"What are the latest disease surveillance reports for Salmonellosis?"
+"Show me vaccination coverage data for Influenza"
+"Search for clinical trials on breast cancer"
+"Get details for clinical trial NCT04280705"
+"How many studies are registered on ClinicalTrials.gov?"
 "Are there any known exploited vulnerabilities for Microsoft products?"
 "What are the latest CISA security alerts?"
+"Show me consumer complaints about mortgages in California"
+"What are the most common complaint types filed with the CFPB?"
+"What's the current CPI?"
+"What's the unemployment rate in California?"
+"Show me BLS employment data for 2023"
+"What FEMA disaster declarations were made in Florida this year?"
+"Show me housing assistance data for Hurricane Ian"
+"Search for hospitals in New York with quality ratings"
+"What's the quality rating for facility 050001?"
+"Find Medicare providers specializing in Cardiology in Texas"
+"Show me recent FDA drug recalls in California"
+"What adverse events have been reported for aspirin?"
+"Get drug label information for ibuprofen"
+"Search for national parks in California"
+"Are there any alerts at Yosemite?"
+"Tell me about Grand Canyon National Park"
+"Are there any recalls for 2020 Toyota Camry?"
+"Show me consumer complaints for Ford F-150"
+"Decode VIN 1HGCM82633A004352"
+"Search for school districts in California"
+"What's the enrollment at schools in Texas?"
+"Find colleges in New York"
+"Search for nutritional info on chicken breast"
+"What are the detailed nutrients in FDC ID 171688?"
+"Show me corn production data for Iowa in 2023"
+"What are the current gasoline prices?"
+"Show me electricity data for California"
+"What energy data categories does the EIA provide?"
+"What's California's GDP from BEA?"
+"Show me GDP by industry for 2022"
+"What datasets does the BEA offer?"
+"Show me airline on-time stats for American Airlines"
+"What's the border crossing data for El Paso?"
+"Search BTS datasets about freight"
+"Search SBA datasets for PPP loans"
+"What is the SBA size standard for restaurants?"
+"Show me SBA disaster loans in Florida"
+"Show me OSHA inspections in California"
+"What violations were found in OSHA inspection 1234567?"
+"Search for workplace fatality reports in Texas"
+"Search for EPA-regulated facilities in California"
+"Get compliance details for EPA facility 110000350174"
+"Show toxic chemical releases in Texas for 2022"
+"Find mental health treatment facilities near Chicago"
+"Search SAMHSA data for opioid treatment admissions"
+"What are the active wildfires in California?"
+"Show me wildfire perimeters in Oregon"
+"Search for National Forests in Montana"
+"What are the crime estimates for California?"
+"Show me national arrest data for robbery"
+"Search for prisoner statistics datasets"
 ```
 
 ---
@@ -146,6 +289,17 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_global_weather` | Current conditions for any city worldwide |
 | `query_noaa` | Raw NOAA API access |
 | `query_openweather` | Raw OpenWeather API access |
+
+</details>
+
+<details>
+<summary><strong>NOAA Radar & Alerts</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_forecast_discussion` | Area Forecast Discussion from a NWS Weather Forecast Office |
+| `get_active_weather_alerts` | Active weather alerts filtered by state, event type, and severity |
+| `get_radar_stations` | NEXRAD radar stations, optionally filtered by state |
 
 </details>
 
@@ -177,6 +331,28 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_water_conditions` | Stream flow and gage height by US state |
 | `get_water_site` | All readings for a specific USGS monitoring site |
 | `query_usgs_water` | Raw USGS Water Services API access |
+
+</details>
+
+<details>
+<summary><strong>Tides & Coastal (NOAA CO-OPS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_tide_predictions` | Tide predictions for a CO-OPS station |
+| `get_water_levels` | Observed water levels from a CO-OPS station |
+| `search_tide_stations` | Search for NOAA CO-OPS tide prediction stations |
+
+</details>
+
+<details>
+<summary><strong>EPA (Environmental Compliance)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_epa_facilities` | Search EPA-regulated facilities via ECHO enforcement database |
+| `get_epa_facility_info` | Get detailed compliance info for a facility by registry ID |
+| `get_toxic_releases` | Query Toxics Release Inventory (TRI) data via Envirofacts |
 
 </details>
 
@@ -227,6 +403,117 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>CDC Public Health</strong> — 4 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_cdc_datasets` | Search CDC's open data catalog by keyword |
+| `get_cdc_disease_surveillance` | Notifiable disease case counts from the NNDSS |
+| `get_cdc_vaccination_coverage` | Vaccination coverage estimates by vaccine and state |
+| `query_cdc_open_data` | Raw CDC SODA API access for any dataset |
+
+</details>
+
+<details>
+<summary><strong>ClinicalTrials.gov</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_clinical_trials` | Search clinical studies by keyword, condition, intervention, or status |
+| `get_clinical_trial` | Get detailed protocol information for a specific trial by NCT ID |
+| `get_trial_statistics` | Get overall ClinicalTrials.gov database statistics |
+
+</details>
+
+<details>
+<summary><strong>CMS Healthcare</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_hospitals` | Search hospitals by name or state with overall quality ratings |
+| `get_hospital_quality` | Get detailed quality measures and ratings for a specific hospital |
+| `search_medicare_providers` | Search Medicare-enrolled healthcare providers by name, state, or specialty |
+
+</details>
+
+<details>
+<summary><strong>FEMA Disasters</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_fema_disasters` | Search disaster declarations by state, year, or type |
+| `get_fema_disaster_summary` | Detailed summary for a specific disaster number |
+| `get_fema_assistance` | Housing assistance data for disaster survivors |
+
+</details>
+
+<details>
+<summary><strong>USDA Forest Service (USFS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_active_wildfires` | Current wildfire incidents from WFIGS by state |
+| `get_wildfire_perimeters` | Active fire perimeters and boundaries with acreage |
+| `search_national_forests` | Search National Forests by name or state |
+
+</details>
+
+<details>
+<summary><strong>FDA (openFDA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_fda_recalls` | Search FDA drug, food, and device recall/enforcement reports |
+| `get_fda_adverse_events` | Search drug adverse event reports from FAERS |
+| `get_fda_drug_labels` | Search drug labeling and SPL data (indications, warnings, dosage) |
+
+</details>
+
+<details>
+<summary><strong>SBA (Small Business)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_sba_datasets` | Search SBA open datasets on data.sba.gov |
+| `get_sba_size_standards` | Look up small business size standards by industry or NAICS code |
+| `get_sba_disaster_loans` | Get SBA disaster loan data by state or year |
+
+</details>
+
+<details>
+<summary><strong>Workplace Safety (OSHA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_osha_inspections` | Search OSHA workplace inspections by state or establishment |
+| `get_osha_violations` | Get violations for a specific OSHA inspection |
+| `search_osha_fatalities` | Search workplace fatality and catastrophe reports |
+
+</details>
+
+<details>
+<summary><strong>NHTSA Vehicle Safety</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_vehicle_recalls` | Search NHTSA vehicle recall campaigns by make, model, and year |
+| `get_vehicle_complaints` | Get consumer complaints about vehicles from NHTSA |
+| `decode_vin` | Decode a Vehicle Identification Number for make/model/year/specs |
+
+</details>
+
+<details>
+<summary><strong>SAMHSA (Behavioral Health)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `find_treatment_facilities` | Find mental health and substance abuse treatment facilities near a location |
+| `search_samhsa_datasets` | Search SAMHSA open data catalog for behavioral health datasets |
+| `get_samhsa_facility_details` | Get detailed info about a specific SAMHSA treatment facility |
+
+</details>
+
+<details>
 <summary><strong>SEC EDGAR</strong> — 5 tools</summary>
 
 | Tool | Description |
@@ -236,6 +523,72 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `get_latest_submissions` | Get recent submissions filtered by form type |
 | `get_company_facts` | Get company facts and XBRL financial data |
 | `query_sec_edgar` | Raw SEC EDGAR API access |
+
+</details>
+
+<details>
+<summary><strong>Criminal Justice (BJS / FBI CDE)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_crime_estimates` | Crime estimates by state or national from the FBI UCR program |
+| `get_arrest_data` | National arrest data by offense type |
+| `search_crime_datasets` | Search crime and justice datasets on Data.gov |
+
+</details>
+
+<details>
+<summary><strong>CFPB Consumer Complaints</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_cfpb_complaints` | Search consumer complaints by product, company, state, or keyword |
+| `get_cfpb_complaint` | Get full details of a specific consumer complaint by ID |
+| `get_cfpb_complaint_stats` | Aggregate complaint statistics by product, company, or state |
+
+</details>
+
+<details>
+<summary><strong>National Parks (NPS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_national_parks` | Search parks by name, keyword, or state code |
+| `get_park_alerts` | Active alerts for a park (closures, cautions, dangers) |
+| `get_park_info` | Detailed park info including hours, fees, and contacts |
+
+</details>
+
+<details>
+<summary><strong>Food & Agriculture (USDA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_usda_foods` | Search FoodData Central for nutritional info on foods |
+| `get_food_details` | Get detailed nutrition data for a specific food by FDC ID |
+| `get_crop_data` | Get NASS crop production, acreage, and yield data by state and year |
+
+</details>
+
+<details>
+<summary><strong>Energy (EIA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_electricity_data` | Retail electricity sales, prices, and revenue by state |
+| `get_petroleum_prices` | Gasoline, diesel, and heating oil price data |
+| `get_energy_overview` | Browse available EIA data categories and routes |
+
+</details>
+
+<details>
+<summary><strong>Transportation (BTS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_airline_ontime_stats` | Airline on-time performance, delays, and cancellations |
+| `get_border_crossing_data` | US-Canada and US-Mexico border crossing entry data |
+| `search_bts_datasets` | Search BTS open datasets on data.bts.gov |
 
 </details>
 
@@ -263,7 +616,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
-<summary><strong>Economics</strong> — 3 tools</summary>
+<summary><strong>Economics (World Bank)</strong> — 3 tools</summary>
 
 | Tool | Description |
 |------|-------------|
@@ -274,15 +627,46 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
-<summary><strong>SEC EDGAR</strong> — 5 tools</summary>
+<summary><strong>Economics (FRED)</strong> — 3 tools</summary>
 
 | Tool | Description |
 |------|-------------|
-| `get_company_filings` | Get SEC filings by ticker or CIK (10-K, 10-Q, 8-K) |
-| `search_company` | Find CIK for a company by name or ticker |
-| `get_latest_submissions` | Get latest submissions filtered by form type |
-| `get_company_facts` | Financial facts and XBRL data for a company |
-| `query_sec_edgar` | Raw SEC EDGAR API access |
+| `search_fred_series` | Search for economic data series by keyword |
+| `get_fred_series` | Get observations for a series (e.g., GDP, UNRATE, CPIAUCSL) |
+| `get_fred_series_info` | Get metadata about a series |
+
+</details>
+
+<details>
+<summary><strong>Labor Statistics (BLS)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_bls_timeseries` | Get time series data for any BLS series (CPI, employment, PPI) |
+| `search_bls_series` | Look up common BLS series IDs by keyword |
+| `get_unemployment_rate` | National or state-level unemployment rate data |
+
+</details>
+
+<details>
+<summary><strong>Economics (BEA)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `get_bea_regional_data` | Regional GDP, income, and employment data by state |
+| `get_bea_gdp_by_industry` | GDP breakdown by industry sector |
+| `search_bea_datasets` | List available BEA datasets and tables |
+
+</details>
+
+<details>
+<summary><strong>Education (NCES)</strong> — 3 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_school_districts` | Search school districts by state or name |
+| `get_school_enrollment` | Get school enrollment data by state or district |
+| `search_colleges` | Search colleges and universities via IPEDS |
 
 </details>
 
@@ -320,6 +704,13 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 |----------|---------|---------|
 | `OPENWEATHER_API_KEY` | Enables global weather tools | *(disabled)* |
 | `NASA_API_KEY` | Higher rate limits for NASA + FIRMS | `DEMO_KEY` (30 req/hr) |
+| `FRED_API_KEY` | Enables FRED economic data tools | *(disabled)* |
+| `BLS_API_KEY` | Higher rate limits for BLS (25 to 500 queries/day) | *(works without key)* |
+| `NPS_API_KEY` | Enables National Park Service tools | *(disabled)* |
+| `EIA_API_KEY` | Enables EIA energy market tools | *(disabled)* |
+| `BEA_API_KEY` | Enables BEA economic accounts tools | *(disabled)* |
+| `USDA_API_KEY` | Enables USDA food nutrition and crop data tools | *(disabled)* |
+| `FBI_CDE_API_KEY` | Enables FBI Crime Data Explorer / BJS crime tools | *(disabled)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
 
 On startup the server prints which APIs are available:
@@ -330,8 +721,14 @@ API Availability:
   ✓ OpenAQ                ✓ USGS Water     ✓ USGS Earthquakes
   ✓ Safecast              ✓ Data.gov       ✓ EU Open Data
   ✓ Space Weather         ✓ NASA FIRMS     ✓ NASA
-  ✓ SEC EDGAR
+  ✓ SEC EDGAR             ✓ CDC Open Data  ✓ EPA ECHO/TRI
+  ✓ BLS                   ✓ FEMA
+  ✓ SBA                   ✓ CFPB
+  ✓ CMS Healthcare        ✓ SAMHSA
   ✗ OpenWeather (key not set)
+  ✗ EIA (key not set)
+  ✗ BEA (key not set)
+  ✗ USDA (key not set)
 ```
 
 ---
@@ -363,7 +760,7 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 
 - [#57](https://github.com/EricGrill/mcp-civic-data/issues/57) Add BLS labor statistics tools
 - [#61](https://github.com/EricGrill/mcp-civic-data/issues/61) Add FEMA disaster declarations and assistance tools
-- [#62](https://github.com/EricGrill/mcp-civic-data/issues/62) Add ClinicalTrials.gov health research tools
+- ~~[#62](https://github.com/EricGrill/mcp-civic-data/issues/62) Add ClinicalTrials.gov health research tools~~
 - [#63](https://github.com/EricGrill/mcp-civic-data/issues/63) Add USDA Forest Service land and wildfire tools
 - [#64](https://github.com/EricGrill/mcp-civic-data/issues/64) Add Bureau of Justice Statistics tools
 - [#65](https://github.com/EricGrill/mcp-civic-data/issues/65) Add USDA food and agriculture data tools
@@ -371,7 +768,6 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 - [#71](https://github.com/EricGrill/mcp-civic-data/issues/71) Add NCES education and school district tools
 - [#72](https://github.com/EricGrill/mcp-civic-data/issues/72) Add NHTSA traffic safety and crash statistics tools
 - [#73](https://github.com/EricGrill/mcp-civic-data/issues/73) Add OSHA workplace safety and enforcement tools
-- [#74](https://github.com/EricGrill/mcp-civic-data/issues/74) Add CMS healthcare provider and hospital quality tools
 - [#78](https://github.com/EricGrill/mcp-civic-data/issues/78) Add SBA small business and disaster loan tools
 - [#80](https://github.com/EricGrill/mcp-civic-data/issues/80) Add FDA recalls, shortages, and safety alert tools
 - [#84](https://github.com/EricGrill/mcp-civic-data/issues/84) Add National Park Service parks and alerts tools
@@ -380,7 +776,7 @@ The active roadmap lives in [#87](https://github.com/EricGrill/mcp-civic-data/is
 
 - [#49](https://github.com/EricGrill/mcp-civic-data/issues/49) Add composite queries for multi-source data aggregation
 - [#59](https://github.com/EricGrill/mcp-civic-data/issues/59) Add EIA energy market and grid tools
-- [#75](https://github.com/EricGrill/mcp-civic-data/issues/75) Add CFPB consumer complaint and financial protection tools
+- ~~[#75](https://github.com/EricGrill/mcp-civic-data/issues/75) Add CFPB consumer complaint and financial protection tools~~
 - [#79](https://github.com/EricGrill/mcp-civic-data/issues/79) Add BTS freight and transportation performance tools
 - [#82](https://github.com/EricGrill/mcp-civic-data/issues/82) Add SEC filings and company disclosure tools
 - [#83](https://github.com/EricGrill/mcp-civic-data/issues/83) Add BEA regional and national economic accounts tools
