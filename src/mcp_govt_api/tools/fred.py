@@ -2,7 +2,6 @@ from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
 
-
 FRED_BASE = "https://api.stlouisfed.org/fred"
 
 

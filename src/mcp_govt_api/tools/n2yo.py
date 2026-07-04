@@ -8,7 +8,7 @@ Requires a free API key from https://www.n2yo.com/
 """
 
 import os
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from mcp_govt_api.server import mcp
@@ -186,7 +186,7 @@ async def get_satellite_position(
         time_str = "N/A"
         if timestamp:
             try:
-                dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+                dt = datetime.fromtimestamp(timestamp, tz=UTC)
                 time_str = dt.strftime("%Y-%m-%d %H:%M:%S UTC")
             except (OSError, ValueError):
                 time_str = str(timestamp)

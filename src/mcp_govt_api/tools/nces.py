@@ -1,7 +1,6 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 NCES_BASE = "https://educationdata.urban.org/api/v1"
 
 

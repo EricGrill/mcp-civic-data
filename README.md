@@ -6,16 +6,16 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml/badge.svg)](https://github.com/EricGrill/mcp-civic-data/actions/workflows/ci.yml)
-[![110 Tools](https://img.shields.io/badge/tools-110-2563eb.svg?style=flat-square)](#tool-reference)
-[![33 APIs](https://img.shields.io/badge/APIs-33-7c3aed.svg?style=flat-square)](#data-sources)
+[![172 Tools](https://img.shields.io/badge/tools-172-2563eb.svg?style=flat-square)](#tool-reference)
+[![34 APIs](https://img.shields.io/badge/APIs-34-7c3aed.svg?style=flat-square)](#data-sources)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab.svg?style=flat-square)](https://python.org)
 [![MCP](https://img.shields.io/badge/protocol-MCP-f97316.svg?style=flat-square)](https://modelcontextprotocol.io)
 
-An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **33 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, national forests, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, SBA small business data, USDA food and agriculture data, USFS wildfire and forest data, and FBI crime/justice statistics.
+An [MCP](https://modelcontextprotocol.io) server that connects AI agents to **34 free, authoritative public data APIs** across weather, hazards, air quality, water, tides, radiation, demographics, economics, education, energy, labor statistics, public health, clinical trials, behavioral health, healthcare quality, disaster management, EPA environmental compliance, FDA safety data, vehicle safety, workplace safety, national parks, national forests, consumer financial protection, open data discovery, cybersecurity, SEC disclosures, Federal Reserve economic indicators, BEA economic accounts, BTS transportation data, FAA aviation data, SBA small business data, USDA food and agriculture data, USFS wildfire and forest data, and FBI crime/justice statistics.
 
 Built for practical agent workflows: concise high-level tools, raw query access where it matters, and location-aware inputs that accept city names, ZIP codes, addresses, or raw coordinates.
 
-No API keys required for 22 of 33 sources. Install it, point your MCP client at it, and start querying real civic data.
+No API keys required for 23 of 34 sources. Install it, point your MCP client at it, and start querying real civic data.
 
 [Get Started](#get-started) · [What's New](#whats-new) · [Data Sources](#data-sources) · [Tool Reference](#tool-reference) · [Roadmap](#implementation-roadmap) · [Contributing](CONTRIBUTING.md)
 
@@ -74,6 +74,7 @@ python3 -m mcp_govt_api
 - Added GitHub Actions CI for install, compile, unit test, import, and build validation
 - Added `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`
 - Added BEA regional and national economic accounts tools (GDP, income, industry)
+- Added FAA public aviation tools for AIS geodata, TFRs, NAS Status, aircraft registry, and aircraft type characteristics
 - Added branch protection and required automated checks on `main`
 
 ---
@@ -141,6 +142,7 @@ python3 -m mcp_govt_api
 | Source | What It Covers | Key |
 |--------|---------------|-----|
 | [BTS](https://data.bts.gov) | Airline on-time performance, border crossing data, transportation datasets | -- |
+| [FAA Public Aviation Data](https://www.faa.gov/data) | AIS airport/geodata, TFRs, NAS status, aircraft registry, aircraft characteristics, FAA catalog | -- |
 
 ### Small Business
 
@@ -254,6 +256,10 @@ python3 -m mcp_govt_api
 "Show me airline on-time stats for American Airlines"
 "What's the border crossing data for El Paso?"
 "Search BTS datasets about freight"
+"Are there active TFRs in Virginia?"
+"Look up FAA airport and runway data for LAX"
+"Is DCA currently affected by FAA NAS delays or closures?"
+"Look up FAA aircraft registration N23FX"
 "Search SBA datasets for PPP loans"
 "What is the SBA size standard for restaurants?"
 "Show me SBA disaster loans in Florida"
@@ -683,6 +689,36 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 </details>
 
 <details>
+<summary><strong>FAA Aviation</strong> — 22 tools</summary>
+
+| Tool | Description |
+|------|-------------|
+| `search_faa_airports` | Search FAA AIS airport geodata by identifier, name, city, or state |
+| `get_faa_airport` | FAA AIS airport details by FAA identifier or ICAO ID |
+| `get_faa_runways` | FAA AIS runway records for an airport |
+| `get_faa_airspace_near` | FAA class and special-use airspace near a coordinate |
+| `get_faa_uas_facility_map` | FAA UAS Facility Map records near a coordinate |
+| `query_faa_ais` | Raw bounded FAA AIS ArcGIS FeatureServer query |
+| `get_faa_tfrs` | Active FAA Temporary Flight Restrictions with optional filters |
+| `get_faa_tfr_summary` | FAA TFR counts by center/facility |
+| `get_faa_tfr_shapes` | Active FAA TFR GeoJSON-style shapes |
+| `get_faa_tfr_detail` | Parsed FAA TFR detail XML for a NOTAM ID |
+| `get_faa_nas_airport_events` | Current FAA NAS airport events |
+| `get_faa_ground_stops` | Current FAA NAS ground stop events |
+| `get_faa_ground_delays` | Current FAA NAS ground delay events |
+| `get_faa_airport_closures` | Current FAA NAS airport closure events |
+| `get_faa_operations_plan` | Current FAA NAS operations plan JSON |
+| `get_faa_artcc_boundaries` | FAA NAS ARTCC boundary data |
+| `lookup_faa_aircraft_registration` | Bounded FAA aircraft registry lookup by N-number |
+| `search_faa_aircraft_registry` | Bounded FAA aircraft registry search by make/model/state/status |
+| `get_faa_aircraft_type_characteristics` | FAA aircraft type characteristics lookup |
+| `search_faa_aircraft_type_characteristics` | FAA aircraft type characteristics search |
+| `search_faa_catalog` | FAA Data Catalog CKAN search |
+| `query_faa_catalog` | Raw FAA Data Catalog CKAN query |
+
+</details>
+
+<details>
 <summary><strong>Open Data</strong> — 6 tools</summary>
 
 | Tool | Description |
@@ -698,6 +734,29 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 
 ---
 
+## FAA Source Notes
+
+First-wave FAA tools use public no-key sources:
+
+| Source | Endpoint family | Freshness | Caveat |
+|--------|-----------------|-----------|--------|
+| FAA AIS ArcGIS FeatureServers | `services6.arcgis.com/.../FeatureServer` | FAA AIS publication cycle; service metadata exposes edit dates | Informational geodata only |
+| FAA TFR | `tfr.faa.gov/tfrapi` and GeoServer WFS | Active FAA TFR site data | Verify official FAA/briefing sources before operational use |
+| FAA NAS Status | `nasstatus.faa.gov/api` | Current NAS Status API data | Status data can change quickly |
+| FAA Aircraft Registry | `registry.faa.gov/database/ReleasableAircraft.zip` | Daily public ZIP download | Public records may include owner information; searches are bounded |
+| FAA Aircraft Characteristics | FAA downloadable workbook | FAA published workbook update cadence | Type characteristics, not individual aircraft or live operations |
+| FAA Data Catalog | `catalog.data.faa.gov/api/3` | Catalog metadata update cadence | Discovery only; resources vary |
+
+FAA aviation tools are informational only. Verify official FAA, NOTAM, chart, and flight briefing sources before making operational decisions. Aircraft registry tools use public FAA records and keep searches bounded because registry data can include owner information.
+
+Deferred FAA-adjacent integrations:
+
+- FAA Developer Portal products: require FAA account/API key.
+- FAA SWIM: requires access agreement.
+- Full NOTAM Search/NMS scraping: deferred; TFR data is the first-wave NOTAM subset.
+- NOAA Aviation Weather Center: useful aviation weather data, but not FAA-owned.
+- FAA Wildlife Strike API: deferred until a production hostname and public-use terms are confirmed; no POST/add/update/upload endpoints are included.
+
 ## Configuration
 
 | Variable | Purpose | Default |
@@ -712,6 +771,7 @@ Every data source exposes **high-level tools** for common queries and a **raw qu
 | `USDA_API_KEY` | Enables USDA food nutrition and crop data tools | *(disabled)* |
 | `FBI_CDE_API_KEY` | Enables FBI Crime Data Explorer / BJS crime tools | *(disabled)* |
 | `API_TIMEOUT` | Request timeout in seconds | `30` |
+| `MCP_CIVIC_DATA_CACHE_DIR` | Optional cache root for FAA registry/workbook downloads | `~/.cache/mcp-civic-data` |
 
 On startup the server prints which APIs are available:
 
@@ -725,6 +785,7 @@ API Availability:
   ✓ BLS                   ✓ FEMA
   ✓ SBA                   ✓ CFPB
   ✓ CMS Healthcare        ✓ SAMHSA
+  ✓ FAA Public Aviation Data
   ✗ OpenWeather (key not set)
   ✗ EIA (key not set)
   ✗ BEA (key not set)

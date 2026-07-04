@@ -106,6 +106,7 @@ class Config:
                 "  ✓ NOAA Space Weather (no key required)",
                 "  ✓ SEC EDGAR (no key required)",
                 "  ✓ CISA (no key required)",
+                "  ✓ FAA Public Aviation Data (no key required)",
             ]
         )
         if self.has_fred:

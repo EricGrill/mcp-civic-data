@@ -1,7 +1,6 @@
 from mcp_govt_api.server import mcp
-from mcp_govt_api.utils.http import fetch_json
 from mcp_govt_api.utils.config import config
-
+from mcp_govt_api.utils.http import fetch_json
 
 FDC_BASE = "https://api.nal.usda.gov/fdc/v1"
 NASS_BASE = "https://quickstats.nass.usda.gov/api"
@@ -75,10 +74,14 @@ async def search_usda_foods(
             name = n.get("nutrientName", "")
             value = n.get("value")
             unit = n.get("unitName", "")
-            if name and value is not None:
-                if name in ("Energy", "Protein", "Total lipid (fat)",
-                            "Carbohydrate, by difference", "Fiber, total dietary"):
-                    nutrient_strs.append(f"{name}: {value} {unit}")
+            if name and value is not None and name in (
+                "Energy",
+                "Protein",
+                "Total lipid (fat)",
+                "Carbohydrate, by difference",
+                "Fiber, total dietary",
+            ):
+                nutrient_strs.append(f"{name}: {value} {unit}")
         if nutrient_strs:
             parts.append(" | ".join(nutrient_strs))
 

@@ -1,3 +1,5 @@
+from contextlib import suppress
+
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
@@ -150,10 +152,8 @@ async def get_lightning_summary(region: int = 1, minutes: int = 60) -> str:
 
             sig = props.get("sig")
             if sig is not None:
-                try:
+                with suppress(TypeError, ValueError):
                     station_counts.append(int(sig))
-                except (TypeError, ValueError):
-                    pass
 
         rate = total / max(minutes, 1)
 

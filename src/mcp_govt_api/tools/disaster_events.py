@@ -26,7 +26,7 @@ def _build_fields_params(fields: list[str]) -> dict[str, str]:
     """Build query parameters for ReliefWeb field selection."""
     params: dict[str, str] = {}
     for field in fields:
-        params[f"fields[include][]"] = field  # httpx handles list params
+        params["fields[include][]"] = field  # httpx handles list params
     return params
 
 
@@ -82,13 +82,6 @@ async def get_recent_disasters(
 
     # Build URL with filters
     url = f"{BASE_URL}/disasters"
-
-    # For filters, we need to use the query parameter approach
-    query_params: dict = {
-        "appname": APP_NAME,
-        "limit": limit,
-        "sort[]": "date:desc",
-    }
 
     try:
         # Build the full URL with field parameters

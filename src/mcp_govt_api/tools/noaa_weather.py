@@ -1,7 +1,6 @@
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
-
 NOAA_BASE = "https://api.weather.gov"
 
 # Common WFO codes for reference
@@ -132,7 +131,7 @@ async def get_active_weather_alerts(
             ]
 
         if not alerts:
-            filter_desc = f" matching filters" if event or severity else ""
+            filter_desc = " matching filters" if event or severity else ""
             return f"No active weather alerts for {state}{filter_desc}."
 
         # Sort by severity order
@@ -198,7 +197,7 @@ async def get_radar_stations(state: str = "") -> str:
         if not features:
             return f"No radar stations found for state '{state}'."
 
-        result = [f"NEXRAD Radar Stations" + (f" in {state}" if state else "") + f" ({len(features)} stations):\n"]
+        result = ["NEXRAD Radar Stations" + (f" in {state}" if state else "") + f" ({len(features)} stations):\n"]
         for feat in features:
             props = feat.get("properties", {})
             coords = feat.get("geometry", {}).get("coordinates", [None, None])

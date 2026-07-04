@@ -1,3 +1,5 @@
+from datetime import UTC
+
 from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.http import fetch_json
 
@@ -118,9 +120,9 @@ async def get_active_wildfires(
         if discovery:
             # Convert epoch milliseconds to readable date
             try:
-                from datetime import datetime, timezone
+                from datetime import datetime
 
-                dt = datetime.fromtimestamp(discovery / 1000, tz=timezone.utc)
+                dt = datetime.fromtimestamp(discovery / 1000, tz=UTC)
                 lines.append(f"  Discovered: {dt.strftime('%Y-%m-%d %H:%M UTC')}")
             except (ValueError, OSError):
                 pass
@@ -207,9 +209,9 @@ async def get_wildfire_perimeters(
             lines.append(f"  Containment: {containment}%")
         if create_date:
             try:
-                from datetime import datetime, timezone
+                from datetime import datetime
 
-                dt = datetime.fromtimestamp(create_date / 1000, tz=timezone.utc)
+                dt = datetime.fromtimestamp(create_date / 1000, tz=UTC)
                 lines.append(f"  Perimeter Date: {dt.strftime('%Y-%m-%d')}")
             except (ValueError, OSError):
                 pass
@@ -248,14 +250,10 @@ async def search_national_forests(
 
     where_parts = []
     if state:
-        state_clause = _state_where(state, "ADMINFORESTID")
         # National Forest boundaries use different field names; try FORESTNAME state matching
         # Use a LIKE on FORESTNAME which often includes state context
         st = state.strip().upper()
-        if len(st) == 2:
-            full_name = STATE_NAMES.get(st, st)
-        else:
-            full_name = state.strip()
+        full_name = STATE_NAMES.get(st, st) if len(st) == 2 else state.strip()
         where_parts.append(f"UPPER(FORESTNAME) LIKE '%{full_name.upper()}%' OR UPPER(GIS_ACRES) >= 0")
         # Actually, the boundary service stores state info differently.
         # Use a general approach - filter by name if state given

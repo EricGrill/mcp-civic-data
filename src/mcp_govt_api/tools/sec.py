@@ -191,7 +191,7 @@ async def search_company(name: str = "", ticker: str = "") -> str:
                         f"- **{m['name']}** | Ticker: {m['ticker']} | CIK: {m['cik']}"
                     )
                 result.append(
-                    f"\nUse the CIK number with `get_company_filings` or `get_latest_submissions`."
+                    "\nUse the CIK number with `get_company_filings` or `get_latest_submissions`."
                 )
                 return "\n".join(result)
             else:

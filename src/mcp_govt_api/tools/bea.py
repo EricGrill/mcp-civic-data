@@ -2,7 +2,6 @@ from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
 
-
 BEA_BASE = "https://apps.bea.gov/api/data/"
 
 
@@ -63,10 +62,7 @@ async def get_bea_regional_data(
     geo_fips = "STATE"
     if state:
         upper = state.upper()
-        if upper in state_fips:
-            geo_fips = state_fips[upper]
-        else:
-            geo_fips = upper
+        geo_fips = state_fips.get(upper, upper)
 
     params: dict = {
         "UserID": api_key,
