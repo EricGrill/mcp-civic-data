@@ -71,8 +71,9 @@ class TestGetWeatherForecast(unittest.IsolatedAsyncioTestCase):
         )
         mock_fetch.side_effect = Exception("Connection refused")
 
-        with self.assertRaises(Exception):
-            await get_weather_forecast(latitude=38.0, longitude=-77.0)
+        result = await get_weather_forecast(latitude=38.0, longitude=-77.0)
+        self.assertIn("Error: [NOAA Weather]", result)
+        self.assertIn("Connection refused", result)
 
 
 class TestGetWeatherAlerts(unittest.IsolatedAsyncioTestCase):

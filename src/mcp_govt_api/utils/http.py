@@ -1,14 +1,14 @@
-from typing import Any
-from contextlib import asynccontextmanager
-from collections.abc import AsyncIterator
 import asyncio
 import logging
 import random
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+from typing import Any, NoReturn
 
 import httpx
 
-from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.cache import response_cache
+from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.errors import (
     APIError,
     AuthenticationError,
@@ -50,9 +50,7 @@ def _is_retryable_error(exc: Exception) -> bool:
         return True
     if isinstance(exc, httpx.HTTPStatusError):
         return exc.response.status_code in RETRYABLE_STATUS_CODES
-    if isinstance(exc, (httpx.ConnectError, httpx.ReadError, httpx.WriteError)):
-        return True
-    return False
+    return isinstance(exc, (httpx.ConnectError, httpx.ReadError, httpx.WriteError))
 
 
 async def _retry_delay(attempt: int, base_delay: float = DEFAULT_BASE_DELAY) -> None:
@@ -65,7 +63,7 @@ async def _retry_delay(attempt: int, base_delay: float = DEFAULT_BASE_DELAY) -> 
     await asyncio.sleep(delay + jitter)
 
 
-def _raise_specific_error(last_exception: Exception | None, url: str) -> None:
+def _raise_specific_error(last_exception: Exception | None, url: str) -> NoReturn:
     """Convert the last caught exception into a specific error type and raise."""
     if isinstance(last_exception, httpx.TimeoutException):
         raise TimeoutError(
@@ -238,3 +236,23 @@ async def fetch_with_retry(
                 )
 
     _raise_specific_error(last_exception, url)
+
+
+async def fetch_text(
+    url: str,
+    params: dict[str, Any] | None = None,
+    max_retries: int = DEFAULT_MAX_RETRIES,
+) -> str:
+    """Fetch text content with retry-aware HTTP error handling."""
+    response = await fetch_with_retry(url, params=params, max_retries=max_retries)
+    return response.text
+
+
+async def fetch_bytes(
+    url: str,
+    params: dict[str, Any] | None = None,
+    max_retries: int = DEFAULT_MAX_RETRIES,
+) -> bytes:
+    """Fetch binary content with retry-aware HTTP error handling."""
+    response = await fetch_with_retry(url, params=params, max_retries=max_retries)
+    return response.content

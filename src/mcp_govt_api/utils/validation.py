@@ -81,10 +81,10 @@ def validate_date(date_str: str, fmt: str = "%Y-%m-%d") -> str:
     date_str = date_str.strip()
     try:
         datetime.strptime(date_str, fmt)
-    except ValueError:
+    except ValueError as exc:
         raise ValueError(
             f"Invalid date '{date_str}'. Expected format: {fmt}"
-        )
+        ) from exc
     return date_str
 
 
@@ -99,8 +99,8 @@ def validate_latitude(lat: float) -> float:
     """
     try:
         lat = float(lat)
-    except (TypeError, ValueError):
-        raise ValueError(f"Latitude must be a number, got {lat!r}.")
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"Latitude must be a number, got {lat!r}.") from exc
     if lat < -90 or lat > 90:
         raise ValueError(
             f"Latitude must be between -90 and 90, got {lat}."
@@ -119,8 +119,8 @@ def validate_longitude(lon: float) -> float:
     """
     try:
         lon = float(lon)
-    except (TypeError, ValueError):
-        raise ValueError(f"Longitude must be a number, got {lon!r}.")
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"Longitude must be a number, got {lon!r}.") from exc
     if lon < -180 or lon > 180:
         raise ValueError(
             f"Longitude must be between -180 and 180, got {lon}."
@@ -139,8 +139,8 @@ def validate_magnitude(value: float) -> float:
     """
     try:
         value = float(value)
-    except (TypeError, ValueError):
-        raise ValueError(f"Magnitude must be a number, got {value!r}.")
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"Magnitude must be a number, got {value!r}.") from exc
     if value < 0 or value > 10:
         raise ValueError(
             f"Magnitude must be between 0 and 10, got {value}."

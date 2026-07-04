@@ -2,7 +2,6 @@ from mcp_govt_api.server import mcp
 from mcp_govt_api.utils.config import config
 from mcp_govt_api.utils.http import fetch_json
 
-
 FBI_CDE_BASE = "https://api.usa.gov/crime/fbi/cde"
 
 
@@ -48,10 +47,11 @@ async def get_crime_estimates(
         "API_KEY": api_key,
     }
 
-    if state:
-        url = f"{FBI_CDE_BASE}/estimate/state/{state.upper()}"
-    else:
-        url = f"{FBI_CDE_BASE}/estimate/national"
+    url = (
+        f"{FBI_CDE_BASE}/estimate/state/{state.upper()}"
+        if state
+        else f"{FBI_CDE_BASE}/estimate/national"
+    )
 
     try:
         data = await fetch_json(url, params=params)
@@ -139,10 +139,11 @@ async def get_arrest_data(
         "API_KEY": api_key,
     }
 
-    if offense:
-        url = f"{FBI_CDE_BASE}/arrest/national/{offense}"
-    else:
-        url = f"{FBI_CDE_BASE}/arrest/national"
+    url = (
+        f"{FBI_CDE_BASE}/arrest/national/{offense}"
+        if offense
+        else f"{FBI_CDE_BASE}/arrest/national"
+    )
 
     try:
         data = await fetch_json(url, params=params)
@@ -193,13 +194,22 @@ async def get_arrest_data(
             if isinstance(juvenile, (int, float)):
                 lines.append(f"  Juvenile: {juvenile:,}")
 
+        ignored_keys = {
+            "year",
+            "data_year",
+            "total_arrests",
+            "value",
+            "male",
+            "female",
+            "juvenile",
+            "adult",
+            "month",
+            "month_num",
+        }
         for key, val in entry.items():
-            if key not in ("year", "data_year", "total_arrests", "value",
-                           "male", "female", "juvenile", "adult",
-                           "month", "month_num"):
-                if isinstance(val, (int, float)) and val > 0:
-                    label = key.replace("_", " ").title()
-                    lines.append(f"  {label}: {val:,}")
+            if key not in ignored_keys and isinstance(val, (int, float)) and val > 0:
+                label = key.replace("_", " ").title()
+                lines.append(f"  {label}: {val:,}")
         lines.append("")
 
     lines.append("_Source: FBI Crime Data Explorer (UCR)_")

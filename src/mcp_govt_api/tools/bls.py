@@ -1,7 +1,6 @@
 from mcp_govt_api.server import mcp
-from mcp_govt_api.utils.http import http_client
 from mcp_govt_api.utils.config import config
-
+from mcp_govt_api.utils.http import http_client
 
 BLS_BASE = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
 
@@ -134,7 +133,7 @@ async def _fetch_bls_series(
         response.raise_for_status()
         return response.json()
     except Exception as e:
-        raise Exception(f"BLS API request failed: {e}")
+        raise Exception(f"BLS API request failed: {e}") from e
 
 
 @mcp.tool()

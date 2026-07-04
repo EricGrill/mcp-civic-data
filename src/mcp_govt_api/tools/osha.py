@@ -78,7 +78,7 @@ async def search_osha_inspections(
             lines.append(f"  Total Penalty: ${nr_violations}")
         lines.append("")
 
-    lines.append(f"_Source: OSHA Enforcement Data (DOL)_")
+    lines.append("_Source: OSHA Enforcement Data (DOL)_")
     return "\n".join(lines)
 
 
@@ -150,7 +150,7 @@ async def get_osha_violations(
             lines.append(f"  Abatement Complete: {contest}")
         lines.append("")
 
-    lines.append(f"_Source: OSHA Enforcement Data (DOL)_")
+    lines.append("_Source: OSHA Enforcement Data (DOL)_")
     return "\n".join(lines)
 
 
@@ -214,5 +214,5 @@ async def search_osha_fatalities(
         lines.append(f"  Summary: {summary}")
         lines.append("")
 
-    lines.append(f"_Source: OSHA Fatality and Catastrophe Reports (DOL)_")
+    lines.append("_Source: OSHA Fatality and Catastrophe Reports (DOL)_")
     return "\n".join(lines)
